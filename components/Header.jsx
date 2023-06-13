@@ -12,7 +12,7 @@ const Header = () => {
           I'm fullstack developer from India.
         </p>
         <div className="relative">
-          <button className="bg-amber-300 border border-slate-950 shadow-md shadow-black rounded-full w-1/2 py-2 transition ease-in-out delay-150 hover:-translate-x-1 hover:-translate-y-1 duration-300">
+          <button className="bg-amber-300 border border-slate-950 shadow-sm shadow-black rounded-full w-1/2 py-2 transition ease-in-out delay-150 hover:-translate-x-1 hover:-translate-y-1 duration-300">
             <p className="text-sm text-neutral-800 font-medium">Say Hello</p>
           </button>
           <div className="bg-black rounded-full w-1/2 absolute inset-0 z-[-1]"></div>
