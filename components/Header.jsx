@@ -5,11 +5,13 @@ const Header = () => {
   return (
     <div className="w-full h-full flex justify-between items-center mx-5 my-5 py-5">
       <div className="flex flex-col justify-center space-y-2">
-        <h2 className="text-lg text-neutral-800 font-medium mb-2">
+        <h2 className="text-lg text-neutral-800 font-medium mb-2 font-Work">
           Hi, my name is <span className="font-semibold">Harsh Keshari</span>.
         </h2>
-        <h1 className="text-5xl text-neutral-900 font-bold font-Rampart">I Code.</h1>
-        <p className="text-lg text-neutral-600 font-medium mt-2">
+        <h1 className="text-5xl text-neutral-900 font-bold font-Rampart">
+          I Code.
+        </h1>
+        <p className="text-lg text-neutral-600 font-medium mt-2 font-Work">
           I'm a full-stack developer from India.
         </p>
         <div className="relative">
