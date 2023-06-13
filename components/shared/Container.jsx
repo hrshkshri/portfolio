@@ -19,7 +19,7 @@ const Container = ({ children, activeRoute }) => {
   return (
     <div className="w-full h-screen flex flex-col">
       <div className="w-full h-full flex overflow-hidden">
-        <div className="bg-gray-950 text-neutral-400 hidden md:block md:h-full md:w-1/6 md:flex md:flex-col md:items-center md:justify-between md:border-r md:border-neutral-400 ">
+        <div className="bg-gray-950 text-neutral-400 hidden md:block md:h-full md:w-1/6 md:flex md:flex-col md:items-center md:justify-between">
           {/* <div className="relative">
           <div className="bg-amber-300 w-1/6 p-20 rounded-full absolute -left-10 -top-5 z-[-1]"></div>
             <div className="rounded-full">
