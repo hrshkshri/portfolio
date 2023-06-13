@@ -1,12 +1,19 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { AiOutlineHome, AiFillFlag } from "react-icons/ai";
+import {
+  AiOutlineHome,
+  AiFillInstagram,
+  AiFillLinkedin,
+  AiFillGithub,
+  AiFillMail,
+} from "react-icons/ai";
 import { GrContact } from "react-icons/gr";
 import {
   BsJournalCode,
   BsFillPersonVcardFill,
   BsPersonWorkspace,
+  BsTwitter,
 } from "react-icons/bs";
 
 const Container = ({ children, activeRoute }) => {
@@ -20,17 +27,16 @@ const Container = ({ children, activeRoute }) => {
           <div className="flex flex-col justify-between my-5">
             <Link
               href="/home"
-              className={`flex rounded ${
+              className={`flex items-center rounded ${
                 activeRoute === "home" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
               <AiOutlineHome className="mx-2" />
               <span className="sm:max-lg:hidden">Home</span>
             </Link>
-            <hr />
             <Link
               href="/whatido"
-              className={`flex rounded ${
+              className={`flex items-center rounded ${
                 activeRoute === "whatido" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
@@ -39,7 +45,7 @@ const Container = ({ children, activeRoute }) => {
             </Link>
             <Link
               href="/mywork"
-              className={`flex rounded ${
+              className={`flex items-center rounded ${
                 activeRoute === "mywork" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
@@ -48,7 +54,7 @@ const Container = ({ children, activeRoute }) => {
             </Link>
             <Link
               href="/about"
-              className={`flex rounded ${
+              className={`flex items-center rounded ${
                 activeRoute === "about" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
@@ -57,7 +63,7 @@ const Container = ({ children, activeRoute }) => {
             </Link>
             <Link
               href="/contact"
-              className={`flex rounded ${
+              className={`flex items-center rounded ${
                 activeRoute === "contact" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
@@ -65,21 +71,21 @@ const Container = ({ children, activeRoute }) => {
               <span className="sm:max-lg:hidden">Contact</span>
             </Link>
           </div>
-          <div className="flex justify-between space-x-2 py-3 ">
+          <div className="flex items-center justify-between space-x-2 py-3 ">
             <Link href="/contact">
-              <AiFillFlag className="" />
+              <BsTwitter className="" />
             </Link>
             <Link href="/contact">
-              <AiFillFlag className="" />
+              <AiFillInstagram className="" />
             </Link>
             <Link href="/contact">
-              <AiFillFlag className="" />
+              <AiFillLinkedin className="" />
             </Link>
             <Link href="/contact">
-              <AiFillFlag className="" />
+              <AiFillGithub className="" />
             </Link>
             <Link href="/contact">
-              <AiFillFlag className="" />
+              <AiFillMail className="" />
             </Link>
           </div>
         </div>
