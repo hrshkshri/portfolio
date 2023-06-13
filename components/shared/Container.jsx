@@ -1,14 +1,13 @@
 "use client";
-import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   AiOutlineHome,
   AiFillInstagram,
   AiFillLinkedin,
   AiFillGithub,
-  AiFillMail,
 } from "react-icons/ai";
-import { GrContact } from "react-icons/gr";
+import { MdOutlineSms } from "react-icons/md";
 import {
   BsJournalCode,
   BsFillPersonVcardFill,
@@ -17,18 +16,21 @@ import {
 } from "react-icons/bs";
 
 const Container = ({ children, activeRoute }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
   return (
     <div className="w-full h-screen flex flex-col">
       <div className="w-full h-full flex overflow-hidden">
-        <div className="hidden md:block md:h-full md:w-1/6 md:flex md:flex-col md:items-center md:justify-between md:border-r md:border-neutral-400 ">
-          <div>my photo</div>
+        <div className="bg-gray-950 text-neutral-400 hidden md:block md:h-full md:w-1/6 md:flex md:flex-col md:items-center md:justify-between md:border-r md:border-neutral-400 ">
+          {/* <div className="relative">
+          <div className="bg-amber-300 w-1/6 p-20 rounded-full absolute -left-10 -top-5 z-[-1]"></div>
+            <div className="rounded-full">
+              <Image className="rounded-full" src="/Img/img3.png" alt="Logo" width={200} height={200} />
+            </div>
+          </div> */}
           <div className="flex flex-col justify-between my-5">
             <Link
               href="/home"
-              className={`flex items-center rounded ${
-                activeRoute === "home" ? `` : ``
+              className={`flex items-center hover:text-white ${
+                activeRoute === "home" ? `text-white` : ``
               } font-medium py-2 px-4 mx-2`}
             >
               <AiOutlineHome className="w-5 h-5 mx-2" />
@@ -36,8 +38,8 @@ const Container = ({ children, activeRoute }) => {
             </Link>
             <Link
               href="/whatido"
-              className={`flex items-center rounded ${
-                activeRoute === "whatido" ? `` : ``
+              className={`flex items-center hover:text-white ${
+                activeRoute === "whatido" ? `text-white` : ``
               } font-medium py-2 px-4 mx-2`}
             >
               <BsPersonWorkspace className="w-5 h-5 mx-2" />
@@ -45,8 +47,8 @@ const Container = ({ children, activeRoute }) => {
             </Link>
             <Link
               href="/mywork"
-              className={`flex items-center rounded ${
-                activeRoute === "mywork" ? `` : ``
+              className={`flex items-center hover:text-white ${
+                activeRoute === "mywork" ? `text-white` : ``
               } font-medium py-2 px-4 mx-2`}
             >
               <BsJournalCode className="w-5 h-5 mx-2" />
@@ -54,8 +56,8 @@ const Container = ({ children, activeRoute }) => {
             </Link>
             <Link
               href="/about"
-              className={`flex items-center rounded ${
-                activeRoute === "about" ? `` : ``
+              className={`flex items-center hover:text-white ${
+                activeRoute === "about" ? `text-white` : ``
               } font-medium py-2 px-4 mx-2`}
             >
               <BsFillPersonVcardFill className="w-5 h-5 mx-2" />
@@ -63,34 +65,41 @@ const Container = ({ children, activeRoute }) => {
             </Link>
             <Link
               href="/contact"
-              className={`flex items-center rounded ${
-                activeRoute === "contact" ? `` : ``
+              className={`flex items-center hover:text-white ${
+                activeRoute === "contact" ? `text-white` : ``
               } font-medium py-2 px-4 mx-2`}
             >
-              <GrContact className="w-5 h-5 mx-2" />
+              <MdOutlineSms className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">Contact</span>
             </Link>
           </div>
           <div className="flex flex-col items-center justify-between space-y-2 py-3 ">
             <div className="flex items-center justify-center space-x-2 py-1">
-              <Link href="/contact">
+              <Link
+                className="hover:text-white"
+                href="https://twitter.com/hrshkshri"
+              >
                 <BsTwitter className="w-5 h-5" />
               </Link>
-              <Link href="/contact">
+              <Link
+                className="hover:text-white"
+                href="https://www.instagram.com/hrshkshri/"
+              >
                 <AiFillInstagram className="w-5 h-5" />
               </Link>
             </div>
             <div className="flex items-center justify-center space-x-2 py-1">
-              <Link href="/contact">
+              <Link
+                className="hover:text-white"
+                href="https://www.linkedin.com/in/hrshkshri/"
+              >
                 <AiFillLinkedin className="w-5 h-5" />
               </Link>
-              <Link href="/contact">
+              <Link
+                className="hover:text-white"
+                href="https://github.com/hrshkshri"
+              >
                 <AiFillGithub className="w-5 h-5" />
-              </Link>
-            </div>
-            <div className="flex items-center justify-center space-x-2 py-1">
-              <Link href="/contact">
-                <AiFillMail className="w-5 h-5" />
               </Link>
             </div>
           </div>
@@ -100,7 +109,7 @@ const Container = ({ children, activeRoute }) => {
           {children}
         </div>
       </div>
-      <div className="navbar  flex justify-between border-t border-gray-700 hidden min-[320px]:max-md:block">
+      <div className="bg-gray-950 text-white navbar  flex justify-between border-t border-gray-700 hidden min-[320px]:max-md:block">
         hola
       </div>
     </div>
