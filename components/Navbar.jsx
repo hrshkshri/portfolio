@@ -7,7 +7,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <nav className="p-2 m-2 text-lg font-medium">
-      <ul className="flex justify-between items-center space-x-5">
+      <ul className="flex flex-col justify-between items-center space-x-5">
         <li className="hover:underline underline-offset-8">
           <Link href="/">Home</Link>
         </li>
