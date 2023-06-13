@@ -15,7 +15,6 @@ module.exports = {
       fontFamily: {
         Work: ["Work Sans", "sans - serif"],
         Rampart: ["Rampart One", "cursive"],
-        xyz: ["Kablammo", "cursive"],
       },
     },
   },
