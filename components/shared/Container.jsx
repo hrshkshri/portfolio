@@ -31,7 +31,7 @@ const Container = ({ children, activeRoute }) => {
                 activeRoute === "home" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
-              <AiOutlineHome className="mx-2" />
+              <AiOutlineHome className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">Home</span>
             </Link>
             <Link
@@ -40,7 +40,7 @@ const Container = ({ children, activeRoute }) => {
                 activeRoute === "whatido" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
-              <BsPersonWorkspace className="mx-2" />
+              <BsPersonWorkspace className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">What I Do</span>
             </Link>
             <Link
@@ -49,7 +49,7 @@ const Container = ({ children, activeRoute }) => {
                 activeRoute === "mywork" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
-              <BsJournalCode className="mx-2" />
+              <BsJournalCode className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">My Work</span>
             </Link>
             <Link
@@ -58,7 +58,7 @@ const Container = ({ children, activeRoute }) => {
                 activeRoute === "about" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
-              <BsFillPersonVcardFill className=" mx-2" />
+              <BsFillPersonVcardFill className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">About</span>
             </Link>
             <Link
@@ -67,30 +67,30 @@ const Container = ({ children, activeRoute }) => {
                 activeRoute === "contact" ? `` : ``
               } font-medium py-2 px-4 mx-2`}
             >
-              <GrContact className=" mx-2" />
+              <GrContact className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">Contact</span>
             </Link>
           </div>
           <div className="flex flex-col items-center justify-between space-y-2 py-3 ">
-            <div className="flex items-center justify-center space-x-2 py-3">
+            <div className="flex items-center justify-center space-x-2 py-1">
               <Link href="/contact">
-                <BsTwitter className="" />
+                <BsTwitter className="w-5 h-5" />
               </Link>
               <Link href="/contact">
-                <AiFillInstagram className="" />
-              </Link>
-            </div>
-            <div className="flex items-center justify-center space-x-2 py-3">
-              <Link href="/contact">
-                <AiFillLinkedin className="" />
-              </Link>
-              <Link href="/contact">
-                <AiFillGithub className="" />
+                <AiFillInstagram className="w-5 h-5" />
               </Link>
             </div>
-            <div className="flex items-center justify-center space-x-2 py-3">
+            <div className="flex items-center justify-center space-x-2 py-1">
               <Link href="/contact">
-                <AiFillMail className="" />
+                <AiFillLinkedin className="w-5 h-5" />
+              </Link>
+              <Link href="/contact">
+                <AiFillGithub className="w-5 h-5" />
+              </Link>
+            </div>
+            <div className="flex items-center justify-center space-x-2 py-1">
+              <Link href="/contact">
+                <AiFillMail className="w-5 h-5" />
               </Link>
             </div>
           </div>
