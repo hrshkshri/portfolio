@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Container from "./shared/Container";
 
-const Header = () => {
+const Home = () => {
   return (
     <Container activeRoute={"home"}>
       <div className="w-full h-full flex justify-between items-center mx-5 my-5 py-5">
@@ -31,4 +31,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Home;

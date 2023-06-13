@@ -34,17 +34,7 @@ const Container = ({ children, activeRoute }) => {
               {/* <AiFillHome className="w-8 h-8 mx-2" /> */}
               <span className="sm:max-lg:hidden">Home</span>
             </Link>
-            <Link
-              href="/about"
-              className={`flex items-center justify-center rounded ${
-                activeRoute === "about"
-                  ? `bg-neutral-900/50`
-                  : `bg-neutral-900/25 hover:bg-neutral-900/40`
-              } font-bold py-2 px-4 mx-5`}
-            >
-              {/* <AiFillFlag className="w-8 h-8 mx-2" /> */}
-              <span className="sm:max-lg:hidden">about</span>
-            </Link>
+
             <Link
               href="/whatido"
               className={`flex items-center justify-center rounded ${
@@ -66,6 +56,17 @@ const Container = ({ children, activeRoute }) => {
             >
               {/* <SiMarketo className="w-8 h-8 mx-2" /> */}
               <span className="sm:max-lg:hidden">My Work</span>
+            </Link>
+            <Link
+              href="/about"
+              className={`flex items-center justify-center rounded ${
+                activeRoute === "about"
+                  ? `bg-neutral-900/50`
+                  : `bg-neutral-900/25 hover:bg-neutral-900/40`
+              } font-bold py-2 px-4 mx-5`}
+            >
+              {/* <AiFillFlag className="w-8 h-8 mx-2" /> */}
+              <span className="sm:max-lg:hidden">About</span>
             </Link>
             <Link
               href="/contact"
