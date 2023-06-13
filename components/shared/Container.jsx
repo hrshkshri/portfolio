@@ -71,22 +71,28 @@ const Container = ({ children, activeRoute }) => {
               <span className="sm:max-lg:hidden">Contact</span>
             </Link>
           </div>
-          <div className="flex items-center justify-between space-x-2 py-3 ">
-            <Link href="/contact">
-              <BsTwitter className="" />
-            </Link>
-            <Link href="/contact">
-              <AiFillInstagram className="" />
-            </Link>
-            <Link href="/contact">
-              <AiFillLinkedin className="" />
-            </Link>
-            <Link href="/contact">
-              <AiFillGithub className="" />
-            </Link>
-            <Link href="/contact">
-              <AiFillMail className="" />
-            </Link>
+          <div className="flex flex-col items-center justify-between space-y-2 py-3 ">
+            <div className="flex items-center justify-center space-x-2 py-3">
+              <Link href="/contact">
+                <BsTwitter className="" />
+              </Link>
+              <Link href="/contact">
+                <AiFillInstagram className="" />
+              </Link>
+            </div>
+            <div className="flex items-center justify-center space-x-2 py-3">
+              <Link href="/contact">
+                <AiFillLinkedin className="" />
+              </Link>
+              <Link href="/contact">
+                <AiFillGithub className="" />
+              </Link>
+            </div>
+            <div className="flex items-center justify-center space-x-2 py-3">
+              <Link href="/contact">
+                <AiFillMail className="" />
+              </Link>
+            </div>
           </div>
         </div>
         <div className="w-full h-full flex flex-col overflow-y-auto scrollbar-none ">
