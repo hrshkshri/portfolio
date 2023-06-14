@@ -7,18 +7,27 @@ const Home = () => {
   return (
     <Container activeRoute={"home"}>
       {/* <ParticleBackground /> */}
-      <div className="w-full h-full flex justify-between items-center p-10 text-white relative">
-        <div className="flex flex-col justify-center space-y-2">
-          <h2 className="text-xl text-neutral-400 font-medium mb-2 font-Work">
+      <div className="grid place-content-center" >
+        <div className="w-full h-full flex flex-col justify-center space-y-2 p-10 text-white relative">
+          <h2 className="text-xl text-neutral-400 font-medium font-Work">
             Hi, I'm{" "}
             <span className="text-2xl font-semibold text-amber-100 drop-shadow-md">
               Harsh Keshari
             </span>
             .
           </h2>
-          <h1 className="text-7xl text-amber-200 font-bold font-Rampart ">
-            I Code.
-          </h1>
+          <div className="flex space-x-1 items-center">
+            <h1 className="text-9xl text-amber-200 font-bold font-Rampart ">
+              I Code.
+            </h1>
+            <Image
+              className="rounded-medium"
+              src="/Img/2.svg"
+              alt="Logo"
+              width={300}
+              height={300}
+            />
+          </div>
           <p className="text-xl text-neutral-300 font-medium mt-2 font-Work">
             A full-stack developer from India.
           </p>
@@ -30,15 +39,6 @@ const Home = () => {
             </button>
             <div className="bg-gray-100 rounded-full w-1/2 absolute inset-0 z-[-1]"></div>
           </div>
-        </div>
-        <div className="">
-          <Image
-            className="rounded-medium"
-            src="/Img/2.svg"
-            alt="Logo"
-            width={500}
-            height={500}
-          />
         </div>
       </div>
     </Container>
