@@ -65,7 +65,7 @@ const Container = ({ children, activeRoute }) => {
           <div className="flex flex-col items-center justify-between space-y-2 py-3 ">
             <div className="flex items-center justify-center space-x-2 py-1">
               <Link
-                className="hover:text-white"
+                className="hover:text-amber-300"
                 href="https://twitter.com/hrshkshri"
               >
                 <BsTwitter className="w-5 h-5" />
