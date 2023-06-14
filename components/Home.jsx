@@ -6,25 +6,25 @@ import ParticleBackground from "./shared/Particle/ParticleBackground";
 const Home = () => {
   return (
     <Container activeRoute={"home"}>
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
       <div className="w-full h-full flex justify-between items-center p-10 text-white relative">
         <div className="flex flex-col justify-center space-y-2">
           <h2 className="text-xl text-neutral-400 font-medium mb-2 font-Work">
-            Hi, my name is{" "}
-            <span className="font-semibold text-neutral-100">
+            Hi, I'm{" "}
+            <span className="text-2xl font-semibold text-amber-100 drop-shadow-md">
               Harsh Keshari
             </span>
             .
           </h2>
-          <h1 className="text-5xl text-neutral-100 font-bold font-Rampart">
+          <h1 className="text-7xl text-amber-200 font-bold font-Rampart ">
             I Code.
           </h1>
           <p className="text-xl text-neutral-300 font-medium mt-2 font-Work">
-            I'm a full-stack developer from India.
+            A full-stack developer from India.
           </p>
-          <div className="relative">
+          <div className="relative mt-2">
             <button className="bg-[#ffb400] shadow-sm shadow-gray-50 rounded-full w-1/2 py-2 transition ease-in-out delay-150 hover:-translate-x-1 hover:-translate-y-1 duration-300">
-              <p className="text-md text-neutral-100 font-semibold">
+              <p className="text-md text-neutral-900 font-semibold">
                 Say Hello
               </p>
             </button>
