@@ -1,11 +1,13 @@
 import React from "react";
 import Image from "next/image";
 import Container from "./shared/Container";
+import ParticleBackground from "./shared/Particle/ParticleBackground";
 
 const Home = () => {
   return (
     <Container activeRoute={"home"}>
-      <div className="w-full h-full flex justify-between items-center p-10 bg-[#0b0b0b] text-white">
+      <ParticleBackground />
+      <div className="w-full h-full flex justify-between items-center p-10 text-white relative">
         <div className="flex flex-col justify-center space-y-2">
           <h2 className="text-xl text-neutral-400 font-medium mb-2 font-Work">
             Hi, my name is{" "}

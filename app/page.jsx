@@ -1,6 +1,5 @@
-// import Home from "@/components/Home";
-import Particle from "@/components/Particle";
+import Home from "@/components/Home";
 
 export default () => {
-  return <Particle />;
+  return <Home />;
 };
