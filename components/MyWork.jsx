@@ -5,7 +5,6 @@ import Container from "./shared/Container";
 const MyWork = () => {
   return (
     <Container activeRoute={"mywork"}>
-      <h1>hello</h1>
       <Project />
     </Container>
   );
