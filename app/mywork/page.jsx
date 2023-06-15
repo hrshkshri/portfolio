@@ -1,5 +1,5 @@
-import Home from "@/components/Home";
+import MyWork from "@/components/MyWork";
 
 export default () => {
-  return <Home />;
+  return <MyWork />;
 };
