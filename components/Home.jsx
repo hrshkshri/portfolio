@@ -11,7 +11,7 @@ import Skills from "./Skills";
 const Home = () => {
   return (
     <Container activeRoute={"home"}>
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
       <div className="grid place-content-center min-h-screen" >
         <div className="w-full h-full flex flex-col justify-center space-y-2 p-10 text-white relative">
           <div className="flex space-x-1 items-center">

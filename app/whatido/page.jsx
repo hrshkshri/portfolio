@@ -1,5 +1,5 @@
-import Home from "@/components/Home";
+import Whatido from "@/components/Whatido";
 
 export default () => {
-  return <Home />;
+  return <Whatido />;
 };
