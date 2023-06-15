@@ -46,7 +46,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4 text-neutral-200 m-4">
+      <div className="grid lg:grid-cols-4 min-[320px]:max-lg:grid-cols-2 gap-4 grid-flow-row auto-rows-max text-neutral-200 m-4">
         <Link href="/about" className="col-span-2 bg-neutral-900 rounded-md px-5 py-5 flex flex-col space-y-3">
           <div>
             <Image
@@ -77,7 +77,7 @@ const Home = () => {
         </Link>
       </div>
       <Skills />
-      <div className="flex items-center justify-center space-x-5 ">
+      <div className="flex items-center justify-center space-x-5 text-neutral-50 p-5 m-2">
         <Link
           className="hover:text-amber-300"
           href="https://twitter.com/hrshkshri"

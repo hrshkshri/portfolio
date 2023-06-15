@@ -9,7 +9,7 @@ const Skills = () => {
     return (
         < div className="text-neutral-50" >
             <h1 className="text-4xl text-neutral-300 font-medium font-Work p-5 m-5 items-center text-center">Skills I Possess</h1>
-            <div className="grid grid-cols-5 gap-4 grid-flow-row auto-rows-max m-5">
+            <div className="grid lg:grid-cols-5 sm:max-lg:grid-cols-3 min-[320px]:max-sm:grid-cols-2 gap-4 grid-flow-row auto-rows-max m-5">
                 <div className="flex flex-col justify-between items-center ">
                     <div className="p-5 bg-neutral-900 rounded-lg">
                         <TbBrandCpp className="w-20 h-20 text-amber-400" />
