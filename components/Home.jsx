@@ -4,10 +4,9 @@ import Container from "./shared/Container";
 import ParticleBackground from "./shared/Particle/ParticleBackground";
 import Link from "next/link";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { BsFileEarmarkText } from "react-icons/bs";
-import { AiFillGithub } from "react-icons/ai";
+import { BsFileEarmarkText, BsTwitter } from "react-icons/bs";
+import { AiFillGithub, AiFillLinkedin, AiFillInstagram } from "react-icons/ai";
 import Skills from "./Skills";
-
 
 const Home = () => {
   return (
@@ -78,6 +77,26 @@ const Home = () => {
         </Link>
       </div>
       <Skills />
+      <div className="flex items-center justify-center space-x-5 ">
+        <Link
+          className="hover:text-amber-300"
+          href="https://twitter.com/hrshkshri"
+        >
+          <BsTwitter className="w-5 h-5" />
+        </Link>
+        <Link
+          className="hover:text-amber-300"
+          href="https://www.instagram.com/hrshkshri/"
+        >
+          <AiFillInstagram className="w-5 h-5" />
+        </Link>
+        <Link
+          className="hover:text-amber-300"
+          href="https://www.linkedin.com/in/hrshkshri/"
+        >
+          <AiFillLinkedin className="w-5 h-5" />
+        </Link>
+      </div>
     </Container>
   );
 };
