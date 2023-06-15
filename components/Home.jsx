@@ -4,17 +4,15 @@ import Container from "./shared/Container";
 import ParticleBackground from "./shared/Particle/ParticleBackground";
 import Link from "next/link";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { BsFileEarmarkText, BsGit } from "react-icons/bs";
-import { AiFillGithub, AiFillHtml5 } from "react-icons/ai";
-import { TbBrandCpp, TbBrandNextjs } from "react-icons/tb";
-import { SiJavascript, SiTypescript, SiTailwindcss, SiExpress, SiPostman, SiMongodb, SiFirebase } from "react-icons/si";
-import { IoLogoCss3 } from "react-icons/io";
-import { FaReact, FaNodeJs, FaLinux } from "react-icons/fa";
+import { BsFileEarmarkText } from "react-icons/bs";
+import { AiFillGithub } from "react-icons/ai";
+import Skills from "./Skills";
+
 
 const Home = () => {
   return (
     <Container activeRoute={"home"}>
-      {/* <ParticleBackground /> */}
+      <ParticleBackground />
       <div className="grid place-content-center min-h-screen" >
         <div className="w-full h-full flex flex-col justify-center space-y-2 p-10 text-white relative">
           <div className="flex space-x-1 items-center">
@@ -79,89 +77,7 @@ const Home = () => {
           <p className="font-bold text-2xl font-sans">Github</p>
         </Link>
       </div>
-      {/* Skill  */}
-      <div className="text-neutral-50">
-        <h1 className="text-4xl text-neutral-300 font-medium font-Work p-5 m-5 items-center text-center">Skills I Possess</h1>
-        <div className="grid grid-cols-5 gap-4 grid-flow-row auto-rows-max m-5">
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <TbBrandCpp className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <AiFillHtml5 className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <IoLogoCss3 className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <SiJavascript className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <SiTypescript className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <FaReact className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <TbBrandNextjs className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <SiTailwindcss className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <FaNodeJs className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <SiExpress className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <SiPostman className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <SiMongodb className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <SiFirebase className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <BsGit className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-between items-center ">
-            <div className="p-5 bg-neutral-900 rounded-lg">
-              <FaLinux className="w-20 h-20 text-amber-500" />
-            </div>
-          </div>
-          {/* add more skills here */}
-        </div>
-      </div>
-
+      <Skills />
     </Container>
   );
 };
