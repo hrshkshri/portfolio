@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Container from "./shared/Container";
-import ParticleBackground from "./shared/Particle/ParticleBackground";
 import Link from "next/link";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { BsFileEarmarkText, BsTwitter } from "react-icons/bs";
@@ -11,7 +10,6 @@ import Skills from "./Skills";
 const Home = () => {
   return (
     <Container activeRoute={"home"}>
-      {/* <ParticleBackground /> */}
       <div className="grid place-content-center min-h-screen" >
         <div className="w-full h-full flex flex-col justify-center space-y-2 p-10 text-white relative">
           <div className="flex space-x-1 items-center">

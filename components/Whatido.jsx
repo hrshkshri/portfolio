@@ -1,6 +1,5 @@
 import React from "react";
 import Container from "./shared/Container";
-import ParticleBackground from "./shared/Particle/ParticleBackground";
 import { AiFillDatabase } from "react-icons/ai";
 import { BsGlobeCentralSouthAsia } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -35,7 +34,6 @@ const Whatido = () => {
 
   return (
     <Container activeRoute={"Whatido"}>
-      {/* <ParticleBackground /> */}
       <div className="grid md:grid-cols-2 min-[320px]:max-md:grid-cols-1 gap-5 grid-flow-row auto-rows-max m-5 text-white place-content-center min-h-screen">
         {items.map((item, index) => (
           <div className="flex flex-col space-y-3 bg-neutral-900 rounded-lg p-5 transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300"

@@ -13,6 +13,7 @@ import {
   BsPersonWorkspace,
   BsTwitter,
 } from "react-icons/bs";
+import ParticleBackground from "./Particle/ParticleBackground";
 
 const Container = ({ children, activeRoute }) => {
   return (
@@ -94,6 +95,7 @@ const Container = ({ children, activeRoute }) => {
         </div>
         <div className="w-full h-full flex flex-col overflow-y-auto scrollbar-none ">
           {/* Your content */}
+          <ParticleBackground />
           {children}
         </div>
       </div>
