@@ -9,7 +9,7 @@ import Link from "next/link";
 const Whatido = () => {
   const items = [
     {
-      logo: <BsGlobeCentralSouthAsia className="w-20 h-20 text-neutral-50" />,
+      logo: <BsGlobeCentralSouthAsia className="w-20 h-20 text-amber-400" />,
       heading: "Web Development",
       content: "Lorem ipsum dolor sit amet, consectetur ao eiusmod tempor incididunt ut labore et dolore magna aliquao eiusmod tempor incididunt ut labore et dolore magna aliquadipiscing elit.",
       btnName: (
@@ -17,10 +17,10 @@ const Whatido = () => {
           <p>See my Work</p> <MdKeyboardDoubleArrowRight className="w-8 h-8 hover:text-amber-500" />
         </div>
       ),
-      link: ""
+      link: "/mywork"
     },
     {
-      logo: <AiFillDatabase className="w-20 h-20 text-neutral-50" />,
+      logo: <AiFillDatabase className="w-20 h-20 text-amber-400" />,
       heading: "Data Structure & Algorithm",
       content:
         "Sed do eiusmod tempor incididunt ut labore et dolore magna aliquao eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -29,19 +29,20 @@ const Whatido = () => {
           <p>Explore</p> <MdKeyboardDoubleArrowRight className="w-8 h-8 hover:text-amber-500" />
         </div>
       ),
-      link: ""
+      link: "https://leetcode.com/hrshkshri/"
     },
   ];
 
   return (
     <Container activeRoute={"Whatido"}>
       {/* <ParticleBackground /> */}
-      <div className="grid md:grid-cols-2 min-[320px]:max-md:grid-cols-1 gap-4 grid-flow-row auto-rows-max m-5 text-white">
+      <div className="grid md:grid-cols-2 min-[320px]:max-md:grid-cols-1 gap-5 grid-flow-row auto-rows-max m-5 text-white place-content-center min-h-screen">
         {items.map((item, index) => (
-          <div className="flex flex-col space-y-3 bg-neutral-900 rounded-lg p-5" key={index}>
+          <div className="flex flex-col space-y-3 bg-neutral-900 rounded-lg p-5 transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300"
+            key={index}>
             {item.logo}
-            <h2 className="text-3xl text-neutral-300 font-medium font-Work">{item.heading}</h2>
-            <p className="font-sans text-lg font-semibold">{item.content}</p>
+            <h2 className="text-3xl text-amber-50 font-bold font-san">{item.heading}</h2>
+            <p className="font-sans text-lg text-neutral-300 font-semibold">{item.content}</p>
             <Link href={item.link}>{item.btnName}</Link>
           </div>
         ))}

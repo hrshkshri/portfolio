@@ -47,7 +47,7 @@ const Home = () => {
         </div>
       </div>
       <div className="grid lg:grid-cols-4 min-[320px]:max-lg:grid-cols-2 gap-4 grid-flow-row auto-rows-max text-neutral-200 m-4">
-        <Link href="/about" className="col-span-2 bg-neutral-900 rounded-md px-5 py-5 flex flex-col space-y-3">
+        <Link href="/about" className="col-span-2 bg-neutral-900 rounded-md px-5 py-5 flex flex-col space-y-3 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)] transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300">
           <div>
             <Image
               className="bg-amber-500 rounded-full"
@@ -67,11 +67,11 @@ const Home = () => {
             <MdKeyboardDoubleArrowRight className="w-8 h-8 hover:text-amber-500" />
           </div>
         </Link>
-        <Link href="/resume" className="bg-neutral-900 rounded-md px-5 py-5 flex flex-col justify-between space-y-3">
+        <Link href="/resume" className="bg-neutral-900 rounded-md px-5 py-5 flex flex-col justify-between space-y-3 drop-shadow-[0_10px_8px_rgba(82,82,82,0.04)] transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
           <BsFileEarmarkText className="w-10 h-10 hover:text-amber-500" />
           <p className="font-bold text-2xl font-sans">Resume</p>
         </Link>
-        <Link href="https://github.com/hrshkshri" className="bg-neutral-900 rounded-md px-5 py-5 flex flex-col justify-between space-y-3">
+        <Link href="https://github.com/hrshkshri" className="bg-neutral-900 rounded-md px-5 py-5 flex flex-col justify-between space-y-3 drop-shadow-[0_10px_8px_rgba(82,82,82,0.04)] transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
           <AiFillGithub className="w-10 h-10 hover:text-amber-500" />
           <p className="font-bold text-2xl font-sans">Github</p>
         </Link>
