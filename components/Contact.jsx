@@ -3,14 +3,6 @@ import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import Container from './shared/Container';
 
-const SuccessMessage = () => {
-  return (
-    <div className="justify-center items-center p-5 m-3 text-6xl font-bold text-amber-300 drop-shadow-lg shadow-neutral-100 font-sans">
-      Thank you for your message!
-    </div>
-  );
-};
-
 const Contact = () => {
   const form = useRef();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -29,13 +21,13 @@ const Contact = () => {
   return (
     <Container activeRoute={"contact"}>
       {!isSubmitted ? (
-        <div>
-          <div className=''>
-            <h1>Get in Touch</h1>
-            <h3>I'd love to hear your ideas and thoughts!</h3>
-            <div>
+        <div className='flex space-x-3 justify-between m-5'>
+          <div className='text-neutral-300 flex flex-cols space-y-3'>
+            <h1 className='text-4xl font-medium font-Work p-5 m-5 items-center m-2'>Get in Touch</h1>
+            <h3 className="font-sans text-xl font-semibold m-1">I'd love to hear your ideas and thoughts!</h3>
+            <div className='flex flex-col space-y-1 m-1 p-1'>
               <p>Alternatively you can email me at:</p><br />
-              <span>harshkeshari100@gmail.com</span>
+              <span className="text-amber-500 font-bold">harshkeshari100@gmail.com</span>
             </div>
           </div>
           <div className="bg-neutral-900 rounded-md px-5 py-5 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
@@ -51,7 +43,9 @@ const Contact = () => {
           </div>
         </div>
       ) : (
-        <SuccessMessage />
+        <div className="text-center p-5 m-3 text-6xl font-bold text-amber-300 drop-shadow-lg shadow-neutral-100 font-sans">
+          Thank you for your message!
+        </div>
       )}
     </Container>
   );
