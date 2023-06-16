@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { AiFillGithub } from "react-icons/ai";
+import { BsGlobe } from "react-icons/bs";
 
 const Project = () => {
     return (
@@ -19,12 +20,20 @@ const Project = () => {
                 <h1 className="font-bold text-2xl font-sans text-neutral-100">Name of project</h1>
                 <p className='font-sans text-md font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, dolor dolorem, alias illum rem beatae delectus enim cumque </p>
                 <p className='font-sans text-md font-semibold'>Tech stack</p>
-                <Link
-                    className="text-amber-300"
-                    href="https://github.com/hrshkshri"
-                >
-                    <AiFillGithub className="w-8 h-8" />
-                </Link>
+                <div className='flex space-x-2'>
+                    <Link
+                        className="text-amber-300"
+                        href="https://github.com/hrshkshri"
+                    >
+                        <AiFillGithub className="w-8 h-8" />
+                    </Link>
+                    <Link
+                        className="text-amber-300"
+                        href="https://github.com/hrshkshri"
+                    >
+                        <BsGlobe className="w-8 h-8" />
+                    </Link>
+                </div>
             </div>
         </div>
     )
