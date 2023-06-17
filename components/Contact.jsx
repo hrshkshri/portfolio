@@ -13,8 +13,7 @@ const Contact = () => {
     const SERVICE_ID = process.env.SERVICE_ID;
     const TEMPLATE_ID = process.env.TEMPLATE_ID;
     const PUBLIC_KEY = process.env.PUBLIC_KEY;
-    // emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
-    emailjs.sendForm("service_s9fzqah", "template_6daqfq9", form.current, "5tkFZ3r08NkVj7Lfd")
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {F
         console.log(result.text);
       }, (error) => {
