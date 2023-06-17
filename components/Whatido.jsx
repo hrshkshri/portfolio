@@ -10,7 +10,7 @@ const Whatido = () => {
     {
       logo: <BsGlobeCentralSouthAsia className="w-20 h-20 text-amber-400" />,
       heading: "Web Development",
-      content: "Lorem ipsum dolor sit amet, consectetur ao eiusmod tempor incididunt ut labore et dolore magna aliquao eiusmod tempor incididunt ut labore et dolore magna aliquadipiscing elit.",
+      content: "Constantly exploring new creative avenues, pushing the boundaries of what's possible within the realm of web development. I've got this knack for seamlessly bringing together front-end and back-end technologies.",
       btnName: (
         <div className="flex space-x-2 justify-between">
           <p>See my Work</p> <MdKeyboardDoubleArrowRight className="w-8 h-8 hover:text-amber-500" />
@@ -22,7 +22,7 @@ const Whatido = () => {
       logo: <AiFillDatabase className="w-20 h-20 text-amber-400" />,
       heading: "Data Structure & Algorithm",
       content:
-        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliquao eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "My secret weapons in the coding realm. I dive into the depths of DSA with an insatiable curiosity. From conquering complex challenges to optimizing code for maximum efficiency, I thrive on the thrill of unraveling puzzles and crafting elegant solutions.",
       btnName: (
         <div className="flex space-x-2 justify-between">
           <p>Explore</p> <MdKeyboardDoubleArrowRight className="w-8 h-8 hover:text-amber-500" />

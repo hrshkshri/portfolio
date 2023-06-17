@@ -99,8 +99,42 @@ const Container = ({ children, activeRoute }) => {
           {children}
         </div>
       </div>
-      <div className="bg-gray-950 text-white navbar  flex justify-between border-t border-gray-700 hidden min-[320px]:max-md:block">
-        hola
+      <div className="navbar bg-black text-neutral-400 flex justify-between items-center border-t border-gray-700 hidden min-[320px]:max-md:block">
+        <Link
+          href="/home"
+          className={`flex items-center hover:text-amber-100 ${activeRoute === "home" ? `text-white` : ``
+            } font-medium py-2 px-4 mx-2`}
+        >
+          <AiOutlineHome className="w-5 h-5 mx-2" />
+        </Link>
+        <Link
+          href="/whatido"
+          className={`flex items-center hover:text-amber-100 ${activeRoute === "whatido" ? `text-white` : ``
+            } font-medium py-2 px-4 mx-2`}
+        >
+          <BsPersonWorkspace className="w-5 h-5 mx-2" />
+        </Link>
+        <Link
+          href="/mywork"
+          className={`flex items-center hover:text-amber-100 ${activeRoute === "mywork" ? `text-white` : ``
+            } font-medium py-2 px-4 mx-2`}
+        >
+          <BsJournalCode className="w-5 h-5 mx-2" />
+        </Link>
+        <Link
+          href="/about"
+          className={`flex items-center hover:text-amber-100 ${activeRoute === "about" ? `text-white` : ``
+            } font-medium py-2 px-4 mx-2`}
+        >
+          <BsFillPersonVcardFill className="w-5 h-5 mx-2" />
+        </Link>
+        <Link
+          href="/contact"
+          className={`flex items-center hover:text-amber-100 ${activeRoute === "contact" ? `text-white` : ``
+            } font-medium py-2 px-4 mx-2`}
+        >
+          <MdOutlineSms className="w-5 h-5 mx-2" />
+        </Link>
       </div>
     </div>
   );
