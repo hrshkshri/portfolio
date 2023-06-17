@@ -17,7 +17,7 @@ const About = () => {
             But that's not all— I possess exceptional command over data structures and algorithms. So, whether it's bringing ideas to life or optimizing code for maximum efficiency, I can make things happen.
           </p>
           <br />
-          <Link href="/resume" className="transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300">
+          <Link href="https://drive.google.com/file/d/1xALwqL1iSsD57NOSXj0mP38VgyEaYZcP/view?usp=sharing" className="transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300">
             <BsFileEarmarkText className="w-10 h-10 text-amber-500" />
           </Link>
         </div>
