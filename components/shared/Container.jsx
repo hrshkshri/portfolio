@@ -95,11 +95,11 @@ const Container = ({ children, activeRoute }) => {
         </div>
         <div className="w-full h-full flex flex-col overflow-y-auto scrollbar-none ">
           {/* Your content */}
-          <ParticleBackground />
+          {/* <ParticleBackground /> */}
           {children}
         </div>
       </div>
-      <div className="navbar bg-black text-neutral-400 flex justify-between items-center border-t border-gray-700 hidden min-[320px]:max-md:block">
+      <div className="bg-gray-100 text-neutral-400 border-t border-gray-700 hidden min-[320px]:max-md:block">
         <Link
           href="/home"
           className={`flex items-center hover:text-amber-100 ${activeRoute === "home" ? `text-white` : ``
