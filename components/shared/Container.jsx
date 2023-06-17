@@ -95,8 +95,8 @@ const Container = ({ children, activeRoute }) => {
         </div>
         <div className="w-full h-full flex flex-col overflow-y-auto scrollbar-none ">
           {/* Your content */}
-          {/* <ParticleBackground /> */}
-          {/* {children} */}
+          <ParticleBackground />
+          {children}
         </div>
       </div>
       <div className="py-2 flex items-center justify-between text-neutral-400 border-t border-gray-700 md:hidden block">

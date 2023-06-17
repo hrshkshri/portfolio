@@ -38,8 +38,8 @@ const Contact = () => {
                 <span className="text-amber-500 font-bold">harshkeshari100@gmail.com</span>
               </div>
             </div>
-            <div className="bg-neutral-900 rounded-md px-5 py-5 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
-              <form className="flex flex-col space-y-4 bg-neutral-900 rounded-md p-5 m-5" ref={form} onSubmit={sendEmail}>
+            <div className="bg-neutral-900 rounded-md px-3 py-3 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
+              <form className="flex flex-col space-y-4 bg-neutral-900 rounded-md p-3 m-3" ref={form} onSubmit={sendEmail}>
                 <label className="font-sans text-lg font-semibold text-neutral-300">Your Name</label>
                 <input className="px-4 py-2 rounded-md bg-neutral-500 text-gray-100" type="text" name="user_name" placeholder="Enter your name" />
                 <label className="font-sans text-lg font-semibold text-neutral-300">Your Email</label>
