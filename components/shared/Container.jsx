@@ -37,14 +37,14 @@ const Container = ({ children, activeRoute }) => {
               <BsPersonWorkspace className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">What I Do</span>
             </Link>
-            <Link
+            {/* <Link
               href="/mywork"
               className={`flex items-center hover:text-amber-100 ${activeRoute === "mywork" ? `text-white` : ``
                 } font-medium py-2 px-4 mx-2`}
             >
               <BsJournalCode className="w-5 h-5 mx-2" />
               <span className="sm:max-lg:hidden">My Work</span>
-            </Link>
+            </Link> */}
             <Link
               href="/about"
               className={`flex items-center hover:text-amber-100 ${activeRoute === "about" ? `text-white` : ``
@@ -114,13 +114,13 @@ const Container = ({ children, activeRoute }) => {
         >
           <BsPersonWorkspace className="w-5 h-5" />
         </Link>
-        <Link
+        {/* <Link
           href="/mywork"
           className={`hover:text-amber-100 ${activeRoute === "mywork" ? `text-white` : ``
             } font-medium py-2 px-4`}
         >
           <BsJournalCode className="w-5 h-5" />
-        </Link>
+        </Link> */}
         <Link
           href="/about"
           className={`hover:text-amber-100 ${activeRoute === "about" ? `text-white` : ``
