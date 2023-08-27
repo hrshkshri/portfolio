@@ -65,7 +65,7 @@ const Contact = () => {
             </Link>
             <Link
               className="hover:text-amber-300"
-              href="https://www.linkedin.com/in/hrshkshri/"
+              href="https://www.linkedin.com/in/hrsh-kshri/"
             >
               <AiFillLinkedin className="w-5 h-5" />
             </Link>

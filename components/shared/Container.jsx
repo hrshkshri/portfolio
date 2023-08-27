@@ -80,7 +80,7 @@ const Container = ({ children, activeRoute }) => {
             <div className="flex items-center justify-center space-x-2 py-1">
               <Link
                 className="hover:text-amber-300"
-                href="https://www.linkedin.com/in/hrshkshri/"
+                href="https://www.linkedin.com/in/hrsh-kshri/"
               >
                 <AiFillLinkedin className="w-5 h-5" />
               </Link>
