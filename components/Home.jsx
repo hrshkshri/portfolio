@@ -1,15 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import Container from "./shared/Container";
 import Link from "next/link";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { BsFileEarmarkText, BsTwitter } from "react-icons/bs";
-import { AiFillGithub, AiFillLinkedin, AiFillInstagram } from "react-icons/ai";
+import { AiFillGithub } from "react-icons/ai";
 import Skills from "./Skills";
 
 const Home = () => {
   return (
-    <Container activeRoute={"home"}>
+    <>
       <div className="grid place-content-center min-h-screen">
         <div className="w-full h-full flex flex-col justify-center space-y-2 p-10 text-white relative">
           <div className="flex space-x-1 items-center">
@@ -75,27 +74,7 @@ const Home = () => {
         </Link>
       </div>
       <Skills />
-      <div className="flex items-center justify-center space-x-5 text-neutral-50 p-5 m-2">
-        <Link
-          className="hover:text-amber-300"
-          href="https://twitter.com/hrshkshri"
-        >
-          <BsTwitter className="w-5 h-5" />
-        </Link>
-        <Link
-          className="hover:text-amber-300"
-          href="https://www.instagram.com/hrshkshri/"
-        >
-          <AiFillInstagram className="w-5 h-5" />
-        </Link>
-        <Link
-          className="hover:text-amber-300"
-          href="https://www.linkedin.com/in/hrsh-kshri/"
-        >
-          <AiFillLinkedin className="w-5 h-5" />
-        </Link>
-      </div>
-    </Container>
+    </>
   );
 };
 

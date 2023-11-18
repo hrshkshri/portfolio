@@ -1,10 +1,6 @@
 "use client"
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import Container from './shared/Container';
-import Link from 'next/link';
-import { BsTwitter } from 'react-icons/bs';
-import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from 'react-icons/ai';
 
 const Contact = () => {
   const form = useRef();
@@ -25,7 +21,7 @@ const Contact = () => {
   };
 
   return (
-    <Container activeRoute="contact">
+    <>
       {!isSubmitted ? (
         <div className='h-full flex flex-col space-y-3 justify-between'>
           <div className="flex flex-col md:flex-row space-x-3 space-y-3 items-center justify-between m-5">
@@ -50,39 +46,13 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          <div className="flex text-white items-center justify-center space-x-3 p-3 ">
-            <Link
-              className="hover:text-amber-300"
-              href="https://twitter.com/hrshkshri"
-            >
-              <BsTwitter className="w-5 h-5" />
-            </Link>
-            <Link
-              className="hover:text-amber-300"
-              href="https://www.instagram.com/hrshkshri/"
-            >
-              <AiFillInstagram className="w-5 h-5" />
-            </Link>
-            <Link
-              className="hover:text-amber-300"
-              href="https://www.linkedin.com/in/hrsh-kshri/"
-            >
-              <AiFillLinkedin className="w-5 h-5" />
-            </Link>
-            <Link
-              className="hover:text-amber-300"
-              href="https://github.com/hrshkshri"
-            >
-              <AiFillGithub className="w-5 h-5" />
-            </Link>
-          </div>
         </div>
       ) : (
         <div className="h-full text-center p-5 m-3 text-6xl font-bold text-amber-300 drop-shadow-lg shadow-neutral-100 font-sans">
           Thank you for your message!
         </div>
       )}
-    </Container>
+    </>
   );
 };
 

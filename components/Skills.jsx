@@ -7,7 +7,7 @@ import { IoLogoCss3 } from "react-icons/io";
 import { FaReact, FaNodeJs, FaLinux } from "react-icons/fa";
 const Skills = () => {
     return (
-        < div className="text-neutral-50" >
+        <div className="text-neutral-50" >
             <h1 className="text-4xl text-neutral-300 font-medium font-Work p-5 m-5 items-center text-center">Skills I Possess</h1>
             <div className="grid lg:grid-cols-5 sm:max-lg:grid-cols-3 min-[320px]:max-sm:grid-cols-2 gap-4 grid-flow-row auto-rows-max m-5">
                 <div className="flex flex-col justify-between items-center hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
@@ -87,7 +87,7 @@ const Skills = () => {
                 </div>
                 {/* add more skills here */}
             </div>
-        </div >
+        </div>
     )
 }
 

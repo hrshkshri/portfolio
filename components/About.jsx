@@ -1,12 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import Container from "./shared/Container";
 import Link from "next/link";
-import { BsFileEarmarkText, BsTwitter } from "react-icons/bs";
-import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
+import { BsFileEarmarkText } from "react-icons/bs";
 
 const About = () => {
-  return (<Container activeRoute={"about"}>
+  return (
     <div className="grid my-5 mx-3 place-content-center min-h-screen">
       <div className="h-full flex justify-between space-x-3 text-neutral-200 rounded-md bg-neutral-900 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
         <div className="p-5">
@@ -32,33 +30,7 @@ const About = () => {
         </div>
       </div>
     </div>
-    <div className="flex text-white items-center justify-center space-x-3 p-3 ">
-      <Link
-        className="hover:text-amber-300"
-        href="https://twitter.com/hrshkshri"
-      >
-        <BsTwitter className="w-5 h-5" />
-      </Link>
-      <Link
-        className="hover:text-amber-300"
-        href="https://www.instagram.com/hrshkshri/"
-      >
-        <AiFillInstagram className="w-5 h-5" />
-      </Link>
-      <Link
-        className="hover:text-amber-300"
-        href="https://www.linkedin.com/in/hrsh-kshri/"
-      >
-        <AiFillLinkedin className="w-5 h-5" />
-      </Link>
-      <Link
-        className="hover:text-amber-300"
-        href="https://github.com/hrshkshri"
-      >
-        <AiFillGithub className="w-5 h-5" />
-      </Link>
-    </div>
-  </Container>);
+  );
 };
 
 export default About;
