@@ -20,7 +20,7 @@ const Footer = () => {
             </Link>
             <Link
                 className="hover:text-amber-300"
-                href="https://www.linkedin.com/in/hrsh-kshri/"
+                href="https://www.linkedin.com/in/hrshkshri/"
             >
                 <AiFillLinkedin className="w-5 h-5" />
             </Link>
