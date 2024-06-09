@@ -15,14 +15,6 @@ const LeftSidebar = ({ activeRoute }) => {
                 <AiOutlineHome className="w-5 h-5 mx-2" />
                 <span className="sm:max-lg:hidden">Home</span>
             </Link>
-            {/* <Link
-                href="/mywork"
-                className={`flex items-center hover:text-amber-100 ${activeRoute === "mywork" ? `text-white` : ``
-                    } font-medium py-2 px-4 mx-2`}
-            >
-                <BsJournalCode className="w-5 h-5 mx-2" />
-                <span className="sm:max-lg:hidden">My Work</span>
-            </Link> */}
             <Link
                 href="/about"
                 className={`flex items-center hover:text-amber-100 ${activeRoute === "/about" ? `text-white` : ``

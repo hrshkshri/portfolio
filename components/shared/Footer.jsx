@@ -3,39 +3,22 @@ import React from 'react'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin, AiFillMail } from 'react-icons/ai'
 import { BsTwitter } from 'react-icons/bs'
 
+const socialLinks = [
+    { href: 'https://twitter.com/hrshkshri', icon: BsTwitter, label: 'Twitter' },
+    { href: 'https://www.instagram.com/hrshkshri/', icon: AiFillInstagram, label: 'Instagram' },
+    { href: 'https://www.linkedin.com/in/hrshkshri/', icon: AiFillLinkedin, label: 'LinkedIn' },
+    { href: 'https://github.com/hrshkshri', icon: AiFillGithub, label: 'GitHub' },
+    { href: 'mailto:harshkeshari100@gmail.com', icon: AiFillMail, label: 'Email' },
+];
+
 const Footer = () => {
     return (
-        <div className="flex text-white items-center justify-center space-x-3 p-3 ">
-            <Link
-                className="hover:text-amber-300"
-                href="https://twitter.com/hrshkshri"
-            >
-                <BsTwitter className="w-5 h-5" />
-            </Link>
-            <Link
-                className="hover:text-amber-300"
-                href="https://www.instagram.com/hrshkshri/"
-            >
-                <AiFillInstagram className="w-5 h-5" />
-            </Link>
-            <Link
-                className="hover:text-amber-300"
-                href="https://www.linkedin.com/in/hrshkshri/"
-            >
-                <AiFillLinkedin className="w-5 h-5" />
-            </Link>
-            <Link
-                className="hover:text-amber-300"
-                href="https://github.com/hrshkshri"
-            >
-                <AiFillGithub className="w-5 h-5" />
-            </Link>
-            <Link
-                className="hover:text-amber-300"
-                href="mailto:harshkeshari100@gmail.com"
-            >
-                <AiFillMail className="w-5 h-5" />
-            </Link>
+        <div className="flex items-center justify-center space-x-5 p-4 text-white">
+            {socialLinks.map((link, index) => (
+                <Link key={index} href={link.href} aria-label={link.label}>
+                    <link.icon className="w-6 h-6 hover:text-amber-300 transition-transform transform hover:scale-110" />
+                </Link>
+            ))}
         </div>
     )
 }

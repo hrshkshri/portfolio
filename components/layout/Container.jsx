@@ -5,15 +5,15 @@ import LeftSidebar from "./LeftSidebar";
 import MobNav from "./MobNav";
 
 const Container = ({ children }) => {
-  const activeRoute = usePathname()
+  const activeRoute = usePathname();
 
   return (
-    <div className="w-full h-screen flex flex-col">
-      <div className="w-full h-full flex overflow-hidden">
-        <div className="bg-black text-neutral-400 hidden md:h-full md:w-1/6 md:flex md:flex-col md:items-center md:justify-between">
+    <div className="flex flex-col h-screen">
+      <div className="flex h-full overflow-hidden">
+        <div className="hidden md:flex md:flex-col md:w-1/6 bg-black text-neutral-400">
           <LeftSidebar activeRoute={activeRoute} />
         </div>
-        <div className="w-full h-full flex flex-col overflow-y-auto scrollbar-none bg-neutral-950">
+        <div className="flex flex-col w-full h-full overflow-y-auto bg-neutral-950">
           {children}
           <Footer />
         </div>

@@ -13,13 +13,6 @@ const MobNav = ({ activeRoute }) => {
             >
                 <AiOutlineHome className="w-5 h-5" />
             </Link>
-            {/* <Link
-                href="/mywork"
-                className={`hover:text-amber-100 ${activeRoute === "mywork" ? `text-white` : ``
-                    } font-medium py-2 px-4`}
-            >
-                <BsJournalCode className="w-5 h-5" />
-            </Link> */}
             <Link
                 href="/about"
                 className={`hover:text-amber-100 ${activeRoute === "/about" ? `text-white` : ``

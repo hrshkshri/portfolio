@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { BsArrow90DegUp, BsFileEarmarkText } from "react-icons/bs";
 import { MdArrowOutward } from "react-icons/md";
 import { AiOutlineMail } from "react-icons/ai";
 
