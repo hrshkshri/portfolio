@@ -5,7 +5,7 @@ import { BsFillPersonVcardFill, BsPersonWorkspace } from 'react-icons/bs'
 
 const MobNav = ({ activeRoute }) => {
     return (
-        <div className="navbar p-2 justify-between text-neutral-400 border-t border-gray-700 hidden min-[320px]:max-sm:block min-[320px]:max-sm:flex">
+        <div className="navbar p-2 justify-between text-neutral-400 border-t border-gray-700 hidden min-[320px]:max-sm:flex">
             <Link
                 href="/home"
                 className={`hover:text-amber-100 ${activeRoute === "/home" ? `text-white` : ``

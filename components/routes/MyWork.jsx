@@ -1,5 +1,5 @@
 import React from "react";
-import Project from "./shared/Project";
+import Project from "../shared/Project";
 
 const MyWork = () => {
   return (
