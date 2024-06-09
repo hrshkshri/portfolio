@@ -2,7 +2,6 @@ import Link from 'next/link'
 import React from 'react'
 import { AiOutlineHome } from 'react-icons/ai'
 import { BsFillPersonVcardFill, BsPersonWorkspace } from 'react-icons/bs'
-import { MdOutlineSms } from 'react-icons/md'
 
 const LeftSidebar = ({ activeRoute }) => {
 
@@ -39,14 +38,6 @@ const LeftSidebar = ({ activeRoute }) => {
             >
                 <BsFillPersonVcardFill className="w-5 h-5 mx-2" />
                 <span className="sm:max-lg:hidden">About</span>
-            </Link>
-            <Link
-                href="/contact"
-                className={`flex items-center hover:text-amber-100 ${activeRoute === "/contact" ? `text-white` : ``
-                    } font-medium py-2 px-4 mx-2`}
-            >
-                <MdOutlineSms className="w-5 h-5 mx-2" />
-                <span className="sm:max-lg:hidden">Contact</span>
             </Link>
         </div>
     )

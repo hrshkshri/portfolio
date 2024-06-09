@@ -1,4 +1,4 @@
-import Whatido from "@/components/Whatido";
+import Whatido from "@/components/routes/Whatido";
 
 export default () => {
   return <Whatido />;

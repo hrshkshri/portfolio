@@ -1,4 +1,4 @@
-import About from "@/components/About";
+import About from "@/components/routes/About";
 
 export default () => {
   return <About />;

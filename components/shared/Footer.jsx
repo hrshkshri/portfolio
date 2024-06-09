@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from 'react-icons/ai'
+import { AiFillGithub, AiFillInstagram, AiFillLinkedin, AiFillMail } from 'react-icons/ai'
 import { BsTwitter } from 'react-icons/bs'
 
 const Footer = () => {
@@ -29,6 +29,12 @@ const Footer = () => {
                 href="https://github.com/hrshkshri"
             >
                 <AiFillGithub className="w-5 h-5" />
+            </Link>
+            <Link
+                className="hover:text-amber-300"
+                href="mailto:harshkeshari100@gmail.com"
+            >
+                <AiFillMail className="w-5 h-5" />
             </Link>
         </div>
     )

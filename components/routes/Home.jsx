@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { BsFileEarmarkText, BsTwitter } from "react-icons/bs";
 import { AiFillGithub } from "react-icons/ai";
-import Skills from "./Skills";
+import Skills from "../shared/Skills";
 
 const Home = () => {
   return (

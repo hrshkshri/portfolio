@@ -1,4 +1,4 @@
-import MyWork from "@/components/MyWork";
+import MyWork from "@/components/routes/MyWork";
 
 export default () => {
   return <MyWork />;
