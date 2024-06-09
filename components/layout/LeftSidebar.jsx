@@ -1,30 +1,21 @@
-import Link from 'next/link'
-import React from 'react'
-import { AiOutlineHome } from 'react-icons/ai'
-import { BsFillPersonVcardFill, BsPersonWorkspace } from 'react-icons/bs'
+import React from 'react';
+import { AiOutlineHome } from 'react-icons/ai';
+import { BsFillPersonVcardFill } from 'react-icons/bs';
+import NavLink from './NavLink';
+
+const links = [
+  { href: '/home', icon: AiOutlineHome, label: 'Home' },
+  { href: '/about', icon: BsFillPersonVcardFill, label: 'About' },
+];
 
 const LeftSidebar = ({ activeRoute }) => {
+  return (
+    <div className="flex flex-col justify-between my-5">
+      {links.map((link, index) => (
+        <NavLink key={index} href={link.href} activeRoute={activeRoute} icon={link.icon} label={link.label} />
+      ))}
+    </div>
+  );
+};
 
-    return (
-        <div className="flex flex-col justify-between my-5">
-            <Link
-                href="/home"
-                className={`flex items-center hover:text-amber-100 ${activeRoute === "/home" ? `text-white` : ``
-                    } font-medium py-2 px-4 mx-2`}
-            >
-                <AiOutlineHome className="w-5 h-5 mx-2" />
-                <span className="sm:max-lg:hidden">Home</span>
-            </Link>
-            <Link
-                href="/about"
-                className={`flex items-center hover:text-amber-100 ${activeRoute === "/about" ? `text-white` : ``
-                    } font-medium py-2 px-4 mx-2`}
-            >
-                <BsFillPersonVcardFill className="w-5 h-5 mx-2" />
-                <span className="sm:max-lg:hidden">About</span>
-            </Link>
-        </div>
-    )
-}
-
-export default LeftSidebar
+export default LeftSidebar;
