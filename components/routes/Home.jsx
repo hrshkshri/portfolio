@@ -59,7 +59,11 @@ const Home = () => {
           </div>
           <div className="flex justify-between items-center">
             <p className="font-sans text-lg font-semibold">
-              Full Stack Developer 💻 from India
+              Full Stack Developer 💻
+              <br />
+              <span className="text-amber-500 font-bold">&</span>
+              <br />
+              Open-Source Contributor 🚀
             </p>
             <MdKeyboardDoubleArrowRight className="w-8 h-8 hover:text-amber-500" />
           </div>
