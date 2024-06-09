@@ -1,15 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { AiFillGithub, AiFillInstagram, AiFillLinkedin, AiFillMail } from 'react-icons/ai'
-import { BsTwitter } from 'react-icons/bs'
-
-const socialLinks = [
-    { href: 'https://twitter.com/hrshkshri', icon: BsTwitter, label: 'Twitter' },
-    { href: 'https://www.instagram.com/hrshkshri/', icon: AiFillInstagram, label: 'Instagram' },
-    { href: 'https://www.linkedin.com/in/hrshkshri/', icon: AiFillLinkedin, label: 'LinkedIn' },
-    { href: 'https://github.com/hrshkshri', icon: AiFillGithub, label: 'GitHub' },
-    { href: 'mailto:harshkeshari100@gmail.com', icon: AiFillMail, label: 'Email' },
-];
+import { socialLinks } from '../shared/constant'
 
 const Footer = () => {
     return (
