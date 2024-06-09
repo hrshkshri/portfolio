@@ -8,7 +8,7 @@ const Skills = () => {
         <div className="text-neutral-50" >
             <h1 className="text-4xl text-neutral-300 font-medium font-Work p-5 m-5 items-center text-center">Skills I Possess</h1>
 
-            <div className="bg-neutral-900 rounded-md px-5 py-5 flex flex-col">
+            <div className="bg-neutral-900 rounded-md px-5 py-5 flex flex-col m-5">
                 <div className="flex flex-wrap space-x-3 items-center">
                     <div className="font-bold text-xl font-serif">
                         Languages:
