@@ -1,23 +1,37 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { BsFileEarmarkText } from "react-icons/bs";
+import { BsArrow90DegUp, BsFileEarmarkText } from "react-icons/bs";
+import { MdArrowOutward } from "react-icons/md";
+import { AiOutlineMail } from "react-icons/ai";
 
 const About = () => {
   return (
-
-    <div className="flex items-center justify-between space-x-3 m-5 text-neutral-200 rounded-md bg-neutral-900 hover:drop-shadow-[0_10px_8px_rgba(231,229,228,0.04)]">
-      <div className="p-5">
-        <p className="font-sans text-neutral-300 text-lg font-semibold">Hey 👋, I am <span className="text-2xl text-amber-500 font-bold">Harsh Keshari</span>;
-          Open to internship and full-time opportunities focused on developing robust frontend and backend infrastructure.
-        </p>
-        <br />
-        <Link href="https://drive.google.com/file/d/11yXiL8ymrC-d_9qcUts6OIv09PE6OBph/view" className="transition ease-in-out delay-150 hover:-translate-y-1 hover:-translate-x-1 duration-300">
-          <BsFileEarmarkText className="w-10 h-10 text-amber-500" />
-        </Link>
+    <>
+      <div className="flex flex-col items-center justify-between space-y-5 mx-5 my-8 text-neutral-200">
+        <div className="p-6 rounded-md bg-amber-500 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+          <p className="font-sans text-neutral-900 text-lg font-semibold text-center">
+            Open to SDE/SWE internship and full-time roles focused on developing robust frontend and backend infrastructure.
+          </p>
+          <div className="mt-4 text-center">
+            <Link href="https://drive.google.com/file/d/11yXiL8ymrC-d_9qcUts6OIv09PE6OBph/view">
+              <span className="flex items-center justify-center space-x-2 transition ease-in-out duration-300 transform hover:-translate-y-1 hover:-translate-x-1 cursor-pointer">
+                <span className="text-neutral-900">Resume:</span>
+                <MdArrowOutward className="w-5 h-5 text-neutral-900" />
+              </span>
+            </Link>
+          </div>
+          <div className="mt-4 text-center">
+            <Link href="mailto:harshkeshari100@gmail.com">
+              <span className="flex items-center justify-center space-x-2 transition ease-in-out duration-300 transform hover:-translate-y-1 hover:-translate-x-1 cursor-pointer">
+                <AiOutlineMail className="w-5 h-5 text-neutral-900" />
+                <span className="text-neutral-900">harshkeshari100@gmail.com</span>
+              </span>
+            </Link>
+          </div>
+        </div>
       </div>
-    </div>
-
+    </>
   );
 };
 
