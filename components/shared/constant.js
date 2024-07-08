@@ -87,3 +87,69 @@ export const navLinks = [
   { href: "/home", icon: AiOutlineHome, label: "Home" },
   { href: "/about", icon: BsFillPersonVcardFill, label: "About" },
 ];
+
+export const experiences = [
+  {
+    role: "Software Development Engineer Intern",
+    company: "Amazon",
+    companyUrl: "https://www.amazon.com",
+    period: "May 2021 - August 2021",
+    responsibilities: [
+      "Developed a new feature for the Amazon Prime Video app that allows users to create and manage watch parties with friends and family.",
+      "The feature was built using React, Redux, and Node.js, and was launched to millions of users in the US and UK.",
+    ],
+  },
+  {
+    role: "Software Developer Intern",
+    company: "Microsoft",
+    companyUrl: "https://www.microsoft.com",
+    period: "January 2021 - April 2021",
+    responsibilities: [
+      "Developed a new feature for the Microsoft Teams app that allows users to create and manage tasks and to-do lists.",
+      "The feature was built using React, Redux, and Node.js, and was launched to millions of users in the US and UK.",
+    ],
+  },
+];
+
+export const openSourceContributions = [
+  {
+    name: "The Oppia Foundations",
+    link: "https://www.livepreview.com",
+    handle: "@oppia",
+  },
+  {
+    name: "Tailcall",
+    link: "https://www.livepreview.com",
+    handle: "@tailcallhq",
+  },
+  {
+    name: "CircuitVerse",
+    link: "https://www.livepreview.com",
+    handle: "@CircuitVerse",
+  },
+];
+
+export const projectsData = [
+  {
+    name: "Project One",
+    duration: "May 2021 - August 2021",
+    liveLink: "https://www.livepreview.com",
+    githubLink: "https://www.github.com",
+    description: [
+      "Developed a new feature for the Amazon Prime Video app that allows users to create and manage watch parties with friends and family.",
+      "The feature was built using React, Redux, and Node.js, and was launched to millions of users in the US and UK.",
+    ],
+    techStack: "React, Redux, Node.js, Express, MongoDB, Tailwind CSS",
+  },
+  {
+    name: "Project Two",
+    duration: "January 2021 - April 2021",
+    liveLink: "https://www.livepreview.com",
+    githubLink: "https://www.github.com",
+    description: [
+      "Developed a new feature for the Microsoft Teams app that allows users to create and manage tasks and to-do lists.",
+      "The feature was built using React, Redux, and Node.js, and was launched to millions of users in the US and UK.",
+    ],
+    techStack: "React, Redux, Node.js, Express, MongoDB, Tailwind CSS",
+  },
+];
