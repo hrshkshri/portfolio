@@ -8,7 +8,7 @@ const OpenSource = () => {
         <div className="w-full">
             <h1 className="text-xl font-bold">Open Source Contributions</h1>
             <div className="mt-5 border-l-2 pl-1 transition ease-in-out duration-300 hover:border-amber-500">
-                {openSourceContributions.map((contribution, index) => (
+                {openSourceContributions.slice().reverse().map((contribution, index) => (
                     <div key={index}>
                         <div className="group relative mb-1 p-2 flex flex-col justify-normal">
                             <p className="font-semibold text-amber-500">{contribution.name}</p>

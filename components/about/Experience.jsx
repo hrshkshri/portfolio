@@ -8,7 +8,7 @@ const Experience = () => {
         <div className="w-full">
             <h1 className="text-xl font-bold">Experience</h1>
             <div className="mt-5">
-                {experiences.map((experience, index) => (
+                {experiences.slice().reverse().map((experience, index) => (
                     <div key={index} className="border-l-2 pl-1 transition ease-in-out duration-300 hover:border-amber-500">
                         <div className="group relative mb-8 p-2">
                             <div className="flex justify-between">
