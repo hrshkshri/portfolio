@@ -18,7 +18,7 @@ const Container = ({ children }) => {
           <Footer />
         </div>
       </div>
-      <MobNav activeRoute={activeRoute} />
+      <MobNav activeRoute={activeRoute} className="fixed bottom-0 w-full" />
     </div>
   );
 };
