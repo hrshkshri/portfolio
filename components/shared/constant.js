@@ -63,6 +63,9 @@ export const skillsData = [
   },
 ];
 
+export const resumeLink =
+  "https://drive.google.com/file/d/1m1Tv89Us2tZl6pw-vIqMhkueJ9-4cEuL/view?usp=drive_link";
+
 export const socialLinks = [
   { href: "https://twitter.com/hrshkshri", icon: BsTwitter, label: "Twitter" },
   {

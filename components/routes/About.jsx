@@ -5,6 +5,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import Experience from "../about/Experience";
 import OpenSource from "../about/OpenSource";
 import Projects from "../about/Projects";
+import { resumeLink } from "../shared/constant";
 
 const About = () => {
   return (
@@ -15,7 +16,7 @@ const About = () => {
             Open to SDE/SWE internship and full-time roles focused on developing robust frontend and backend infrastructure.
           </p>
           <div className="mt-4 text-center">
-            <Link href="https://drive.google.com/file/d/11yXiL8ymrC-d_9qcUts6OIv09PE6OBph/view">
+            <Link href={resumeLink}>
               <span className="flex items-center justify-center space-x-2 transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer">
                 <span className="text-neutral-900">Resume:</span>
                 <MdArrowOutward className="w-5 h-5 text-neutral-900" />
