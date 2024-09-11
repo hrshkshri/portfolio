@@ -108,7 +108,7 @@ export const experiences = [
     role: "Fullstack Development Intern",
     company: "Web3Scope",
     companyUrl: "https://www.web3scope.com",
-    period: "April 2024 - Present",
+    period: "April 2024 - July 2024",
     responsibilities: [
       "Developed and implemented frontend UI features based on Figma design.",
       "Contributed significantly to the MVP of Web3Scope and over 6 incubator projects, enhancing user experience and functionality.",
