@@ -16,15 +16,18 @@ const Projects = () => {
                                 <p className="font-light text-sm">{project.tag}</p>
                             </div>
                             <div className="text-sm italic space-x-2 flex items-center mt-1">
-                                <Link
-                                    href={project.liveLink}
-                                    className="transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer"
-                                >
-                                    <span className="flex items-center">
-                                        Live Preview
-                                        <MdArrowOutward className="w-4 h-4 ml-1" />
-                                    </span>
-                                </Link>
+                                {/* Conditionally render Live Preview only if liveLink exists */}
+                                {project.liveLink && (
+                                    <Link
+                                        href={project.liveLink}
+                                        className="transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer"
+                                    >
+                                        <span className="flex items-center">
+                                            Live Preview
+                                            <MdArrowOutward className="w-4 h-4 ml-1" />
+                                        </span>
+                                    </Link>
+                                )}
                                 <Link
                                     href={project.githubLink}
                                     className="transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer"

@@ -166,7 +166,6 @@ export const projectsData = [
   {
     name: "Job Application App",
     tag: "",
-    liveLink: "#",
     githubLink: "https://github.com/hrshkshri/job-application-app",
     description: [
       "Mobile application used to browse job listings and apply for jobs using data retrieved from a free job API.",
@@ -178,7 +177,6 @@ export const projectsData = [
   {
     name: "Nexus",
     tag: "Maintained",
-    liveLink: "#",
     githubLink: "https://github.com/orgs/the-nexus-point/repositories",
     description: [
       "Developed a live web portal to facilitate real-time coding contest participation and monitoring for 300+ students at the college level.",
