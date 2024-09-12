@@ -1,6 +1,6 @@
 import Container from "@/components/layout/Container";
 import "./globals.css";
-
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Harsh",
@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`bg-black`}>
         <Container>{children}</Container>
+        <Analytics />
       </body>
     </html>
   );
