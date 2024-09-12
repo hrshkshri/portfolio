@@ -1,6 +1,7 @@
 import Container from "@/components/layout/Container";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: "Harsh",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
       <body className={`bg-black`}>
         <Container>{children}</Container>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
