@@ -62,8 +62,6 @@ export default function RootLayout({ children }) {
         <meta name="twitter:description" content={metadata.description} />
         <meta name="twitter:image" content={metadata.twitter.image} />
         <meta name="twitter:site" content="@hrshkshri" />
-        <meta name="twitter:creator" content="@hrshkshri" />
-        <meta name="twitter:url" content={metadata.twitter.url} />
 
         {/* LinkedIn Open Graph meta tags */}
         <meta property="og:title" content={metadata.linkedin.title} />
