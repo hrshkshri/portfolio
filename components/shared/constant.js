@@ -107,16 +107,36 @@ export const experiences = [
   {
     role: "Fullstack Development Intern",
     company: "Web3Scope",
-    companyUrl: "https://www.web3scope.com",
+    companyUrl: "https://www.linkedin.com/company/web3scope/",
     period: "April 2024 - July 2024",
     responsibilities: [
-      "Developed and implemented frontend UI features based on Figma design.",
-      "Contributed significantly to the MVP of Web3Scope and over 6 incubator projects, enhancing user experience and functionality.",
+      "Frontend UI features based on Figma designs using React.js.",
+      "Contributed to the Web3Scope's MVP and over six incubator projects.",
+      "Collaborated with cross-functional teams to ensure seamless integration of frontend and backend components.",
+    ],
+  },
+
+  {
+    role: "Backend Development Intern",
+    company: "Xipper",
+    companyUrl: "https://www.linkedin.com/company/xipper/",
+    period: "September 2024 - Present",
+    responsibilities: [
+      "Backend APIs and security features using Node.js and Express.js.",
+      "SQL operations and database schemas with PostgreSQL for efficient data handling.",
+      "Integrated backend APIs with the frontend to ensure seamless functionality and data flow.",
+      "authentication, authorization, and other security measures to protect user data.",
+      "Collaborated with frontend teams to align API design with user interface requirements.",
     ],
   },
 ];
 
 export const openSourceContributions = [
+  {
+    name: "Zlux Server Framework",
+    link: "https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri",
+    handle: "@zowe",
+  },
   {
     name: "CircuitVerse",
     link: "https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri",
