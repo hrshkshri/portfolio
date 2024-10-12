@@ -1,5 +1,5 @@
-import Home from "@/components/routes/Home";
+import { redirect } from "next/navigation";
 
-export default () => {
-  return <Home />;
-};
+export default function HomeRedirect() {
+  redirect("/home");
+}
