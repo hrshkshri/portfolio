@@ -64,7 +64,7 @@ export const skillsData = [
 ];
 
 export const resumeLink =
-  "https://drive.google.com/file/d/19rJOYql_7HtOtJjbePdxeWINS5S3RFa3/view?usp=sharing";  
+  "https://drive.google.com/file/d/19rJOYql_7HtOtJjbePdxeWINS5S3RFa3/view?usp=sharing";
 
 export const socialLinks = [
   { href: "https://twitter.com/hrshkshri", icon: BsTwitter, label: "Twitter" },
@@ -193,6 +193,19 @@ export const projectsData = [
     ],
     category: "Mobile Development",
     techStack: "React Native, Expo CLI",
+  },
+  {
+    name: "Event calendar",
+    tag: "",
+    liveLink: "https://calendar-frontend-kappa-rosy.vercel.app",
+    githubLink: "https://github.com/hrshkshri/calendar-frontend",
+    description: [
+      "Developed a calendar application with features like event creation, deletion, and editing.",
+      "Utilized React Big Calendar for a user-friendly interface and a seamless user experience.",
+      "Implemented user authentication and authorization using Express.js and JSON Web Tokens (JWT).",
+    ],
+    category: "Full-Stack Development",
+    techStack: "MERN Stack, React Big Calendar",
   },
   {
     name: "Nexus",
