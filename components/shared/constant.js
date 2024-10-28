@@ -195,6 +195,18 @@ export const projectsData = [
     techStack: "React Native, Expo CLI",
   },
   {
+    name: "Bitcoin Wallet - cli tool",
+    tag: "",
+    githubLink: "https://github.com/hrshkshri/bitcoin-cli-tool",
+    description: [
+      "A command-line interface (CLI) tool to manage Bitcoin wallets, addresses, and transactions.",
+      "Implemented functionalities like wallet creation, address generation, balance checking, and transaction history.",
+      "Utilized the blockcypther API to fetch real-time Bitcoin data.",
+    ],
+    category: "CLI Development",
+    techStack: "Node.js, Blockcypher API",
+  },
+  {
     name: "Event calendar",
     tag: "",
     liveLink: "https://calendar-frontend-kappa-rosy.vercel.app",
