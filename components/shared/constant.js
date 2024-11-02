@@ -169,6 +169,17 @@ export const projectsData = [
     techStack: "React.js, Tailwind CSS, Vite, Google Search API, Context API",
   },
   {
+    name: "Job Application App",
+    tag: "",
+    githubLink: "https://github.com/hrshkshri/job-application-app",
+    description: [
+      "Mobile application used to browse job listings and apply for jobs using data retrieved from a free job API.",
+      "Implemented features such as user authentication, browsing job listings, applying for jobs, viewing job details, and saving favourite jobs.",
+    ],
+    category: "Mobile Development",
+    techStack: "React Native, Expo CLI",
+  },
+  {
     name: "Drive React",
     tag: "",
     liveLink: "https://drive-react.vercel.app",
@@ -184,15 +195,18 @@ export const projectsData = [
     techStack: "React, Firebase, Material UI, Styled Components",
   },
   {
-    name: "Job Application App",
+    name: "Pokédex App",
     tag: "",
-    githubLink: "https://github.com/hrshkshri/job-application-app",
+    liveLink: "https://harsh-pokedex.vercel.app",
+    githubLink: "https://github.com/hrshkshri/pokedex",
     description: [
-      "Mobile application used to browse job listings and apply for jobs using data retrieved from a free job API.",
-      "Implemented features such as user authentication, browsing job listings, applying for jobs, viewing job details, and saving favourite jobs.",
+      "Full-stack application to explore Pokémon data, allowing users to browse, search, and filter Pokémon information.",
+      "Implemented a responsive design using Material-UI, providing an optimal user experience across devices.",
+      "Employed tRPC for type-safe API interactions, ensuring seamless communication between the frontend and backend.",
+      "Managed data with Prisma ORM and stored it in a PostgreSQL database on Supabase, facilitating efficient data retrieval and management.",
     ],
-    category: "Mobile Development",
-    techStack: "React Native, Expo CLI",
+    category: "Front-End Development",
+    techStack: "next.js, tRPC, Material-UI, Prisma, supabase, PostgreSQL",
   },
   {
     name: "Bitcoin Wallet - cli tool",
