@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
-  title: "Harsh",
+  title: "Harsh Keshari",
   description: "Harsh Keshari's Portfolio",
   // Open Graph Metadata
   openGraph: {
@@ -24,7 +24,7 @@ export const metadata = {
   },
   // Twitter Card Metadata
   twitter: {
-    card: "summary_large_image", // Can be 'summary' or 'summary_large_image'
+    card: "summary_large_image",
     title: "Harsh Keshari",
     description: "Harsh Keshari's Portfolio",
     image: "https://x.com/hrshkshri/photo",
@@ -35,7 +35,7 @@ export const metadata = {
     title: "Harsh Keshari",
     description: "Welcome to my portfolio on LinkedIn!",
     url: "https://www.linkedin.com/in/hrshkshri/",
-    image: "https://github.com/hrshkshri.png", // Use a suitable image for LinkedIn
+    image: "https://github.com/hrshkshri.png",
   },
 };
 
@@ -44,22 +44,27 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         {/* Meta tags for SEO */}
-        <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {/* Open Graph for social sharing */}
-        <meta property="og:title" content={metadata.title} />
-        <meta property="og:description" content={metadata.description} />
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta
+          property="og:description"
+          content={metadata.openGraph.description}
+        />
         <meta property="og:image" content={metadata.openGraph.images[0].url} />
         <meta property="og:url" content={metadata.openGraph.url} />
         <meta property="og:type" content={metadata.openGraph.type} />
 
         {/* Twitter Card meta tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={metadata.title} />
-        <meta name="twitter:description" content={metadata.description} />
+        <meta name="twitter:title" content={metadata.twitter.title} />
+        <meta
+          name="twitter:description"
+          content={metadata.twitter.description}
+        />
         <meta name="twitter:image" content={metadata.twitter.image} />
         <meta name="twitter:site" content="@hrshkshri" />
 
@@ -115,6 +120,10 @@ export default function RootLayout({ children }) {
           type="font/woff2"
           crossOrigin="anonymous"
         />
+
+        {/* Link the manifest for PWA */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
       </head>
       <body className="bg-black text-neutral-200">
         <Container>{children}</Container>
