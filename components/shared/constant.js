@@ -120,13 +120,26 @@ export const experiences = [
     role: "Backend Development Intern",
     company: "Xipper",
     companyUrl: "https://www.linkedin.com/company/xipper/",
-    period: "September 2024 - Present",
+    period: "September 2024 - October 2024",
     responsibilities: [
       "Backend APIs and security features using Node.js and Express.js.",
       "SQL operations and database schemas with PostgreSQL for efficient data handling.",
       "Integrated backend APIs with the frontend to ensure seamless functionality and data flow.",
       "authentication, authorization, and other security measures to protect user data.",
       "Collaborated with frontend teams to align API design with user interface requirements.",
+    ],
+  },
+
+  {
+    role: "Software Development Intern",
+    company: "Experiment Labs",
+    companyUrl: "https://www.linkedin.com/company/experiment-labs/",
+    period: "November 2024 - Present",
+    responsibilities: [
+      "Build new products and resolve issues in existing products as a full-stack developer using the MERN stack.",
+      "Backend APIs integrated with MongoDB and Prisma for efficient data management.",
+      "Debug and resolve issues in existing products to improve performance and functionality.",
+      "Focus on both front-end and back-end development to deliver full-stack solutions.",
     ],
   },
 ];
