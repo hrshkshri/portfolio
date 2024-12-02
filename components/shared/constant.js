@@ -131,7 +131,7 @@ export const experiences = [
   },
 
   {
-    role: "Software Development Intern",
+    role: "Full Stack Engineer Intern",
     company: "Experiment Labs",
     companyUrl: "https://www.linkedin.com/company/experiment-labs/",
     period: "November 2024 - Present",
@@ -139,7 +139,7 @@ export const experiences = [
       "Build new products and resolve issues in existing products as a full-stack developer using the MERN stack.",
       "Backend APIs integrated with MongoDB and Prisma for efficient data management.",
       "Debug and resolve issues in existing products to improve performance and functionality.",
-      "Focus on both front-end and back-end development to deliver full-stack solutions.",
+      "Deploy applications using AWS and Firebase for cloud services and hosting.",
     ],
   },
 ];
