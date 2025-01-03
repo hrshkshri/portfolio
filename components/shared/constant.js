@@ -103,23 +103,23 @@ export const experiences = [
       "More than 10 Accepted PRs.",
     ],
   },
-  {
-    role: "Fullstack Development Intern",
-    company: "Web3Scope",
-    companyUrl: "https://www.linkedin.com/company/web3scope/",
-    period: "April 2024 - July 2024",
-    responsibilities: [
-      "Frontend UI features based on Figma designs using React.js.",
-      "Contributed to the Web3Scope's MVP and over six incubator projects.",
-      "Collaborated with cross-functional teams to ensure seamless integration of frontend and backend components.",
-    ],
-  },
+  // {
+  //   role: "Fullstack Development Intern",
+  //   company: "Web3Scope",
+  //   companyUrl: "https://www.linkedin.com/company/web3scope/",
+  //   period: "April 2024 - July 2024",
+  //   responsibilities: [
+  //     "Frontend UI features based on Figma designs using React.js.",
+  //     "Contributed to the Web3Scope's MVP and over six incubator projects.",
+  //     "Collaborated with cross-functional teams to ensure seamless integration of frontend and backend components.",
+  //   ],
+  // },
 
   {
     role: "Backend Development Intern",
     company: "Xipper",
     companyUrl: "https://www.linkedin.com/company/xipper/",
-    period: "September 2024 - October 2024",
+    period: "September 2024 - November 2024",
     responsibilities: [
       "Backend APIs and security features using Node.js and Express.js.",
       "SQL operations and database schemas with PostgreSQL for efficient data handling.",
