@@ -130,7 +130,7 @@ export const experiences = [
   },
 
   {
-    role: "Full Stack Engineer Intern",
+    role: "Full Stack Engineer",
     company: "Experiment Labs",
     companyUrl: "https://www.linkedin.com/company/experiment-labs/",
     period: "November 2024 - Present",
