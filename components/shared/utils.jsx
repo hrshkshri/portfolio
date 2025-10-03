@@ -5,7 +5,7 @@ export const renderTextWithBold = (text) => {
     return parts.map((part, index) => {
         if (part.startsWith('**') && part.endsWith('**')) {
             return (
-                <span key={index} className="font-semibold text-neutral-300">
+                <span key={index} className="font-bold text-neutral-400">
                     {part.slice(2, -2)}
                 </span>
             );
