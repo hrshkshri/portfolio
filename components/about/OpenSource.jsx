@@ -2,21 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
 import { openSourceContributions } from "../shared/constant";
+import { renderTextWithBold } from "../shared/utils";
 
 const OpenSource = () => {
-    const renderTextWithBold = (text) => {
-        const parts = text.split(/(\*\*.*?\*\*)/g);
-        return parts.map((part, index) => {
-            if (part.startsWith('**') && part.endsWith('**')) {
-                return (
-                    <span key={index} className="font-semibold text-neutral-200">
-                        {part.slice(2, -2)}
-                    </span>
-                );
-            }
-            return part;
-        });
-    };
 
     return (
         <div className="w-full">

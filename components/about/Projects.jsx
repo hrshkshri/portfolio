@@ -2,59 +2,72 @@ import React from "react";
 import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
 import { projectsData } from "../shared/constant";
+import { renderTextWithBold } from "../shared/utils";
 
 const Projects = () => {
+
     return (
         <div className="w-full">
             <h1 className="text-xl font-bold">Projects</h1>
-            <div className="mt-5">
+            <div className="mt-5 space-y-8">
                 {projectsData.slice().reverse().map((project, index) => (
-                    <div key={index} className="border-l-2 pl-1 transition ease-in-out duration-300 hover:border-amber-500">
-                        <div className="group relative mb-8 p-4 transition duration-300 ease-in-out">
-                            <div className="flex justify-between items-center">
-                                <p className="font-semibold text-lg">{project.name}</p>
-                                <p className="font-light text-sm">{project.tag}</p>
-                            </div>
-                            <div className="text-sm italic space-x-2 flex items-center mt-1">
-                                {/* Conditionally render Live Preview only if liveLink exists */}
-                                {project.liveLink && (
-                                    <Link
-                                        href={project.liveLink}
-                                        className="transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer"
-                                    >
-                                        <span className="flex items-center">
-                                            Live Preview
-                                            <MdArrowOutward className="w-4 h-4 ml-1" />
+                    <div key={index} className="border-l-2 border-neutral-700 pl-4 transition ease-in-out duration-300 hover:border-amber-500">
+                        <div className="p-2">
+                            {/* Project Header */}
+                            <div className="mb-3">
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-bold text-lg text-neutral-100">{project.name}</h3>
+                                    {project.tag && (
+                                        <span className="text-amber-400 text-xs font-medium px-2 py-1 bg-amber-400/10 rounded">
+                                            {project.tag}
                                         </span>
-                                    </Link>
-                                )}
-                                <Link
-                                    href={project.githubLink}
-                                    className="transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer"
-                                >
-                                    <span className="flex items-center">
-                                        GitHub
-                                        <MdArrowOutward className="w-4 h-4 ml-1" />
-                                    </span>
-                                </Link>
-                            </div>
-                            <div className="text-neutral-500">
-                                <ul className="mt-4 text-sm list-disc list-inside space-y-1">
-                                    {project.description.map((desc, idx) => (
-                                        <li key={idx}>{desc}</li>
-                                    ))}
-                                </ul>
-                                <div className="mt-4 flex items-center space-x-1">
-                                    <p className="font-semibold group-hover:text-amber-500 transition ease-in-out duration-300">
-                                        Category:
-                                    </p>
-                                    <p className="italic">{project.category}</p>
+                                    )}
                                 </div>
-                                <div className="mt-4 flex items-center space-x-1">
-                                    <p className="font-semibold group-hover:text-amber-500 transition ease-in-out duration-300">
-                                        Tech Stack:
-                                    </p>
-                                    <p className="italic">{project.techStack}</p>
+
+                                {/* Links */}
+                                <div className="flex items-center gap-4 text-sm">
+                                    {project.liveLink && (
+                                        <Link
+                                            href={project.liveLink}
+                                            className="text-amber-400 hover:text-amber-300 transition-colors duration-300 inline-flex items-center gap-1"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Live Preview
+                                            <MdArrowOutward className="w-3 h-3" />
+                                        </Link>
+                                    )}
+                                    <Link
+                                        href={project.githubLink}
+                                        className="text-neutral-300 hover:text-amber-400 transition-colors duration-300 inline-flex items-center gap-1"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        GitHub
+                                        <MdArrowOutward className="w-3 h-3" />
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* Description */}
+                            <ul className="ml-2 space-y-1 mb-4">
+                                {project.description.map((desc, idx) => (
+                                    <li key={idx} className="text-neutral-400 text-xs leading-relaxed flex items-start">
+                                        <span className="text-amber-500 mr-2 mt-1 text-xs">•</span>
+                                        <span className="flex-1">{renderTextWithBold(desc)}</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Category and Tech Stack */}
+                            <div className="ml-2 space-y-2">
+                                <div className="flex items-start gap-2">
+                                    <span className="font-semibold text-neutral-200 text-xs">Category:</span>
+                                    <span className="text-neutral-400 text-xs">{project.category}</span>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                    <span className="font-semibold text-neutral-200 text-xs">Tech Stack:</span>
+                                    <span className="text-neutral-400 text-xs">{project.techStack}</span>
                                 </div>
                             </div>
                         </div>
