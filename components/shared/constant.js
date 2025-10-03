@@ -92,78 +92,108 @@ export const navLinks = [
 
 export const experiences = [
   {
-    role: "Member",
-    company: "Oppia Foundation",
-    companyUrl: "https://www.oppia.org",
-    period: "November 2023 - April 2024",
-    responsibilities: [
-      "Led the LaCE quality team (Responsible for all user-facing features) and worked on a Python/Angular project.",
-      "Reviewed PRs of fellow developers and assisted new contributors in onboarding.",
-      "Addressed several feature requests/bugs, contributed to e2e and acceptance tests.",
-      "More than 10 Accepted PRs.",
-    ],
-  },
-  // {
-  //   role: "Fullstack Development Intern",
-  //   company: "Web3Scope",
-  //   companyUrl: "https://www.linkedin.com/company/web3scope/",
-  //   period: "April 2024 - July 2024",
-  //   responsibilities: [
-  //     "Frontend UI features based on Figma designs using React.js.",
-  //     "Contributed to the Web3Scope's MVP and over six incubator projects.",
-  //     "Collaborated with cross-functional teams to ensure seamless integration of frontend and backend components.",
-  //   ],
-  // },
-
-  {
-    role: "Backend Development Intern",
+    role: "Backend Developer",
     company: "Xipper",
-    companyUrl: "https://www.linkedin.com/company/xipper/",
-    period: "September 2024 - November 2024",
-    responsibilities: [
-      "Backend APIs and security features using Node.js and Express.js.",
-      "SQL operations and database schemas with PostgreSQL for efficient data handling.",
-      "Integrated backend APIs with the frontend to ensure seamless functionality and data flow.",
-      "authentication, authorization, and other security measures to protect user data.",
-      "Collaborated with frontend teams to align API design with user interface requirements.",
+    companyUrl: "https://www.linkedin.com/company/xipper",
+    period: "Sept 2024 - Nov 2024",
+    projects: [
+      {
+        name: "Hotel Booking Platform MVP",
+        achievements: [
+          "**Designed and developed the MVP** of Xipper, a **hotel booking and management web & mobile platform**, implementing core backend features using **Node.js** and **Express.js**.",
+          "Built and exposed **RESTful APIs** for key functionalities such as room booking, availability management, and user authentication, ensuring **reliability and scalability**.",
+          "Collaborated with frontend developers using **React.js** to deliver a seamless and responsive **user experience** across web and mobile.",
+        ],
+      },
     ],
   },
-
   {
-    role: "Full Stack Engineer",
+    role: "Fullstack Engineer (started as Intern)",
     company: "Experiment Labs",
-    companyUrl: "https://www.linkedin.com/company/experiment-labs/",
-    period: "November 2024 - Present",
-    responsibilities: [
-      "Build new products and resolve issues in existing products as a full-stack developer using the MERN stack.",
-      "Backend APIs integrated with MongoDB and Prisma for efficient data management.",
-      "Debug and resolve issues in existing products to improve performance and functionality.",
-      "Deploy applications using AWS and Firebase for cloud services and hosting.",
+    companyUrl: "https://www.linkedin.com/company/experiment-labs",
+    period: "Nov 2024 - Present",
+    projects: [
+      {
+        name: "Learning Management System (LMS)",
+        achievements: [
+          "**Fixed Razorpay payment race conditions** by redesigning API flows and adding fallback mechanisms, enabling **100% reliable course enrollment** under high user concurrency.",
+          "**Resolved course enrollment failures** by implementing robust post-payment workflows and retry logic, ensuring **seamless user onboarding**.",
+          "**Optimized long-running API calls** by restructuring request/response handling, preventing **client-side timeouts** and improving checkout success rates.",
+          "**Migrated infrastructure** from AWS Lambda (Serverless) to **EC2**, reducing timeout errors and improving **system stability and scalability**.",
+          "**Automated delayed payment reconciliation** using cron jobs to track pending Razorpay updates and auto-assign courses, ensuring **no user left unenrolled**.",
+          "**Strengthened authentication security** by adding middleware and validation for user registration APIs, blocking **invalid/duplicate data**.",
+          "**Developed analytics email service** with scheduled cron jobs to deliver periodic usage insights to client organisations, enhancing **customer engagement**.",
+        ],
+      },
+      {
+        name: "Internship Portal (Built from scratch)",
+        achievements: [
+          "**Designed and developed complete architecture** of a multi-tenant internship platform with **Role-Based Access Control (RBAC)**: System Admin → Super Admin (Head Org) → Companies/Schools → Students.",
+          "Implemented support for two organization types — **Internship Providers** (companies under a head org) and **Internship Consumers** (schools with students) — ensuring scalable onboarding and strict data isolation.",
+          "Built secure backend services with **Node.js (TypeScript), Express, RESTful API design, Prisma ORM, MongoDB, Redis (caching)** following API security best practices (auth, validation, error handling).",
+          "Developed responsive frontend using **React.js, Vite, TailwindCSS, ShadCN UI**, with state management via **Zustand** (UI state) and **React Query (TanStack)** for server-state caching.",
+          "Applied strong validation and error resilience with **Zod schema validation, Axios**, and API-layer safeguards.",
+          "Deployed applications with **Firebase Hosting** (frontend) and **AWS EC2** (backend) ensuring production reliability.",
+          "Achieved excellent Lighthouse scores: **100% Best Practices, 94% Accessibility, 78% Performance**, demonstrating strong focus on code quality and user experience.",
+        ],
+      },
+      {
+        name: "Customer Relationship Management (CRM)",
+        achievements: [
+          "**Collaborated with team** to design and develop **backend APIs** and **frontend features**, ensuring seamless integration and data flow.",
+          "Built a feature leveraging **OpenAI API** to generate personalized **activity recommendations** for students based on their profiles, enabling enhanced **profile-building** and becoming a major **revenue stream**.",
+          "Developed **frontend UI components** and integrated APIs using **Recoil** for state management, ensuring **responsive and user-friendly interfaces**.",
+          "Designed and implemented a **Calendar Module** for student-admin meetings (similar to **Calendly**), allowing students to request slots and admins/consultants to **accept or reschedule**; integrated **Zoom** and **Google Meet** links.",
+          "Ensured proper **API structure, input validation, and error handling**, enhancing **system reliability** and **maintainability**.",
+        ],
+      },
     ],
   },
 ];
 
 export const openSourceContributions = [
   {
-    name: "Zlux Server Framework",
-    link: "https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri",
-    handle: "@zowe",
+    role: "Member & LaCE Quality Team Lead",
+    organization: "Oppia Foundation",
+    organizationUrl: "https://www.github.com/oppia",
+    period: "Nov 2023 - April 2024",
+    achievements: [
+      "Led the **LaCE (Learner and Creator Experience) quality team**, managing task assignments for new contributors and conducting **code reviews** to ensure quality standards across all user-facing features.",
+      "Contributed **10 merged PRs** using **Python** (backend) and **AngularJS** (frontend), including major features like **admin acceptance tests** and **topic editor migration**",
+      "Implemented **UI enhancements** and **bug fixes** across multiple pages: added loading states for lesson pages, fixed community library item alignment, corrected partnership page layouts, and improved mobile UI responsiveness.",
+      "Developed comprehensive **unit tests** and **end-to-end acceptance tests** to improve test coverage and platform reliability."
+    ]
   },
   {
-    name: "CircuitVerse",
-    link: "https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri",
-    handle: "@CircuitVerse",
+    role: "Contributor",
+    organization: "Tailcall",
+    organizationUrl: "https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri",
+    period: "",
+    achievements: [
+      "Fixed a critical **search bar modal focus issue** in the documentation site, improving user navigation and accessibility.",
+      "Completed a **$150 bounty** for the contribution, demonstrating ability to deliver functional, production-ready features."
+    ]
   },
   {
-    name: "The Oppia Foundations",
-    link: "https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri",
-    handle: "@oppia",
+    role: "Contributor",
+    organization: "CircuitVerse",
+    organizationUrl: "https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri",
+    period: "",
+    achievements: [
+      "Fixed a **search bar overlap issue**, ensuring the search bar never hides page content, improving navigation and user experience.",
+      "Improved **responsiveness of the profile page** by optimising layout and CSS, enabling seamless viewing across devices."
+    ]
   },
   {
-    name: "Tailcall",
-    link: "https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri",
-    handle: "@tailcallhq",
-  },
+    role: "Contributor",
+    organization: "Zlux Server Framework (Zowe)",
+    organizationUrl: "https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri",
+    period: "",
+    achievements: [
+      "Fixed an **authentication bug** by ensuring proper error handling and response reliability.",
+      "Contribution labelled **size/XS**, demonstrating precise and minimal yet effective changes in the codebase."
+    ]
+  }
 ];
 
 export const projectsData = [
