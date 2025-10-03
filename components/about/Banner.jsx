@@ -8,7 +8,7 @@ const Banner = () => {
     return (
         <div className="p-6 rounded-md bg-amber-500 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
             <p className="font-sans text-neutral-900 text-lg font-semibold text-center">
-                Open to SDE/SWE internship and full-time roles focused on developing robust frontend and backend infrastructure.
+                Open to SDE/SWE full-time roles focused on developing robust frontend and backend infrastructure.
             </p>
             <div className="mt-4 text-center">
                 <Link href={resumeLink}>
