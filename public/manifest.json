@@ -1,0 +1,40 @@
+{
+  "name": "Harsh Keshari",
+  "short_name": "Harsh",
+  "description": "Harsh Keshari's Portfolio showcasing work, skills, and achievements.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/img/Screenshot.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://github.com/hrshkshri.png",
+      "sizes": "460x460",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://github.com/hrshkshri.png",
+      "sizes": "460x460",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "lang": "en",
+  "scope": "/",
+  "orientation": "portrait",
+  "screenshots": [
+    {
+      "src": "https://github.com/hrshkshri.png",
+      "sizes": "460x460",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
