@@ -27,7 +27,7 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
       </div>
 
       {/* Mobile navigation */}
-      <MobNav activeRoute={activeRoute} className="fixed bottom-0 w-full" />
+      <MobNav activeRoute={activeRoute} />
     </div>
   );
 };
