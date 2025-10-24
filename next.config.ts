@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import path from "node:path";
 
 // @ts-ignore - next-pwa doesn't have TypeScript definitions
 const withPWA = require("next-pwa")({
@@ -20,7 +19,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  outputFileTracingRoot: path.resolve(__dirname, '../../'),
 };
 
 export default withPWA(nextConfig);
