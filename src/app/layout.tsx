@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
 import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import NavigationWrapper from "@/components/layout/NavigationWrapper";
@@ -83,7 +82,7 @@ export default function RootLayout({
         <NavigationWrapper>
           {children}
         </NavigationWrapper>
-        <VisualEditsMessenger />
+        {/* <VisualEditsMessenger /> */}
       </body>
     </html>
   );
