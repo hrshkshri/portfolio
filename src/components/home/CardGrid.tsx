@@ -1,8 +1,9 @@
 import React from "react";
 import ProfileCard from "./cards/ProfileCard";
 import ResumeCard from "./cards/ResumeCard";
-import GithubCard from "./cards/GithubCard";
 import CalendarCard from "./cards/CalendarCard";
+import GitHubActivityCard from "./cards/GitHubActivityCard";
+import TwitterCard from "./cards/TwitterCard";
 
 const CardsGrid: React.FC = () => {
   return (
@@ -20,8 +21,9 @@ const CardsGrid: React.FC = () => {
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
           <ProfileCard />
           <ResumeCard />
-          <GithubCard />
           <CalendarCard />
+          <GitHubActivityCard />
+          <TwitterCard />
         </div>
       </div>
     </div>
