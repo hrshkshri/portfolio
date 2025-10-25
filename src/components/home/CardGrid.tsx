@@ -3,7 +3,6 @@ import ProfileCard from "./cards/ProfileCard";
 import ResumeCard from "./cards/ResumeCard";
 import CalendarCard from "./cards/CalendarCard";
 import GitHubActivityCard from "./cards/GitHubActivityCard";
-import TwitterCard from "./cards/TwitterCard";
 
 const CardsGrid: React.FC = () => {
   return (
@@ -23,7 +22,6 @@ const CardsGrid: React.FC = () => {
           <ResumeCard />
           <CalendarCard />
           <GitHubActivityCard />
-          <TwitterCard />
         </div>
       </div>
     </div>
