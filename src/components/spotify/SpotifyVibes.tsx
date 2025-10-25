@@ -2,12 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { SiSpotify } from "react-icons/si";
-import {
-  Music2,
-  Waves,
-  Sparkles,
-  ExternalLink,
-} from "lucide-react";
+import { Music2, Waves, Sparkles, ExternalLink } from "lucide-react";
 
 interface SpotifyData {
   title: string;
@@ -172,31 +167,34 @@ const SpotifyVibes: React.FC = () => {
                   </a>
                 </div>
 
-                {/* Progress Bar */}
-                <div className="space-y-2">
-                  <div className="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-green-500 to-amber-400 rounded-full transition-all duration-500"
-                      style={{ width: `${progressPercentage}%` }}
-                    ></div>
+                {/* Progress Bar or Recently Played Message */}
+                {isPlaying ? (
+                  <div className="space-y-2">
+                    <div className="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-green-500 to-amber-400 rounded-full transition-all duration-500"
+                        style={{ width: `${progressPercentage}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-xs text-neutral-400">
+                      <span>{formatTime(spotifyData.progress)}</span>
+                      <span>{formatTime(spotifyData.duration)}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-xs text-neutral-400">
-                    <span>{formatTime(spotifyData.progress)}</span>
-                    <span>{formatTime(spotifyData.duration)}</span>
+                ) : (
+                  <div className="text-neutral-400 text-sm italic">
+                    Last thing I was vibing to 🎵
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
         ) : (
           <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-12 shadow-2xl border border-neutral-700 mb-6 text-center">
             <Music2 className="w-24 h-24 text-neutral-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-2">
+            <h3 className="text-2xl font-bold text-white mb-6">
               No music playing
             </h3>
-            <p className="text-neutral-400 mb-6">
-              Start playing something on Spotify to see it here!
-            </p>
             <a
               href="https://open.spotify.com"
               target="_blank"
