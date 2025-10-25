@@ -3,20 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { SiSpotify } from "react-icons/si";
 import { Music2, Waves, Sparkles, ExternalLink } from "lucide-react";
+import { spotifyService, SpotifyData } from "@/lib/api";
 
-interface SpotifyData {
-  title: string;
-  artist: string;
-  album: string;
-  albumImageUrl: string;
-  songUrl: string;
-  isPlaying: boolean;
-  progress: number;
-  duration: number;
-  wasRecentlyPlayed?: boolean;
-}
-
-const SpotifyVibes: React.FC = () => {
+const Spotify: React.FC = () => {
   const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -24,8 +13,7 @@ const SpotifyVibes: React.FC = () => {
   useEffect(() => {
     const fetchNowPlaying = async () => {
       try {
-        const response = await fetch("/api/spotify/now-playing");
-        const data = await response.json();
+        const data = await spotifyService.getNowPlaying();
         setSpotifyData(data);
         setLoading(false);
       } catch (error) {
@@ -212,4 +200,4 @@ const SpotifyVibes: React.FC = () => {
   );
 };
 
-export default SpotifyVibes;
+export default Spotify;

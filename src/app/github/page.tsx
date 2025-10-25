@@ -1,6 +1,6 @@
 import React from "react";
-import GitHubActivity from "@/components/github/GitHubActivity";
+import GitHub from "@/components/github/GitHub";
 
 export default function GitHubPage() {
-  return <GitHubActivity />;
+  return <GitHub />;
 }

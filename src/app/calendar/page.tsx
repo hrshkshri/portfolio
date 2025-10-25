@@ -1,6 +1,6 @@
 import React from "react";
-import CalendarEmbed from "@/components/calendar/CalendarEmbed";
+import Calendar from "@/components/calendar/Calendar";
 
 export default function CalendarPage() {
-  return <CalendarEmbed />;
+  return <Calendar />;
 }

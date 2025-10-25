@@ -3,54 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { AiFillGithub, AiFillStar } from "react-icons/ai";
 import { BsPeople, BsBookmark } from "react-icons/bs";
-import { FiGitCommit, FiCode, FiExternalLink } from "react-icons/fi";
+import { FiGitCommit, FiExternalLink } from "react-icons/fi";
 import { RiSparklingFill } from "react-icons/ri";
 import { FaCodeBranch } from "react-icons/fa";
+import { githubService, GitHubData } from "@/lib/api";
 
-interface GitHubUser {
-  name: string;
-  login: string;
-  avatar_url: string;
-  bio: string;
-  public_repos: number;
-  followers: number;
-  following: number;
-}
-
-interface GitHubRepo {
-  id: number;
-  name: string;
-  description: string;
-  html_url: string;
-  stargazers_count: number;
-  forks_count: number;
-  language: string;
-  updated_at: string;
-}
-
-interface GitHubEvent {
-  id: string;
-  type: string;
-  repo: { name: string };
-  created_at: string;
-  payload: any;
-}
-
-interface GitHubData {
-  user: GitHubUser;
-  repos: GitHubRepo[];
-  events: GitHubEvent[];
-}
-
-const GitHubActivity: React.FC = () => {
+const GitHub: React.FC = () => {
   const [data, setData] = useState<GitHubData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchGitHubData = async () => {
       try {
-        const response = await fetch("/api/github");
-        const result = await response.json();
+        const result = await githubService.getGitHubData();
         setData(result);
         setLoading(false);
       } catch (error) {
@@ -177,4 +142,4 @@ const GitHubActivity: React.FC = () => {
   );
 };
 
-export default GitHubActivity;
+export default GitHub;

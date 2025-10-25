@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { BsCalendar3, BsClock } from "react-icons/bs";
-import { Sparkles, Mail, Video, Calendar, ExternalLink } from "lucide-react";
+import { Sparkles, Mail, Video, Calendar as CalendarIcon, ExternalLink } from "lucide-react";
 
-const CalendarEmbed: React.FC = () => {
+const Calendar: React.FC = () => {
   const [showCalendly, setShowCalendly] = useState(true);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const CalendarEmbed: React.FC = () => {
           >
             <div className="flex items-center justify-between mb-4">
               <div className="p-4 bg-blue-500/10 rounded-2xl group-hover:bg-blue-500/20 transition-colors">
-                <Calendar className="w-8 h-8 text-blue-400" />
+                <CalendarIcon className="w-8 h-8 text-blue-400" />
               </div>
               {showCalendly && (
                 <div className="px-3 py-1 bg-blue-500/20 rounded-full">
@@ -113,7 +113,7 @@ const CalendarEmbed: React.FC = () => {
           >
             <div className="flex items-center justify-between mb-4">
               <div className="p-4 bg-amber-500/10 rounded-2xl group-hover:bg-amber-500/20 transition-colors">
-                <Calendar className="w-8 h-8 text-amber-400" />
+                <CalendarIcon className="w-8 h-8 text-amber-400" />
               </div>
               {!showCalendly && (
                 <div className="px-3 py-1 bg-amber-500/20 rounded-full">
@@ -177,4 +177,4 @@ const CalendarEmbed: React.FC = () => {
   );
 };
 
-export default CalendarEmbed;
+export default Calendar;
