@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "Harsh Keshari | Full Stack Developer",
     description:
       "Welcome to my portfolio. Explore my projects, skills, and journey as a Full Stack Developer.",
-    url: "https://harshkeshari.dev/home",
+    url: "https://hrshkshri.me/home",
   },
   twitter: {
     title: "Harsh Keshari | Full Stack Developer",

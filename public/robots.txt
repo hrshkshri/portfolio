@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://harshkeshari.dev/sitemap.xml
+Sitemap: https://hrshkshri.me/sitemap.xml

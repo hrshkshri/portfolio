@@ -2,7 +2,6 @@ import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig, AxiosResp
 
 // Create axios instance with default config
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
