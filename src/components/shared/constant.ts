@@ -151,7 +151,6 @@ export const navLinks: NavLink[] = [
   { href: "/about", icon: BsFillPersonVcardFill, label: "About" },
   { href: "/spotify", icon: SiSpotify, label: "Spotify" },
   { href: "/calendar", icon: BsCalendar3, label: "Schedule" },
-  { href: "/github", icon: AiFillGithub, label: "GitHub" },
 ];
 
 export const experiences: Experience[] = [

@@ -42,9 +42,12 @@ const Greeting: React.FC = () => {
             >
               View My Work
             </a>
-            <button className="px-8 py-4 bg-neutral-800/50 border border-neutral-700 text-neutral-200 font-semibold rounded-lg hover:bg-neutral-800 hover:border-amber-500/50 transition-all duration-300">
+            <a
+              href="/calendar"
+              className="px-8 py-4 bg-neutral-800/50 border border-neutral-700 text-neutral-200 font-semibold rounded-lg hover:bg-neutral-800 hover:border-amber-500/50 transition-all duration-300 inline-flex items-center justify-center"
+            >
               Get In Touch
-            </button>
+            </a>
           </div>
         </div>
 

@@ -30,7 +30,7 @@ const CalendarEmbed: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <BsCalendar3 className="w-12 h-12 text-green-500 animate-pulse" />
+              <BsCalendar3 className="w-12 h-12 text-blue-500 animate-pulse" />
               <Sparkles className="w-4 h-4 text-amber-400 absolute -top-1 -right-1 animate-bounce" />
             </div>
             <div>
@@ -38,56 +38,33 @@ const CalendarEmbed: React.FC = () => {
                 Schedule a Meeting
               </h1>
               <p className="text-neutral-400 text-sm flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span className="inline-block w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
                 Available for meetings
               </p>
             </div>
           </div>
         </div>
 
-        {/* Info Section */}
-        <div className="mb-8 bg-gradient-to-br from-green-500/10 to-amber-500/10 backdrop-blur-sm border border-green-500/20 rounded-2xl p-6">
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-green-500/20 rounded-lg">
-                <BsClock className="w-5 h-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm mb-1">
-                  Quick & Easy
-                </h3>
-                <p className="text-neutral-400 text-xs">
-                  Choose your preferred time slot
-                </p>
-              </div>
+        {/* Email Contact Section */}
+        <div className="mb-8 bg-gradient-to-br from-amber-500/10 to-blue-500/10 backdrop-blur-sm border border-amber-500/20 rounded-2xl p-6">
+          <div className="flex items-center gap-4">
+            <div className="p-4 bg-amber-500/20 rounded-xl">
+              <Mail className="w-8 h-8 text-amber-400" />
             </div>
-
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-amber-500/20 rounded-lg">
-                <Mail className="w-5 h-5 text-amber-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm mb-1">
-                  Instant Confirmation
-                </h3>
-                <p className="text-neutral-400 text-xs">
-                  Get email with meeting details
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-green-500/20 rounded-lg">
-                <Video className="w-5 h-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm mb-1">
-                  Video Call Ready
-                </h3>
-                <p className="text-neutral-400 text-xs">
-                  Meet link included automatically
-                </p>
-              </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-white text-lg mb-2">
+                Or drop me an email directly
+              </h3>
+              <p className="text-neutral-400 text-sm mb-3">
+                If scheduling doesn't work for you, feel free to reach out via email. I typically respond within 24 hours! 📧
+              </p>
+              <a
+                href="mailto:harshkeshari100@gmail.com"
+                className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-medium transition-colors group"
+              >
+                <span>harshkeshari100@gmail.com</span>
+                <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
           </div>
         </div>
@@ -130,17 +107,17 @@ const CalendarEmbed: React.FC = () => {
             onClick={() => setShowCalendly(false)}
             className={`cursor-pointer bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-8 border-2 transition-all duration-300 hover:scale-105 hover:shadow-2xl group ${
               !showCalendly
-                ? "border-green-500 shadow-lg shadow-green-500/20"
-                : "border-neutral-700 hover:border-green-500/50"
+                ? "border-amber-500 shadow-lg shadow-amber-500/20"
+                : "border-neutral-700 hover:border-amber-500/50"
             }`}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="p-4 bg-green-500/10 rounded-2xl group-hover:bg-green-500/20 transition-colors">
-                <Calendar className="w-8 h-8 text-green-400" />
+              <div className="p-4 bg-amber-500/10 rounded-2xl group-hover:bg-amber-500/20 transition-colors">
+                <Calendar className="w-8 h-8 text-amber-400" />
               </div>
               {!showCalendly && (
-                <div className="px-3 py-1 bg-green-500/20 rounded-full">
-                  <span className="text-green-400 text-xs font-semibold">
+                <div className="px-3 py-1 bg-amber-500/20 rounded-full">
+                  <span className="text-amber-400 text-xs font-semibold">
                     Active
                   </span>
                 </div>
@@ -150,7 +127,7 @@ const CalendarEmbed: React.FC = () => {
             <p className="text-neutral-400 text-sm mb-4">
               Modern scheduling with powerful features and customization
             </p>
-            <div className="flex items-center gap-2 text-green-400 text-sm font-medium">
+            <div className="flex items-center gap-2 text-amber-400 text-sm font-medium">
               <span>Book via Cal.com</span>
               <ExternalLink className="w-4 h-4" />
             </div>
@@ -162,7 +139,7 @@ const CalendarEmbed: React.FC = () => {
           {/* Animated background effect */}
           <div
             className={`absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl animate-pulse ${
-              showCalendly ? "bg-blue-500/5" : "bg-green-500/5"
+              showCalendly ? "bg-blue-500/5" : "bg-amber-500/5"
             }`}
           ></div>
           <div

@@ -6,10 +6,10 @@ const CalendarCard: React.FC = () => {
   return (
     <Link
       href="/calendar"
-      className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 flex flex-col justify-between space-y-6 hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-2 group"
+      className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 flex flex-col justify-between space-y-6 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 group"
     >
-      <div className="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
-        <BsCalendar3 className="w-7 h-7 text-green-400 group-hover:scale-110 transition-transform" />
+      <div className="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+        <BsCalendar3 className="w-7 h-7 text-blue-400 group-hover:scale-110 transition-transform" />
       </div>
 
       <div>
