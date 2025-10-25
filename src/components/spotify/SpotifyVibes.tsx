@@ -2,19 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { SiSpotify } from "react-icons/si";
-import {
-  Play,
-  Pause,
-  SkipForward,
-  SkipBack,
-  Volume2,
-  Heart,
-  Music2,
-  Waves,
-  Sparkles,
-  TrendingUp,
-  ExternalLink,
-} from "lucide-react";
+import { Music2, Waves, Sparkles, ExternalLink } from "lucide-react";
 
 interface SpotifyData {
   title: string;
@@ -31,7 +19,6 @@ interface SpotifyData {
 const SpotifyVibes: React.FC = () => {
   const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [liked, setLiked] = useState<boolean>(false);
 
   // Fetch currently playing track
   useEffect(() => {
@@ -124,134 +111,80 @@ const SpotifyVibes: React.FC = () => {
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl animate-pulse delay-75"></div>
 
             <div className="relative z-10 grid md:grid-cols-2 gap-8">
-              {/* Album Art Side */}
-              <div className="space-y-6">
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-amber-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                  <img
-                    src={
-                      spotifyData.albumImageUrl ||
-                      "https://via.placeholder.com/300?text=No+Image"
-                    }
-                    alt={spotifyData.album || "Album"}
-                    className="relative w-full aspect-square object-cover rounded-2xl shadow-2xl group-hover:scale-[1.02] transition-transform"
-                  />
-                  {isPlaying && (
-                    <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full">
-                      <Waves className="w-4 h-4 text-green-500 animate-pulse" />
-                      <span className="text-white text-sm font-medium">
-                        Playing
-                      </span>
-                    </div>
-                  )}
-                  {spotifyData.wasRecentlyPlayed && !isPlaying && (
-                    <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full">
-                      <Music2 className="w-4 h-4 text-neutral-400" />
-                      <span className="text-white text-sm font-medium">
-                        Last Played
-                      </span>
-                    </div>
-                  )}
-                </div>
+              {/* Album Art */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-amber-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                <img
+                  src={
+                    spotifyData.albumImageUrl ||
+                    "https://via.placeholder.com/300?text=No+Image"
+                  }
+                  alt={spotifyData.album || "Album"}
+                  className="relative w-full aspect-square object-cover rounded-2xl shadow-2xl group-hover:scale-[1.02] transition-transform"
+                />
+                {isPlaying && (
+                  <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full">
+                    <Waves className="w-4 h-4 text-green-500 animate-pulse" />
+                    <span className="text-white text-sm font-medium">
+                      Playing
+                    </span>
+                  </div>
+                )}
+                {spotifyData.wasRecentlyPlayed && !isPlaying && (
+                  <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full">
+                    <Music2 className="w-4 h-4 text-neutral-400" />
+                    <span className="text-white text-sm font-medium">
+                      Last Played
+                    </span>
+                  </div>
+                )}
+              </div>
 
-                {/* Vibe Stats */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-xl p-4 border border-neutral-700">
-                    <div className="flex items-center gap-2 text-green-500 mb-1">
-                      <TrendingUp className="w-4 h-4" />
-                      <span className="text-xs font-medium">Status</span>
-                    </div>
-                    <p className="text-lg font-bold text-white">
-                      {isPlaying ? "Playing" : "Paused"}
+              {/* Song Info */}
+              <div className="flex flex-col justify-center space-y-8">
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+                      {spotifyData.title}
+                    </h2>
+                    <p className="text-2xl text-neutral-300 mb-2">
+                      {spotifyData.artist}
+                    </p>
+                    <p className="text-lg text-neutral-500">
+                      {spotifyData.album}
                     </p>
                   </div>
+
+                  {/* Progress Bar or Recently Played Message */}
+                  {isPlaying ? (
+                    <div className="space-y-3">
+                      <div className="w-full h-3 bg-neutral-700 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-green-500 to-amber-400 rounded-full transition-all duration-500"
+                          style={{ width: `${progressPercentage}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between text-sm text-neutral-400">
+                        <span>{formatTime(spotifyData.progress)}</span>
+                        <span>{formatTime(spotifyData.duration)}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-neutral-400 text-base italic py-2">
+                      Last thing I was vibing to 🎵
+                    </div>
+                  )}
+
+                  {/* Open in Spotify */}
                   <a
                     href={spotifyData.songUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-neutral-800/50 backdrop-blur-sm rounded-xl p-4 border border-neutral-700 hover:border-green-500 transition-colors cursor-pointer group"
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-green-500/30 w-fit text-lg"
                   >
-                    <div className="flex items-center gap-2 text-amber-400 mb-1">
-                      <ExternalLink className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                      <span className="text-xs font-medium">Open</span>
-                    </div>
-                    <p className="text-lg font-bold text-white">Spotify</p>
+                    <ExternalLink className="w-5 h-5" />
+                    Open in Spotify
                   </a>
-                </div>
-              </div>
-
-              {/* Controls Side */}
-              <div className="flex flex-col justify-between">
-                {/* Song Info */}
-                <div className="space-y-2">
-                  <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                    {spotifyData.title}
-                  </h2>
-                  <p className="text-xl text-neutral-400">
-                    {spotifyData.artist}
-                  </p>
-                  <p className="text-sm text-neutral-500">
-                    {spotifyData.album}
-                  </p>
-                </div>
-
-                {/* Progress Bar */}
-                <div className="space-y-2">
-                  <div className="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-green-500 to-amber-400 rounded-full transition-all duration-500"
-                      style={{ width: `${progressPercentage}%` }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-between text-xs text-neutral-400">
-                    <span>{formatTime(spotifyData.progress)}</span>
-                    <span>{formatTime(spotifyData.duration)}</span>
-                  </div>
-                </div>
-
-                {/* Controls */}
-                <div className="flex items-center justify-between">
-                  <button
-                    onClick={() => setLiked(!liked)}
-                    className={`p-3 rounded-full transition-all ${
-                      liked
-                        ? "text-red-500 bg-red-500/10"
-                        : "text-neutral-400 hover:text-red-500 hover:bg-neutral-800"
-                    }`}
-                  >
-                    <Heart
-                      className={`w-6 h-6 ${liked ? "fill-current" : ""}`}
-                    />
-                  </button>
-
-                  <div className="flex items-center gap-4">
-                    <button
-                      className="p-2 text-neutral-400 hover:text-white transition-colors opacity-50 cursor-not-allowed"
-                      disabled
-                    >
-                      <SkipBack className="w-6 h-6" />
-                    </button>
-                    <div className="p-5 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-lg shadow-green-500/30">
-                      {isPlaying ? (
-                        <Pause className="w-7 h-7 text-white fill-current" />
-                      ) : (
-                        <Play className="w-7 h-7 text-white fill-current" />
-                      )}
-                    </div>
-                    <button
-                      className="p-2 text-neutral-400 hover:text-white transition-colors opacity-50 cursor-not-allowed"
-                      disabled
-                    >
-                      <SkipForward className="w-6 h-6" />
-                    </button>
-                  </div>
-
-                  <button
-                    className="p-3 text-neutral-400 hover:text-white transition-colors rounded-full hover:bg-neutral-800 opacity-50 cursor-not-allowed"
-                    disabled
-                  >
-                    <Volume2 className="w-6 h-6" />
-                  </button>
                 </div>
               </div>
             </div>
@@ -259,12 +192,9 @@ const SpotifyVibes: React.FC = () => {
         ) : (
           <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-12 shadow-2xl border border-neutral-700 mb-6 text-center">
             <Music2 className="w-24 h-24 text-neutral-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-2">
+            <h3 className="text-2xl font-bold text-white mb-6">
               No music playing
             </h3>
-            <p className="text-neutral-400 mb-6">
-              Start playing something on Spotify to see it here!
-            </p>
             <a
               href="https://open.spotify.com"
               target="_blank"
