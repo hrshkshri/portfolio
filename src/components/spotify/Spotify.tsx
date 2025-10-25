@@ -3,20 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { SiSpotify } from "react-icons/si";
 import { Music2, Waves, Sparkles, ExternalLink } from "lucide-react";
+import { spotifyService, SpotifyData } from "@/lib/api";
 
-interface SpotifyData {
-  title: string;
-  artist: string;
-  album: string;
-  albumImageUrl: string;
-  songUrl: string;
-  isPlaying: boolean;
-  progress: number;
-  duration: number;
-  wasRecentlyPlayed?: boolean;
-}
-
-const SpotifyVibes: React.FC = () => {
+const Spotify: React.FC = () => {
   const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -24,8 +13,7 @@ const SpotifyVibes: React.FC = () => {
   useEffect(() => {
     const fetchNowPlaying = async () => {
       try {
-        const response = await fetch("/api/spotify/now-playing");
-        const data = await response.json();
+        const data = await spotifyService.getNowPlaying();
         setSpotifyData(data);
         setLoading(false);
       } catch (error) {
@@ -192,9 +180,10 @@ const SpotifyVibes: React.FC = () => {
         ) : (
           <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-12 shadow-2xl border border-neutral-700 mb-6 text-center">
             <Music2 className="w-24 h-24 text-neutral-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-6">
-              No music playing
+            <h3 className="text-2xl font-bold text-white mb-3">
+              Not listening to anything right now
             </h3>
+            <p className="text-neutral-400 mb-6">Taking a break from music, but I'll be back soon! 🎧</p>
             <a
               href="https://open.spotify.com"
               target="_blank"
@@ -211,4 +200,4 @@ const SpotifyVibes: React.FC = () => {
   );
 };
 
-export default SpotifyVibes;
+export default Spotify;

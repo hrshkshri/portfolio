@@ -1,6 +1,6 @@
 import React from "react";
-import SpotifyVibes from "@/components/spotify/SpotifyVibes";
+import Spotify from "@/components/spotify/Spotify";
 
 export default function SpotifyPage() {
-  return <SpotifyVibes />;
+  return <Spotify />;
 }

@@ -1,0 +1,23 @@
+import React from "react";
+import Link from "next/link";
+import { BsCalendar3 } from "react-icons/bs";
+
+const CalendarCard: React.FC = () => {
+  return (
+    <Link
+      href="/calendar"
+      className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 flex flex-col justify-between space-y-6 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 group"
+    >
+      <div className="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+        <BsCalendar3 className="w-7 h-7 text-blue-400 group-hover:scale-110 transition-transform" />
+      </div>
+
+      <div>
+        <p className="font-bold text-2xl text-neutral-200 mb-2">Schedule</p>
+        <p className="text-neutral-500 text-sm">Book a meeting with me</p>
+      </div>
+    </Link>
+  );
+};
+
+export default CalendarCard;
