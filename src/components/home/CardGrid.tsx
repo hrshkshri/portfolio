@@ -2,6 +2,7 @@ import React from "react";
 import ProfileCard from "./cards/ProfileCard";
 import ResumeCard from "./cards/ResumeCard";
 import GithubCard from "./cards/GithubCard";
+import CalendarCard from "./cards/CalendarCard";
 
 const CardsGrid: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const CardsGrid: React.FC = () => {
           <ProfileCard />
           <ResumeCard />
           <GithubCard />
+          <CalendarCard />
         </div>
       </div>
     </div>

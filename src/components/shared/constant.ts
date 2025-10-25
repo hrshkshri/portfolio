@@ -21,7 +21,12 @@ import {
   AiFillMail,
   AiOutlineHome,
 } from "react-icons/ai";
-import { BsTwitter, BsFillPersonVcardFill, BsGit } from "react-icons/bs";
+import {
+  BsTwitter,
+  BsFillPersonVcardFill,
+  BsGit,
+  BsCalendar3,
+} from "react-icons/bs";
 import { IconType } from "react-icons";
 
 interface IconData {
@@ -145,6 +150,7 @@ export const navLinks: NavLink[] = [
   { href: "/home", icon: AiOutlineHome, label: "Home" },
   { href: "/about", icon: BsFillPersonVcardFill, label: "About" },
   { href: "/spotify", icon: SiSpotify, label: "Spotify" },
+  { href: "/calendar", icon: BsCalendar3, label: "Schedule" },
 ];
 
 export const experiences: Experience[] = [
@@ -206,39 +212,42 @@ export const openSourceContributions: OpenSourceContribution[] = [
       "Led the **LaCE (Learner and Creator Experience) quality team**, managing task assignments for new contributors and conducting **code reviews** to ensure quality standards across all user-facing features.",
       "Contributed **10 merged PRs** using **Python** (backend) and **AngularJS** (frontend), including major features like **admin acceptance tests** and **topic editor migration**",
       "Implemented **UI enhancements** and **bug fixes** across multiple pages: added loading states for lesson pages, fixed community library item alignment, corrected partnership page layouts, and improved mobile UI responsiveness.",
-      "Developed comprehensive **unit tests** and **end-to-end acceptance tests** to improve test coverage and platform reliability."
-    ]
+      "Developed comprehensive **unit tests** and **end-to-end acceptance tests** to improve test coverage and platform reliability.",
+    ],
   },
   {
     role: "Contributor",
     organization: "Tailcall",
-    organizationUrl: "https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri",
+    organizationUrl:
+      "https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
       "Fixed a critical **search bar modal focus issue** in the documentation site, improving user navigation and accessibility.",
-      "Completed a **$150 bounty** for the contribution, demonstrating ability to deliver functional, production-ready features."
-    ]
+      "Completed a **$150 bounty** for the contribution, demonstrating ability to deliver functional, production-ready features.",
+    ],
   },
   {
     role: "Contributor",
     organization: "CircuitVerse",
-    organizationUrl: "https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri",
+    organizationUrl:
+      "https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
       "Fixed a **search bar overlap issue**, ensuring the search bar never hides page content, improving navigation and user experience.",
-      "Improved **responsiveness of the profile page** by optimising layout and CSS, enabling seamless viewing across devices."
-    ]
+      "Improved **responsiveness of the profile page** by optimising layout and CSS, enabling seamless viewing across devices.",
+    ],
   },
   {
     role: "Contributor",
     organization: "Zlux Server Framework (Zowe)",
-    organizationUrl: "https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri",
+    organizationUrl:
+      "https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
       "Fixed an **authentication bug** by ensuring proper error handling and response reliability.",
-      "Contribution labelled **size/XS**, demonstrating precise and minimal yet effective changes in the codebase."
-    ]
-  }
+      "Contribution labelled **size/XS**, demonstrating precise and minimal yet effective changes in the codebase.",
+    ],
+  },
 ];
 
 export const projectsData: ProjectData[] = [
@@ -261,7 +270,7 @@ export const projectsData: ProjectData[] = [
     githubLink: "https://github.com/hrshkshri/job-application-app",
     description: [
       "**Mobile application** used to browse job listings and apply for jobs using data retrieved from a **free job API**.",
-      "Implemented features such as **user authentication**, browsing job listings, applying for jobs, viewing job details, and **saving favourite jobs**."
+      "Implemented features such as **user authentication**, browsing job listings, applying for jobs, viewing job details, and **saving favourite jobs**.",
     ],
     category: "Mobile Development",
     techStack: "React Native, Expo CLI",
@@ -290,7 +299,7 @@ export const projectsData: ProjectData[] = [
       "**Full-stack application** to explore Pokémon data, allowing users to **browse, search, and filter** Pokémon information.",
       "Implemented a **responsive design** using **Material-UI**, providing an **optimal user experience** across devices.",
       "Employed **tRPC** for **type-safe API interactions**, ensuring seamless communication between the frontend and backend.",
-      "Managed data with **Prisma ORM** and stored it in a **PostgreSQL database** on **Supabase**, facilitating **efficient data retrieval and management**."
+      "Managed data with **Prisma ORM** and stored it in a **PostgreSQL database** on **Supabase**, facilitating **efficient data retrieval and management**.",
     ],
     category: "Front-End Development",
     techStack: "next.js, tRPC, Material-UI, Prisma, supabase, PostgreSQL",
@@ -315,7 +324,7 @@ export const projectsData: ProjectData[] = [
     description: [
       "Developed a **calendar application** with features like **event creation, deletion, and editing**.",
       "Utilized **React Big Calendar** for a **user-friendly interface** and a **seamless user experience**.",
-      "Implemented **user authentication and authorization** using **Express.js** and **JSON Web Tokens (JWT)**."
+      "Implemented **user authentication and authorization** using **Express.js** and **JSON Web Tokens (JWT)**.",
     ],
     category: "Full-Stack Development",
     techStack: "MERN Stack, React Big Calendar",
@@ -329,7 +338,7 @@ export const projectsData: ProjectData[] = [
       "Implemented a **user-friendly student portal** for **contest enrollment** and **standings viewing** on **CodeChef**.",
       "Established a **secure admin portal** for **profile management**, **efficient data scraping**, and **result generation**.",
       "Utilized **web scraping techniques** to extract **real-time user data** from **CodeChef**.",
-      "Implemented **user authentication and authorization** using **Passport.js** and **JSON Web Tokens (JWT)**."
+      "Implemented **user authentication and authorization** using **Passport.js** and **JSON Web Tokens (JWT)**.",
     ],
     category: "Full-Stack Development",
     techStack: "MERN Stack, Chakra-UI, Tailwind CSS",
