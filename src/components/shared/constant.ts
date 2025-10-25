@@ -144,7 +144,7 @@ export const socialLinks: SocialLink[] = [
 export const navLinks: NavLink[] = [
   { href: "/home", icon: AiOutlineHome, label: "Home" },
   { href: "/about", icon: BsFillPersonVcardFill, label: "About" },
-  // { href: "/spotify", icon: SiSpotify, label: "Spotify" },
+  { href: "/spotify", icon: SiSpotify, label: "Spotify" },
 ];
 
 export const experiences: Experience[] = [
