@@ -19,9 +19,9 @@ const CardsGrid: React.FC = () => {
 
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
           <ProfileCard />
-          <ResumeCard />
-          <CalendarCard />
           <GitHubActivityCard />
+          <CalendarCard />
+          <ResumeCard />
         </div>
       </div>
     </div>
