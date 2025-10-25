@@ -141,51 +141,51 @@ const SpotifyVibes: React.FC = () => {
               </div>
 
               {/* Song Info */}
-              <div className="flex flex-col justify-between">
-                <div className="space-y-4">
+              <div className="flex flex-col justify-center space-y-8">
+                <div className="space-y-6">
                   <div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
                       {spotifyData.title}
                     </h2>
-                    <p className="text-xl text-neutral-400">
+                    <p className="text-2xl text-neutral-300 mb-2">
                       {spotifyData.artist}
                     </p>
-                    <p className="text-sm text-neutral-500 mt-1">
+                    <p className="text-lg text-neutral-500">
                       {spotifyData.album}
                     </p>
                   </div>
+
+                  {/* Progress Bar or Recently Played Message */}
+                  {isPlaying ? (
+                    <div className="space-y-3">
+                      <div className="w-full h-3 bg-neutral-700 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-green-500 to-amber-400 rounded-full transition-all duration-500"
+                          style={{ width: `${progressPercentage}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between text-sm text-neutral-400">
+                        <span>{formatTime(spotifyData.progress)}</span>
+                        <span>{formatTime(spotifyData.duration)}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-neutral-400 text-base italic py-2">
+                      Last thing I was vibing to 🎵
+                    </div>
+                  )}
 
                   {/* Open in Spotify */}
                   <a
                     href={spotifyData.songUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-green-500/30 w-fit"
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-green-500/30 w-fit text-lg"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-5 h-5" />
                     Open in Spotify
                   </a>
                 </div>
-
-                {/* Progress Bar or Recently Played Message */}
-                {isPlaying ? (
-                  <div className="space-y-2">
-                    <div className="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-green-500 to-amber-400 rounded-full transition-all duration-500"
-                        style={{ width: `${progressPercentage}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between text-xs text-neutral-400">
-                      <span>{formatTime(spotifyData.progress)}</span>
-                      <span>{formatTime(spotifyData.duration)}</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-neutral-400 text-sm italic">
-                    Last thing I was vibing to 🎵
-                  </div>
-                )}
               </div>
             </div>
           </div>
