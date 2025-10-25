@@ -1,61 +1,22 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { githubServerService } from '@/lib/server';
 
-const GITHUB_USERNAME = "hrshkshri";
-const GITHUB_API = "https://api.github.com";
+export const revalidate = 3600; // Revalidate every hour
 
 export async function GET() {
   try {
-    // Fetch user data
-    const userResponse = await fetch(`${GITHUB_API}/users/${GITHUB_USERNAME}`, {
+    const data = await githubServerService.getAllData();
+
+    return NextResponse.json(data, {
+      status: 200,
       headers: {
-        Accept: "application/vnd.github.v3+json",
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=1800',
       },
-      next: { revalidate: 3600 }, // Cache for 1 hour
-    });
-
-    // Fetch repos
-    const reposResponse = await fetch(
-      `${GITHUB_API}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`,
-      {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-        },
-        next: { revalidate: 3600 },
-      }
-    );
-
-    // Fetch events (recent activity)
-    const eventsResponse = await fetch(
-      `${GITHUB_API}/users/${GITHUB_USERNAME}/events/public?per_page=10`,
-      {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-        },
-        next: { revalidate: 300 }, // Cache for 5 minutes
-      }
-    );
-
-    if (
-      !userResponse.ok ||
-      !reposResponse.ok ||
-      !eventsResponse.ok
-    ) {
-      throw new Error("Failed to fetch GitHub data");
-    }
-
-    const userData = await userResponse.json();
-    const reposData = await reposResponse.json();
-    const eventsData = await eventsResponse.json();
-
-    return NextResponse.json({
-      user: userData,
-      repos: reposData,
-      events: eventsData,
     });
   } catch (error) {
-    console.error("Error fetching GitHub data:", error);
+    console.error('Error in GitHub API route:', error);
     return NextResponse.json(
-      { error: "Failed to fetch GitHub data" },
+      { error: 'Failed to fetch GitHub data' },
       { status: 500 }
     );
   }
