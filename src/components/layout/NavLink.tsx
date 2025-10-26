@@ -17,7 +17,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, activeRoute, icon: Icon, label 
       href={href}
       className={`flex flex-col md:flex-row items-center justify-center md:justify-start py-3 px-4 mx-2 rounded-lg font-medium transition-all duration-300 ${
         isActive
-          ? 'text-amber-400 bg-amber-400/10 border-l-4 md:border-l-4 border-b-0 md:border-b-0 border-amber-400'
+          ? 'text-amber-400 bg-amber-400/10 border-b-4 md:border-b-0 border-l-0 md:border-l-4 border-amber-400'
           : 'text-neutral-400 hover:text-amber-400 hover:bg-neutral-800/50'
       }`}
       aria-label={label}
