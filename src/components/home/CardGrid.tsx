@@ -6,23 +6,16 @@ import GitHubActivityCard from "./cards/GitHubActivityCard";
 
 const CardsGrid: React.FC = () => {
   return (
-    <div className="py-20 px-6 lg:px-20">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <span className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-400 text-sm font-medium">
-            📫 Let's Connect
-          </span>
-          <h2 className="text-3xl md:text-4xl text-neutral-200 font-bold mt-6">
-            Get to Know Me
-          </h2>
-        </div>
+    <div className="py-16 px-8 md:px-14 lg:px-16 border-t border-neutral-900">
+      <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mb-10">
+        Links
+      </p>
 
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
-          <ProfileCard />
-          <GitHubActivityCard />
-          <CalendarCard />
-          <ResumeCard />
-        </div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <ProfileCard />
+        <GitHubActivityCard />
+        <CalendarCard />
+        <ResumeCard />
       </div>
     </div>
   );

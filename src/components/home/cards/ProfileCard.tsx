@@ -1,46 +1,22 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const ProfileCard: React.FC = () => {
-    return (
-        <Link
-            href="/about"
-            className="col-span-2 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 flex flex-col space-y-4 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 hover:-translate-y-2 group"
-        >
-            <div className="relative w-24 h-24">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-400 rounded-full blur-md opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                <Image
-                    className="relative rounded-full ring-4 ring-amber-500/20 group-hover:ring-amber-500/40 transition-all object-cover"
-                    src="/Img/Harsh.png"
-                    alt="Harsh Keshari"
-                    width={96}
-                    height={96}
-                    priority
-                />
-            </div>
+  return (
+    <Link
+      href="/about"
+      className="group border border-neutral-800 rounded-xl p-5 flex flex-col justify-between gap-8 hover:border-neutral-700 transition-colors duration-200 bg-neutral-950/40"
+    >
+      <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+        <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+      </div>
 
-            <div>
-                <div className="text-3xl font-bold mb-1">
-                    <span className="text-amber-400">Harsh</span>{" "}
-                    <span className="text-neutral-200">Keshari</span>
-                </div>
-                <div className="text-neutral-400 text-base leading-relaxed">
-                    Full Stack Developer 💻
-                    <br />
-                    <span className="text-amber-400 font-semibold">&</span>
-                    <br />
-                    Open-Source Contributor 🚀
-                </div>
-            </div>
-
-            <div className="flex items-center gap-2 text-amber-400 font-semibold pt-2">
-                <span>Learn More</span>
-                <MdKeyboardDoubleArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </div>
-        </Link>
-    );
+      <div>
+        <p className="font-semibold text-neutral-200 mb-1">About</p>
+        <p className="text-neutral-600 text-xs">Experience & projects</p>
+      </div>
+    </Link>
+  );
 };
 
 export default ProfileCard;
