@@ -144,12 +144,12 @@ export const socialLinks: SocialLink[] = [
     icon: AiFillMail,
     label: "Email",
   },
+  { href: "/spotify", icon: SiSpotify, label: "Spotify" },
 ];
 
 export const navLinks: NavLink[] = [
   { href: "/home", icon: AiOutlineHome, label: "Home" },
   { href: "/about", icon: BsFillPersonVcardFill, label: "About" },
-  { href: "/spotify", icon: SiSpotify, label: "Spotify" },
   { href: "/calendar", icon: BsCalendar3, label: "Schedule" },
 ];
 
