@@ -6,6 +6,7 @@ import Experience from "./Experience";
 import Projects from "./Projects";
 import OpenSource from "./OpenSource";
 import Header from "./Header";
+import Skills from "../home/Skills";
 
 const About: React.FC = () => {
   return (
@@ -15,6 +16,11 @@ const About: React.FC = () => {
         <div className="mb-12">
           <Header />
           <Banner />
+        </div>
+
+        {/* Stack */}
+        <div className="mb-12 -mx-4 md:-mx-6">
+          <Skills />
         </div>
 
         {/* Journey Timeline */}
