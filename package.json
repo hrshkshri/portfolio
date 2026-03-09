@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
-    "resume": "typst compile resume/resume.typ public/resume.pdf"
+    "resume": "typst compile resume/resume.typ public/resume.pdf",
+    "resume:watch": "typst watch resume/resume.typ public/resume.pdf"
   },
   "dependencies": {
     "@vercel/analytics": "^1.3.1",
