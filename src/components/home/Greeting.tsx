@@ -40,16 +40,11 @@ const Greeting: React.FC = () => {
             </h2>
 
             <h1 className="text-6xl md:text-7xl lg:text-9xl font-bold font-Rampart bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl">
-              I Code.
+              I Build.
             </h1>
           </div>
 
-          <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed">
-            Full-stack developer passionate about building exceptional digital
-            experiences. I turn ideas into elegant, functional solutions.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+<div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <a
               href="/about"
               className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-amber-500/50 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
@@ -63,6 +58,20 @@ const Greeting: React.FC = () => {
               Get In Touch
             </a>
           </div>
+
+          {/* What I'm building */}
+          <p className="text-sm text-neutral-500 leading-relaxed">
+            building{" "}
+            <a
+              href="https://www.crelyzor.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-300 hover:text-amber-400 transition-colors duration-200"
+            >
+              Crelyzor
+            </a>{" "}
+            — an AI-native workspace where your contacts, meetings, and tasks are all connected and actually talk to each other.
+          </p>
 
           {/* Currently listening */}
           {track && track.title && (

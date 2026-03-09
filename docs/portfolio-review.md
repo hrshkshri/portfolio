@@ -10,7 +10,7 @@ Goal: Shift narrative from "I can code" → "I build things that matter"
 
 - [ ] 1. Rewrite hero subtitle — replace generic "Full-stack developer passionate about building exceptional digital experiences..." with something specific and differentiated
 - [ ] 2. Rewrite/replace "I Code." headline — use the prime real estate to communicate unique value
-- [ ] 3. Add a "What I'm building" line or section — even a teaser; makes you look like a founder, not a job seeker
+- [x] 3. Add a "What I'm building" line — Crelyzor teaser with link
 - [x] 4. Remove "Welcome to my portfolio" badge — redundant
 
 ### Personal Brand
