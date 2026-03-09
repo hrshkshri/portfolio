@@ -1,7 +1,27 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { spotifyService, SpotifyData } from "@/lib/api";
 
 const Greeting: React.FC = () => {
+  const [track, setTrack] = useState<SpotifyData | null>(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const data = await spotifyService.getNowPlaying();
+        setTrack(data);
+      } catch {
+        // silent
+      }
+    };
+    fetch();
+    const interval = setInterval(fetch, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="w-full min-h-screen flex items-center justify-center px-6 lg:px-20 relative overflow-hidden">
       {/* Animated background gradient orbs */}
@@ -12,12 +32,6 @@ const Greeting: React.FC = () => {
         {/* Left content */}
         <div className="space-y-8 text-center lg:text-left">
           <div className="space-y-4">
-            <div className="inline-block">
-              <span className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-400 text-sm font-medium">
-                👋 Welcome to my portfolio
-              </span>
-            </div>
-
             <h2 className="text-3xl md:text-4xl lg:text-5xl text-neutral-300 font-light">
               Hi, I'm{" "}
               <span className="block mt-2 text-5xl md:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">
@@ -49,6 +63,29 @@ const Greeting: React.FC = () => {
               Get In Touch
             </a>
           </div>
+
+          {/* Currently listening */}
+          {track && track.title && (
+            <Link
+              href="/spotify"
+              className="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-300 transition-colors duration-200 group"
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                  track.isPlaying
+                    ? "bg-green-500 animate-pulse"
+                    : "bg-neutral-600"
+                }`}
+              />
+              <span>
+                {track.isPlaying ? "listening to" : "last played"}{" "}
+                <span className="text-neutral-300 group-hover:text-white transition-colors">
+                  {track.title}
+                </span>{" "}
+                · {track.artist}
+              </span>
+            </Link>
+          )}
         </div>
 
         {/* Right image */}
@@ -57,7 +94,7 @@ const Greeting: React.FC = () => {
             {/* Decorative glow behind image */}
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/30 via-amber-400/20 to-yellow-500/30 rounded-full blur-3xl opacity-50 animate-pulse"></div>
 
-            {/* Image container - seamless with transparent background */}
+            {/* Image + badge overlay container */}
             <div className="relative">
               <Image
                 src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Gemini-Generated-Image-from-Photoroom-1-1761154733626.png?width=8000&height=8000&resize=contain"
@@ -67,16 +104,14 @@ const Greeting: React.FC = () => {
                 className="w-full h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                 priority
               />
-            </div>
 
-            {/* Floating badge */}
-            <div className="absolute -bottom-6 -left-6 bg-neutral-900 border border-neutral-800 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-neutral-300 font-medium">
-                  Available for work
-                </span>
-              </div>
+              {/* About me badge — half on image, half outside */}
+              <a
+                href="/about"
+                className="absolute bottom-0 left-6 translate-y-1/2 flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-2.5 text-white font-medium text-sm hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg"
+              >
+                About me →
+              </a>
             </div>
           </div>
         </div>

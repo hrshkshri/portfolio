@@ -10,7 +10,7 @@ const Projects: React.FC = () => {
         <div className="w-full">
             <h1 className="text-xl font-bold">Projects</h1>
             <div className="mt-5 space-y-8">
-                {projectsData.slice().reverse().map((project, index) => (
+                {projectsData.map((project, index) => (
                     <div key={index} className="border-l-2 border-neutral-700 pl-4 transition ease-in-out duration-300 hover:border-amber-500">
                         <div className="p-2">
                             {/* Project Header */}
