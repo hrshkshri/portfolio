@@ -2,6 +2,7 @@
 
 import React from "react";
 import Banner from "./Banner";
+import Building from "./Building";
 import Experience from "./Experience";
 import Projects from "./Projects";
 import OpenSource from "./OpenSource";
@@ -17,6 +18,9 @@ const About: React.FC = () => {
           <Header />
           <Banner />
         </div>
+
+        {/* Currently Building */}
+        <Building />
 
         {/* Stack */}
         <div className="mb-12 -mx-4 md:-mx-6">
