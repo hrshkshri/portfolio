@@ -74,6 +74,8 @@
     - *Built AI Interviewer* — Google Cloud Speech-to-Text, Vertex AI for question generation, video transcoding via Cloud Tasks.
     - *Built recommendation engine* using OpenAI embeddings + Pinecone vector search — became a major revenue stream.
     - *Migrated infrastructure from AWS Lambda to EC2*, eliminating timeout errors across all long-running operations.
+    - *Implemented async job queues* with Bull + Redis — decoupled meeting transcription and video processing from request cycles, enabling concurrent session handling.
+    - *Built payment microservice* integrating Razorpay — handled subscription billing and transaction tracking across the platform.
   ]
 
 ]
