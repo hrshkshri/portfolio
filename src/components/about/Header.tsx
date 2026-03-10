@@ -9,12 +9,14 @@ const Header: React.FC = () => {
         Harsh Keshari
       </h1>
       <p className="text-lg md:text-xl text-neutral-300 mb-4">
-        Full Stack Developer
+        Software Developer
       </p>
       <p className="text-sm md:text-base text-neutral-400 leading-relaxed mb-6">
-        Passionate about building scalable web applications and contributing to open source.
-        Currently working as a Fullstack Engineer at Experiment Labs, with experience in
-        backend development, payment systems, and learning management platforms.
+        I build software. That's what I am.
+        <br /><br />
+        Founding Engineer at Experiment Labs — built the LMS, CRM, AI interviewer, internship platform, payment infrastructure, and more from the ground up.
+        <br /><br />
+        Nights and weekends: building Crelyzor — a workspace where your contacts, meetings, and tasks actually know about each other.
       </p>
 
       {/* Social Links */}
