@@ -95,7 +95,7 @@ const Spotify: React.FC = () => {
           <img
             src={spotifyData.albumImageUrl}
             alt={spotifyData.album}
-            className="h-full w-full object-cover scale-110 blur-sm"
+            className="h-full w-full object-cover scale-125 blur-2xl opacity-40"
           />
         )}
       </div>
