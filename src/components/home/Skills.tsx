@@ -9,21 +9,12 @@ const Skills: React.FC = () => {
           Stack
         </p>
 
-        <div className="space-y-5">
-          {skillsData.map((skillCategory, index) => (
-            <div key={index} className="flex items-start gap-6 md:gap-12">
-              <span className="text-xs text-neutral-600 w-32 md:w-40 shrink-0 pt-1 leading-relaxed">
-                {skillCategory.category}
-              </span>
-              <div className="flex flex-wrap gap-4">
-                {skillCategory.icons.map((iconData, iconIndex) => (
-                  <iconData.icon
-                    key={iconIndex}
-                    className={`${iconData.size} text-neutral-500 hover:text-amber-400 transition-colors duration-200 cursor-default`}
-                  />
-                ))}
-              </div>
-            </div>
+        <div className="flex flex-wrap gap-5">
+          {skillsData.flatMap((skillCategory) => skillCategory.icons).map((iconData, index) => (
+            <iconData.icon
+              key={index}
+              className={`${iconData.size} text-neutral-500 hover:text-amber-400 transition-colors duration-200 cursor-default`}
+            />
           ))}
         </div>
       </div>
