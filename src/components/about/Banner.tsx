@@ -6,24 +6,27 @@ import { resumeLink } from "../shared/constant";
 
 const Banner: React.FC = () => {
     return (
-        <div className="p-6 rounded-md bg-amber-500 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
-            <p className="font-sans text-neutral-900 text-lg font-semibold text-center">
-                Open to SDE/SWE full-time roles focused on developing robust frontend and backend infrastructure.
-            </p>
-            <div className="mt-4 text-center">
-                <Link href={resumeLink}>
-                    <span className="flex items-center justify-center space-x-2 transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer">
-                        <span className="text-neutral-900">Resume:</span>
-                        <MdArrowOutward className="w-5 h-5 text-neutral-900" />
-                    </span>
-                </Link>
+        <div className="flex items-center justify-between gap-4 flex-wrap px-5 py-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+            <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                <p className="text-sm text-neutral-300">
+                    Open to full-time SWE roles
+                </p>
             </div>
-            <div className="mt-4 text-center">
-                <Link href="mailto:harshkeshari100@gmail.com">
-                    <span className="flex items-center justify-center space-x-2 transition ease-in-out duration-300 transform hover:-translate-y-0.5 hover:-translate-x-0.5 cursor-pointer">
-                        <AiOutlineMail className="w-5 h-5 text-neutral-900" />
-                        <span className="text-neutral-900">harshkeshari100@gmail.com</span>
-                    </span>
+            <div className="flex items-center gap-3">
+                <Link
+                    href="mailto:harshkeshari100@gmail.com"
+                    className="flex items-center gap-1.5 text-sm text-neutral-400 hover:text-amber-400 transition-colors duration-200"
+                >
+                    <AiOutlineMail className="w-4 h-4" />
+                    harshkeshari100@gmail.com
+                </Link>
+                <Link
+                    href={resumeLink}
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-neutral-700 text-xs text-neutral-400 hover:text-amber-400 hover:border-amber-400/30 transition-all duration-200"
+                >
+                    Resume
+                    <MdArrowOutward className="w-3.5 h-3.5" />
                 </Link>
             </div>
         </div>

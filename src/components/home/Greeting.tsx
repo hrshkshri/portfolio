@@ -1,86 +1,133 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { spotifyService, SpotifyData } from "@/lib/api";
+import { AiFillGithub } from "react-icons/ai";
+import { BsCalendar3, BsFileEarmarkText } from "react-icons/bs";
 
 const Greeting: React.FC = () => {
+  const [track, setTrack] = useState<SpotifyData | null>(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const data = await spotifyService.getNowPlaying();
+        setTrack(data);
+      } catch {
+        // silent
+      }
+    };
+    fetch();
+    const interval = setInterval(fetch, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="w-full min-h-screen flex items-center justify-center px-6 lg:px-20 relative overflow-hidden">
-      {/* Animated background gradient orbs */}
-      <div className="absolute top-20 -left-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-20 -right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    <div className="w-full min-h-screen relative overflow-hidden flex flex-col justify-end">
 
-      <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
-        {/* Left content */}
-        <div className="space-y-8 text-center lg:text-left">
-          <div className="space-y-4">
-            <div className="inline-block">
-              <span className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-400 text-sm font-medium">
-                👋 Welcome to my portfolio
-              </span>
-            </div>
+      {/* Full bleed photo */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Image
+          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Gemini-Generated-Image-from-Photoroom-1-1761154733626.png?width=8000&height=8000&resize=contain"
+          alt="Harsh Keshari"
+          width={600}
+          height={800}
+          className="h-full w-auto object-contain"
+          priority
+        />
+      </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-neutral-300 font-light">
-              Hi, I'm{" "}
-              <span className="block mt-2 text-5xl md:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">
-                Harsh
-              </span>
-            </h2>
+      {/* Gradient overlay — transparent top, dark bottom */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-            <h1 className="text-6xl md:text-7xl lg:text-9xl font-bold font-Rampart bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl">
-              I Code.
+      {/* Bottom bar — two columns */}
+      <div className="relative z-10 w-full px-8 md:px-16 pb-12 grid grid-cols-2 items-end gap-8">
+
+        {/* Left: main content */}
+        <div className="space-y-5">
+          <div>
+            <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mb-3">
+              Harsh Keshari
+            </p>
+            <h1 className="font-Rampart text-6xl md:text-8xl text-white leading-none">
+              I Build.
             </h1>
           </div>
 
-          <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed">
-            Full-stack developer passionate about building exceptional digital
-            experiences. I turn ideas into elegant, functional solutions.
+          <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
+            building{" "}
+            <a
+              href="https://www.crelyzor.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-200 hover:text-amber-400 transition-colors"
+            >
+              Crelyzor
+            </a>{" "}
+            — an AI-native workspace where your contacts, meetings, and tasks are all connected and actually talk to each other.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <div className="flex items-center gap-6">
             <a
               href="/about"
-              className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-amber-500/50 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
+              className="px-6 py-2.5 bg-white text-neutral-900 text-sm font-semibold rounded-full hover:bg-neutral-200 transition-colors duration-200"
             >
               View My Work
             </a>
             <a
               href="/calendar"
-              className="px-8 py-4 bg-neutral-800/50 border border-neutral-700 text-neutral-200 font-semibold rounded-lg hover:bg-neutral-800 hover:border-amber-500/50 transition-all duration-300 inline-flex items-center justify-center"
+              className="text-sm text-neutral-400 hover:text-white transition-colors duration-200"
             >
-              Get In Touch
+              Get In Touch →
             </a>
           </div>
+
+          {track && track.title && (
+            <Link
+              href="/spotify"
+              className="inline-flex items-center gap-2 text-xs text-neutral-600 hover:text-neutral-400 transition-colors group"
+            >
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${track.isPlaying ? "bg-green-500 animate-pulse" : "bg-neutral-700"}`} />
+              <span>
+                {track.isPlaying ? "listening to" : "last played"}{" "}
+                <span className="text-neutral-400 group-hover:text-neutral-200">{track.title}</span>
+                {" "}· {track.artist}
+              </span>
+            </Link>
+          )}
         </div>
 
-        {/* Right image */}
-        <div className="relative lg:order-last order-first">
-          <div className="relative w-full max-w-lg mx-auto">
-            {/* Decorative glow behind image */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/30 via-amber-400/20 to-yellow-500/30 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+        {/* Right: links + stack */}
+        <div className="flex flex-col gap-8 items-end text-right">
 
-            {/* Image container - seamless with transparent background */}
-            <div className="relative">
-              <Image
-                src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Gemini-Generated-Image-from-Photoroom-1-1761154733626.png?width=8000&height=8000&resize=contain"
-                alt="Harsh - Developer Portfolio"
-                width={600}
-                height={800}
-                className="w-full h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-                priority
-              />
-            </div>
-
-            {/* Floating badge */}
-            <div className="absolute -bottom-6 -left-6 bg-neutral-900 border border-neutral-800 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-neutral-300 font-medium">
-                  Available for work
-                </span>
-              </div>
+          {/* Links */}
+          <div>
+            <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mb-3">Links</p>
+            <div className="space-y-2">
+              {[
+                { label: "About", href: "/about" },
+                { label: "GitHub", href: "/github", icon: AiFillGithub },
+                { label: "Schedule", href: "/calendar", icon: BsCalendar3 },
+                { label: "Resume", href: "/resume.pdf", icon: BsFileEarmarkText },
+              ].map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="flex items-center justify-end gap-2 text-xl text-neutral-400 hover:text-neutral-100 transition-colors duration-200"
+                >
+                  {link.label}
+                  {link.icon && <link.icon className="w-4 h-4" />}
+                </a>
+              ))}
             </div>
           </div>
+
+
         </div>
       </div>
+
     </div>
   );
 };

@@ -10,7 +10,7 @@ const OpenSource: React.FC = () => {
         <div className="w-full">
             <h1 className="text-xl font-bold">Open Source Contributions</h1>
             <div className="mt-5 space-y-6">
-                {openSourceContributions.map((contribution, index) => (
+                {openSourceContributions.slice(0, 2).map((contribution, index) => (
                     <div key={index} className="border-l-2 border-neutral-700 pl-4 transition ease-in-out duration-300 hover:border-amber-500">
                         <div className="p-2">
                             {/* Role and Organization Header */}
@@ -52,6 +52,14 @@ const OpenSource: React.FC = () => {
                     </div>
                 ))}
             </div>
+
+            <a
+                href="/github"
+                className="mt-6 inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-amber-400 transition-colors duration-200"
+            >
+                See more on GitHub
+                <MdArrowOutward className="w-3.5 h-3.5" />
+            </a>
         </div>
     );
 };

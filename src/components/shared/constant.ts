@@ -144,12 +144,12 @@ export const socialLinks: SocialLink[] = [
     icon: AiFillMail,
     label: "Email",
   },
+  { href: "/spotify", icon: SiSpotify, label: "Spotify" },
 ];
 
 export const navLinks: NavLink[] = [
   { href: "/home", icon: AiOutlineHome, label: "Home" },
   { href: "/about", icon: BsFillPersonVcardFill, label: "About" },
-  { href: "/spotify", icon: SiSpotify, label: "Spotify" },
   { href: "/calendar", icon: BsCalendar3, label: "Schedule" },
 ];
 
@@ -161,41 +161,31 @@ export const experiences: Experience[] = [
     period: "Sept 2024 - Nov 2024",
     projects: [
       {
-        name: "Hotel Booking Platform MVP",
+        name: "",
         achievements: [
-          "**Designed and developed the MVP** of Xipper, a **hotel booking and management web & mobile platform**, implementing core backend features using **Node.js** and **Express.js**.",
-          "Built and exposed **RESTful APIs** for key functionalities such as room booking, availability management, and user authentication, ensuring **reliability and scalability**.",
-          "Collaborated with frontend developers using **React.js** to deliver a seamless and responsive **user experience** across web and mobile.",
+          "Built the MVP backend for a hotel booking & management platform from scratch using **Node.js and Express**.",
+          "Designed and shipped REST APIs for room booking, availability management, and authentication.",
         ],
       },
     ],
   },
   {
-    role: "Fullstack Engineer (started as Intern)",
+    role: "Founding Engineer",
     company: "Experiment Labs",
     companyUrl: "https://www.linkedin.com/company/experiment-labs",
     period: "Nov 2024 - Present",
     projects: [
       {
-        name: "Learning Management System (LMS)",
+        name: "",
         achievements: [
-          "**Engineered end-to-end payment and enrollment reliability** by redesigning **Razorpay API flows** with retry logic, fallback mechanisms, and automated cron-based reconciliation, ensuring **seamless course enrollment at scale**.",
-          "**Migrated platform infrastructure** from **AWS Lambda to EC2**, eliminating timeout errors across all long-running operations, improving **overall system stability and scalability**.",
-          "**Developed analytics email service** with scheduled cron jobs to deliver periodic usage insights to client organisations, enhancing **customer engagement**.",
-        ],
-      },
-      {
-        name: "Internship Portal (Built from scratch)",
-        achievements: [
-          "**Architected and developed a multi-tenant internship platform** with **Role-Based Access Control (RBAC)** supporting two organization types—**Internship Providers** (companies) and **Consumers** (schools)—ensuring **scalable onboarding and strict data isolation**.",
-          "**Built and deployed full-stack application** using **Node.js, TypeScript, Express, Prisma, MongoDB, Redis, React.js, and TailwindCSS**; deployed on **Firebase/AWS EC2** achieving **100% Best Practices, 94% Accessibility** on Lighthouse.",
-        ],
-      },
-      {
-        name: "Customer Relationship Management (CRM)",
-        achievements: [
-          "**Built AI-powered activity recommendation feature** using **OpenAI API** to generate personalised suggestions for students based on their profiles, becoming a **major revenue stream** for the platform.",
-          "**Designed and implemented a Calendar Module** for student-admin meetings (similar to **Calendly**), enabling slot requests, rescheduling, and video integration with **Zoom and Google Meet**.",
+          "Built the entire platform from scratch — **11 microservices** covering LMS, CRM, AI Interviewer, Smart Meeting Assistant, Recommendation Engine, Payments, Notifications, Auth, Internship Portal, Ops Dashboard, and Evaluator.",
+          "Designed the **auth & RBAC system** powering all services — 39+ permissions, 5 user roles, multi-tenant org isolation.",
+          "Built **Smart Meeting Assistant** — browser-based recording, Deepgram transcription, OpenAI-generated summaries and action items, with one-click push to student roadmaps.",
+          "Built **AI Interviewer** — Google Cloud Speech-to-Text, Vertex AI for question generation, video transcoding via Cloud Tasks.",
+          "Built **recommendation engine** using OpenAI embeddings + Pinecone vector search for AI-driven student career suggestions, which became a **major revenue stream**.",
+          "Engineered **multi-channel notification service** — email, SMS, WhatsApp — with Redis-backed state, scheduled cron reminders, and rate limiting.",
+          "Integrated **Razorpay** payment processing with webhook reconciliation, retry logic, and credit/subscription management.",
+          "Migrated infrastructure from **AWS Lambda to EC2**, eliminating timeout errors across all long-running operations.",
         ],
       },
     ],
@@ -204,15 +194,13 @@ export const experiences: Experience[] = [
 
 export const openSourceContributions: OpenSourceContribution[] = [
   {
-    role: "Member & LaCE Quality Team Lead",
+    role: "Quality Team Lead",
     organization: "Oppia Foundation",
     organizationUrl: "https://www.github.com/oppia",
     period: "Nov 2023 - April 2024",
     achievements: [
-      "Led the **LaCE (Learner and Creator Experience) quality team**, managing task assignments for new contributors and conducting **code reviews** to ensure quality standards across all user-facing features.",
-      "Contributed **10 merged PRs** using **Python** (backend) and **AngularJS** (frontend), including major features like **admin acceptance tests** and **topic editor migration**",
-      "Implemented **UI enhancements** and **bug fixes** across multiple pages: added loading states for lesson pages, fixed community library item alignment, corrected partnership page layouts, and improved mobile UI responsiveness.",
-      "Developed comprehensive **unit tests** and **end-to-end acceptance tests** to improve test coverage and platform reliability.",
+      "Led the **LaCE quality team** at Oppia — managed contributor onboarding, task assignments, and code reviews across all user-facing features.",
+      "Shipped **10 merged PRs** in Python and AngularJS — admin acceptance tests, topic editor migration, UI fixes, and e2e test coverage.",
     ],
   },
   {
@@ -222,8 +210,7 @@ export const openSourceContributions: OpenSourceContribution[] = [
       "https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
-      "Fixed a critical **search bar modal focus issue** in the documentation site, improving user navigation and accessibility.",
-      "Completed a **$150 bounty** for the contribution, demonstrating ability to deliver functional, production-ready features.",
+      "Completed a **$150 bounty** — fixed a critical search bar modal focus issue in the documentation site.",
     ],
   },
   {
@@ -233,8 +220,7 @@ export const openSourceContributions: OpenSourceContribution[] = [
       "https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
-      "Fixed a **search bar overlap issue**, ensuring the search bar never hides page content, improving navigation and user experience.",
-      "Improved **responsiveness of the profile page** by optimising layout and CSS, enabling seamless viewing across devices.",
+      "Fixed a **search bar overlap issue** and improved **profile page responsiveness** across devices.",
     ],
   },
   {
@@ -244,103 +230,33 @@ export const openSourceContributions: OpenSourceContribution[] = [
       "https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
-      "Fixed an **authentication bug** by ensuring proper error handling and response reliability.",
-      "Contribution labelled **size/XS**, demonstrating precise and minimal yet effective changes in the codebase.",
+      "Fixed an **authentication bug** — improved error handling and response reliability.",
     ],
   },
 ];
 
 export const projectsData: ProjectData[] = [
   {
-    name: "Google Clone with ReactJs",
-    duration: "Ongoing",
-    liveLink: "https://clonegoogle.vercel.app",
-    githubLink: "https://github.com/hrshkshri/google-clone",
-    description: [
-      "This is a **Google search clone** created using **React.js, Tailwind CSS, Vite**, and the **Google Search API**.",
-      "It provides features like **debounced search, autocomplete suggestions**, and displays search results along with images, **pagination**, and **multilingual support** using **Google Translate**.",
-      "The **Context API** is used for **state management** for searching images.",
-    ],
-    category: "Web Development",
-    techStack: "React.js, Tailwind CSS, Vite, Google Search API, Context API",
-  },
-  {
-    name: "Job Application App",
-    tag: "",
-    githubLink: "https://github.com/hrshkshri/job-application-app",
-    description: [
-      "**Mobile application** used to browse job listings and apply for jobs using data retrieved from a **free job API**.",
-      "Implemented features such as **user authentication**, browsing job listings, applying for jobs, viewing job details, and **saving favourite jobs**.",
-    ],
-    category: "Mobile Development",
-    techStack: "React Native, Expo CLI",
-  },
-  {
-    name: "Drive React",
-    tag: "",
-    liveLink: "https://drive-react.vercel.app",
-    githubLink: "https://github.com/hrshkshri/drive-react",
-    description: [
-      "Implemented **user registration** using **Firebase Auth** for **secure authentication**.",
-      "Utilized **Firebase Cloud Firestore** and **Firebase Storage** to manage file and folder creation, ensuring **seamless user interactions** with uploaded content.",
-      "Designed **intuitive folder navigation** with **breadcrumb tracking**, enhancing user experience.",
-      "Used **React Hooks** for **state management** and component logic, and **Context API** for efficient **global state management**.",
-      "Applied **Material UI** and **Styled Components** for a clean and modern design.",
-    ],
-    category: "Web Development",
-    techStack: "React, Firebase, Material UI, Styled Components",
-  },
-  {
-    name: "Pokédex App",
-    tag: "",
-    liveLink: "https://harsh-pokedex.vercel.app",
-    githubLink: "https://github.com/hrshkshri/pokedex",
-    description: [
-      "**Full-stack application** to explore Pokémon data, allowing users to **browse, search, and filter** Pokémon information.",
-      "Implemented a **responsive design** using **Material-UI**, providing an **optimal user experience** across devices.",
-      "Employed **tRPC** for **type-safe API interactions**, ensuring seamless communication between the frontend and backend.",
-      "Managed data with **Prisma ORM** and stored it in a **PostgreSQL database** on **Supabase**, facilitating **efficient data retrieval and management**.",
-    ],
-    category: "Front-End Development",
-    techStack: "next.js, tRPC, Material-UI, Prisma, supabase, PostgreSQL",
-  },
-  {
-    name: "Bitcoin Wallet - cli tool",
-    tag: "",
-    githubLink: "https://github.com/hrshkshri/bitcoin-cli-tool",
-    description: [
-      "A **command-line interface (CLI) tool** to manage **Bitcoin wallets, addresses, and transactions**.",
-      "Implemented functionalities like **wallet creation, address generation, balance checking**, and **transaction history**.",
-      "Utilized the **blockcypther API** to fetch **real-time Bitcoin data**.",
-    ],
-    category: "CLI Development",
-    techStack: "Node.js, Blockcypher API",
-  },
-  {
-    name: "Event calendar",
-    tag: "",
-    liveLink: "https://calendar-frontend-kappa-rosy.vercel.app",
-    githubLink: "https://github.com/hrshkshri/calendar-frontend",
-    description: [
-      "Developed a **calendar application** with features like **event creation, deletion, and editing**.",
-      "Utilized **React Big Calendar** for a **user-friendly interface** and a **seamless user experience**.",
-      "Implemented **user authentication and authorization** using **Express.js** and **JSON Web Tokens (JWT)**.",
-    ],
-    category: "Full-Stack Development",
-    techStack: "MERN Stack, React Big Calendar",
-  },
-  {
     name: "Nexus",
     tag: "Maintained",
     githubLink: "https://github.com/orgs/the-nexus-point/repositories",
     description: [
-      "Developed a **live web portal** to facilitate **real-time coding contest participation** and monitoring for **300+ students** at the college level.",
-      "Implemented a **user-friendly student portal** for **contest enrollment** and **standings viewing** on **CodeChef**.",
-      "Established a **secure admin portal** for **profile management**, **efficient data scraping**, and **result generation**.",
-      "Utilized **web scraping techniques** to extract **real-time user data** from **CodeChef**.",
-      "Implemented **user authentication and authorization** using **Passport.js** and **JSON Web Tokens (JWT)**.",
+      "Built a **live contest portal used by 300+ students** for real-time coding competition participation and standings on CodeChef.",
+      "Shipped both a student portal (enrollment, live standings) and a secure admin portal (profile management, data scraping, result generation).",
+      "Implemented **web scraping** to pull real-time user data from CodeChef and **JWT-based auth** via Passport.js.",
     ],
     category: "Full-Stack Development",
     techStack: "MERN Stack, Chakra-UI, Tailwind CSS",
+  },
+  {
+    name: "Bitcoin Wallet CLI",
+    tag: "",
+    githubLink: "https://github.com/hrshkshri/bitcoin-cli-tool",
+    description: [
+      "CLI tool to manage Bitcoin wallets, addresses, and transactions — wallet creation, address generation, balance checking, and transaction history.",
+      "Integrated **Blockcypher API** for real-time Bitcoin data.",
+    ],
+    category: "CLI / Systems",
+    techStack: "Node.js, Blockcypher API",
   },
 ];
