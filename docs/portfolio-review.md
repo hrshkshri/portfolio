@@ -8,14 +8,14 @@ Goal: Shift narrative from "I can code" → "I build things that matter"
 
 ### Hero & Messaging
 
-- [ ] 1. Rewrite hero subtitle — replace generic "Full-stack developer passionate about building exceptional digital experiences..." with something specific and differentiated
-- [ ] 2. Rewrite/replace "I Code." headline — use the prime real estate to communicate unique value
+- [x] 1. Rewrite hero subtitle — replace generic "Full-stack developer passionate about building exceptional digital experiences..." with something specific and differentiated
+- [x] 2. Rewrite/replace "I Code." headline — use the prime real estate to communicate unique value
 - [x] 3. Add a "What I'm building" line — Crelyzor teaser with link
 - [x] 4. Remove "Welcome to my portfolio" badge — redundant
 
 ### Personal Brand
 
-- [ ] 5. Replace AI-generated (Gemini) profile photo with a real photo
+- [x] 5. Replace AI-generated (Gemini) profile photo with a real photo
 - [x] 6. Removed "Available for work" badge → replaced with "About me →" CTA
 
 ### Experience Section
