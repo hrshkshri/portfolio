@@ -199,7 +199,7 @@ export const openSourceContributions: OpenSourceContribution[] = [
     organizationUrl: "https://www.github.com/oppia",
     period: "Nov 2023 - April 2024",
     achievements: [
-      "Led the **LaCE quality team** at a Google-backed open source org — managed contributor onboarding, task assignments, and code reviews across all user-facing features.",
+      "Led the **LaCE quality team** at Oppia — managed contributor onboarding, task assignments, and code reviews across all user-facing features.",
       "Shipped **10 merged PRs** in Python and AngularJS — admin acceptance tests, topic editor migration, UI fixes, and e2e test coverage.",
     ],
   },
