@@ -20,19 +20,19 @@ Goal: Shift narrative from "I can code" → "I build things that matter"
 
 ### Experience Section
 
-- [x] 7. Fix job title: "Fullstack Engineer (started as Intern)" → "Fullstack Engineer"
+- [x] 7. Fix job title → "Founding Engineer"
 - [ ] 8. Add more concrete metrics to Experiment Labs work (users served, scale, latency/perf improvements)
 
 ### Projects
 
 - [x] 9. Remove tutorial projects: Google Clone, Pokédex App, Job Application App
 - [x] 10. Reorder projects — Nexus first, Bitcoin CLI second
-- [ ] 11. Review all project descriptions for impact framing, not just feature listing
+- [x] 11. Review all project descriptions for impact framing, not just feature listing
 
 ### Open Source
 
 - [x] 12. Remove the Zowe "size/XS" callout — it highlights how small the contribution was, not a positive
-- [ ] 13. Keep Oppia lead role prominent — it shows leadership, not just code
+- [x] 13. Keep Oppia lead role prominent — it shows leadership, not just code
 
 ### Navigation & Structure
 
