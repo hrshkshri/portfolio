@@ -5,6 +5,9 @@ import { githubService, GitHubData } from "@/lib/api";
 import LoadingState from "./LoadingState";
 import ErrorState from "./ErrorState";
 import { FiExternalLink } from "react-icons/fi";
+import { openSourceContributions } from "@/components/shared/constant";
+import { renderTextWithBold } from "@/components/shared/utils";
+import { MdArrowOutward } from "react-icons/md";
 
 const GitHub: React.FC = () => {
   const [data, setData] = useState<GitHubData | null>(null);
@@ -133,6 +136,40 @@ const GitHub: React.FC = () => {
           </div>
 
         </div>
+        {/* Open Source Contributions */}
+        <div className="border border-neutral-800/60 rounded-2xl p-6 bg-black/40 backdrop-blur-sm space-y-5">
+          <p className="text-xs tracking-[0.2em] uppercase text-neutral-600">Open Source</p>
+          {openSourceContributions.map((contribution, i) => (
+            <div key={i} className="border-l border-neutral-800 pl-4 hover:border-amber-500/50 transition-colors duration-200">
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <div>
+                  <a
+                    href={contribution.organizationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-semibold text-neutral-200 hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+                  >
+                    {contribution.organization}
+                    <MdArrowOutward className="w-3 h-3" />
+                  </a>
+                  <p className="text-xs text-neutral-500 mt-0.5">{contribution.role}</p>
+                </div>
+                {contribution.period && (
+                  <p className="text-xs text-neutral-600 whitespace-nowrap">{contribution.period}</p>
+                )}
+              </div>
+              <ul className="space-y-1.5">
+                {contribution.achievements.map((achievement, j) => (
+                  <li key={j} className="text-xs text-neutral-400 leading-relaxed flex items-start gap-2">
+                    <span className="text-amber-500 mt-1 shrink-0">◦</span>
+                    <span>{renderTextWithBold(achievement)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
       </div>
 
     </div>

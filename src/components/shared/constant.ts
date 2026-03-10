@@ -161,41 +161,31 @@ export const experiences: Experience[] = [
     period: "Sept 2024 - Nov 2024",
     projects: [
       {
-        name: "Hotel Booking Platform MVP",
+        name: "",
         achievements: [
-          "**Designed and developed the MVP** of Xipper, a **hotel booking and management web & mobile platform**, implementing core backend features using **Node.js** and **Express.js**.",
-          "Built and exposed **RESTful APIs** for key functionalities such as room booking, availability management, and user authentication, ensuring **reliability and scalability**.",
-          "Collaborated with frontend developers using **React.js** to deliver a seamless and responsive **user experience** across web and mobile.",
+          "Built the MVP backend for a hotel booking & management platform from scratch using **Node.js and Express**.",
+          "Designed and shipped REST APIs for room booking, availability management, and authentication.",
         ],
       },
     ],
   },
   {
-    role: "Fullstack Engineer",
+    role: "Founding Engineer",
     company: "Experiment Labs",
     companyUrl: "https://www.linkedin.com/company/experiment-labs",
     period: "Nov 2024 - Present",
     projects: [
       {
-        name: "Learning Management System (LMS)",
+        name: "",
         achievements: [
-          "**Engineered end-to-end payment and enrollment reliability** by redesigning **Razorpay API flows** with retry logic, fallback mechanisms, and automated cron-based reconciliation, ensuring **seamless course enrollment at scale**.",
-          "**Migrated platform infrastructure** from **AWS Lambda to EC2**, eliminating timeout errors across all long-running operations, improving **overall system stability and scalability**.",
-          "**Developed analytics email service** with scheduled cron jobs to deliver periodic usage insights to client organisations, enhancing **customer engagement**.",
-        ],
-      },
-      {
-        name: "Internship Portal (Built from scratch)",
-        achievements: [
-          "**Architected and developed a multi-tenant internship platform** with **Role-Based Access Control (RBAC)** supporting two organization types—**Internship Providers** (companies) and **Consumers** (schools)—ensuring **scalable onboarding and strict data isolation**.",
-          "**Built and deployed full-stack application** using **Node.js, TypeScript, Express, Prisma, MongoDB, Redis, React.js, and TailwindCSS**; deployed on **Firebase/AWS EC2** achieving **100% Best Practices, 94% Accessibility** on Lighthouse.",
-        ],
-      },
-      {
-        name: "Customer Relationship Management (CRM)",
-        achievements: [
-          "**Built AI-powered activity recommendation feature** using **OpenAI API** to generate personalised suggestions for students based on their profiles, becoming a **major revenue stream** for the platform.",
-          "**Designed and implemented a Calendar Module** for student-admin meetings (similar to **Calendly**), enabling slot requests, rescheduling, and video integration with **Zoom and Google Meet**.",
+          "Built the entire platform from scratch — **11 microservices** covering LMS, CRM, AI Interviewer, Smart Meeting Assistant, Recommendation Engine, Payments, Notifications, Auth, Internship Portal, Ops Dashboard, and Evaluator.",
+          "Designed the **auth & RBAC system** powering all services — 39+ permissions, 5 user roles, multi-tenant org isolation.",
+          "Built **Smart Meeting Assistant** — browser-based recording, Deepgram transcription, OpenAI-generated summaries and action items, with one-click push to student roadmaps.",
+          "Built **AI Interviewer** — Google Cloud Speech-to-Text, Vertex AI for question generation, video transcoding via Cloud Tasks.",
+          "Built **recommendation engine** using OpenAI embeddings + Pinecone vector search for AI-driven student career suggestions, which became a **major revenue stream**.",
+          "Engineered **multi-channel notification service** — email, SMS, WhatsApp — with Redis-backed state, scheduled cron reminders, and rate limiting.",
+          "Integrated **Razorpay** payment processing with webhook reconciliation, retry logic, and credit/subscription management.",
+          "Migrated infrastructure from **AWS Lambda to EC2**, eliminating timeout errors across all long-running operations.",
         ],
       },
     ],
@@ -204,15 +194,13 @@ export const experiences: Experience[] = [
 
 export const openSourceContributions: OpenSourceContribution[] = [
   {
-    role: "Member & LaCE Quality Team Lead",
+    role: "Quality Team Lead",
     organization: "Oppia Foundation",
     organizationUrl: "https://www.github.com/oppia",
     period: "Nov 2023 - April 2024",
     achievements: [
-      "Led the **LaCE (Learner and Creator Experience) quality team**, managing task assignments for new contributors and conducting **code reviews** to ensure quality standards across all user-facing features.",
-      "Contributed **10 merged PRs** using **Python** (backend) and **AngularJS** (frontend), including major features like **admin acceptance tests** and **topic editor migration**",
-      "Implemented **UI enhancements** and **bug fixes** across multiple pages: added loading states for lesson pages, fixed community library item alignment, corrected partnership page layouts, and improved mobile UI responsiveness.",
-      "Developed comprehensive **unit tests** and **end-to-end acceptance tests** to improve test coverage and platform reliability.",
+      "Led the **LaCE quality team** at a Google-backed open source org — managed contributor onboarding, task assignments, and code reviews across all user-facing features.",
+      "Shipped **10 merged PRs** in Python and AngularJS — admin acceptance tests, topic editor migration, UI fixes, and e2e test coverage.",
     ],
   },
   {
@@ -222,8 +210,7 @@ export const openSourceContributions: OpenSourceContribution[] = [
       "https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
-      "Fixed a critical **search bar modal focus issue** in the documentation site, improving user navigation and accessibility.",
-      "Completed a **$150 bounty** for the contribution, demonstrating ability to deliver functional, production-ready features.",
+      "Completed a **$150 bounty** — fixed a critical search bar modal focus issue in the documentation site.",
     ],
   },
   {
@@ -233,8 +220,7 @@ export const openSourceContributions: OpenSourceContribution[] = [
       "https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
-      "Fixed a **search bar overlap issue**, ensuring the search bar never hides page content, improving navigation and user experience.",
-      "Improved **responsiveness of the profile page** by optimising layout and CSS, enabling seamless viewing across devices.",
+      "Fixed a **search bar overlap issue** and improved **profile page responsiveness** across devices.",
     ],
   },
   {
@@ -244,7 +230,7 @@ export const openSourceContributions: OpenSourceContribution[] = [
       "https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri",
     period: "",
     achievements: [
-      "Fixed an **authentication bug** by ensuring proper error handling and response reliability.",
+      "Fixed an **authentication bug** — improved error handling and response reliability.",
     ],
   },
 ];
