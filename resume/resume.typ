@@ -72,9 +72,8 @@
     - *Designed auth & RBAC system* powering all services — 39+ permissions, 5 user roles, multi-tenant org isolation.
     - *Built Smart Meeting Assistant* — browser-based recording, Deepgram transcription, OpenAI-generated summaries and action items, one-click push to student roadmaps; used Bull + Redis queues to decouple processing from request cycles, enabling concurrent sessions.
     - *Built AI Interviewer* — Google Cloud Speech-to-Text, Vertex AI for question generation, video transcoding via Cloud Tasks.
-    - *Built recommendation engine* using OpenAI embeddings + Pinecone vector search — became a major revenue stream.
+    - *Built recommendation engine* using OpenAI embeddings + Pinecone vector search — adopted by Leverage Edu and PW, became the primary revenue driver.
     - *Migrated infrastructure from AWS Lambda to EC2*, eliminating timeout errors across all long-running operations.
-    - *Platform adopted by Leverage Edu and PW* — recommendation engine became a primary revenue driver within months of launch.
   ]
 
 ]
@@ -96,7 +95,7 @@
     stack: "React, Express.js, PostgreSQL, Redis, OpenAI, Deepgram",
     project-url: "https://crelyzor.app",
   )[
-    - *Building solo* — a productivity OS where identity, meetings, scheduling, and tasks are one connected system; AI links card contacts to meeting participants, auto-extracts tasks from transcripts, and answers questions across your full conversation history.
+    - *Building solo* — a productivity OS where identity, meetings, scheduling, and tasks are one connected system; AI links card contacts to meeting participants, auto-extracts tasks from transcripts, and answers questions over the full meeting history.
     - *Built end-to-end meeting intelligence pipeline* — Deepgram Nova-2 transcription with speaker diarization, GPT-4o-mini extraction of summaries/action items, and streaming SSE chat (Ask AI) with full transcript context.
     - *Built timezone-aware booking engine* — slot calculation across availability schedules, Google Calendar busy-time, and existing bookings; serializable transactions prevent double-booking race conditions.
     - *Integrated Google Calendar bidirectionally* — OAuth, read sync for busy-time injection, write sync for event creation/cancellation, auto-generated Meet links; Recall.ai bots auto-join online meetings and feed into the same transcription pipeline.
