@@ -18,7 +18,7 @@
 #let email = "harshkeshari100@gmail.com"
 #let github = "hrshkshri"
 #let linkedin = "hrshkshri"
-#let personal-site = "harsh-keshari.vercel.app"
+#let personal-site = "hrshkshri.vercel.app"
 
 #show: resume.with(
   top-margin: 0.2in,
@@ -52,9 +52,9 @@
 // ── Skills ─────────────────────────────────────────────────────────────────────
 #custom-title("Skills")[
   #skills()[
-    - *Languages & Frameworks:* JavaScript/TypeScript, Python, Node.js, Express.js, React.js, Next.js, C/C++
-    - *Databases & Tools:* MongoDB, PostgreSQL, Redis, Prisma, Git, Docker, AWS (EC2, Lambda), Firebase
-    - *Concepts:* REST APIs, RBAC, Multi-tenancy, Cron Jobs, System Design, JWT/Auth, CI/CD
+    - *Languages & Frameworks:* JavaScript/TypeScript, Python, Node.js, Express.js, React.js, Next.js
+    - *Databases & Tools:* MongoDB, PostgreSQL, Redis, Prisma, Git, Docker, AWS (EC2, Lambda), Firebase, Deepgram, Pinecone, Vertex AI, Google Cloud Tasks
+    - *Concepts:* REST APIs, RBAC, Multi-tenancy, Microservices Architecture, Vector Search, JWT/Auth, CI/CD
   ]
 ]
 
@@ -70,55 +70,36 @@
   )[
     - *Built the entire platform from scratch* — 11 microservices: LMS, CRM, AI Interviewer, Smart Meeting Assistant, Recommendation Engine, Payments, Notifications, Auth, Internship Portal, Ops Dashboard, Evaluator.
     - *Designed auth & RBAC system* powering all services — 39+ permissions, 5 user roles, multi-tenant org isolation.
-    - *Built Smart Meeting Assistant* — browser-based recording, Deepgram transcription, OpenAI-generated summaries and action items, one-click push to student roadmaps.
+    - *Built Smart Meeting Assistant* — browser-based recording, Deepgram transcription, OpenAI-generated summaries and action items, one-click push to student roadmaps; used Bull + Redis queues to decouple processing from request cycles, enabling concurrent sessions.
     - *Built AI Interviewer* — Google Cloud Speech-to-Text, Vertex AI for question generation, video transcoding via Cloud Tasks.
     - *Built recommendation engine* using OpenAI embeddings + Pinecone vector search — became a major revenue stream.
     - *Migrated infrastructure from AWS Lambda to EC2*, eliminating timeout errors across all long-running operations.
-    - *Implemented async job queues* with Bull + Redis — decoupled meeting transcription and video processing from request cycles, enabling concurrent session handling.
-    - *Built payment microservice* integrating Razorpay — handled subscription billing and transaction tracking across the platform.
+    - *Platform adopted by Leverage Edu and PW* — recommendation engine became a primary revenue driver within months of launch.
   ]
 
 ]
 
 // ── Open Source ────────────────────────────────────────────────────────────────
-#custom-title("Open-Source Contribution")[
-  #work-heading(
-    "Quality Team Lead",
-    link("https://www.github.com/oppia")[Oppia Foundation],
-    "Open Source",
-    datetime(year: 2023, month: 11, day: 1),
-    datetime(year: 2024, month: 4, day: 1),
-  )[
-    - *Led the LaCE quality team* — managed contributor onboarding, task assignments, and code reviews across all user-facing features.
-    - *Shipped 10 merged PRs* in Python and AngularJS — admin acceptance tests, topic editor migration, UI fixes, and e2e test coverage.
-  ]
-
-  #work-heading-no-date(
-    "Contributor",
-    link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall],
-    "Open Source",
-  )[
-    - *Completed a \$150 bounty* — fixed a critical search bar modal focus issue in the documentation site.
+#custom-title("Open Source")[
+  #skills()[
+    - *#link("https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri")[Oppia Foundation]* (Quality Team Lead, Nov 2023 – Apr 2024) — led LaCE quality team, shipped 10 PRs across admin acceptance tests and UI fixes.
+    - *#link("https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri")[CircuitVerse]* — fixed searchbar overlap bug and improved profile page responsiveness.
+    - *#link("https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri")[Zowe]* — contributed to Linux Foundation's open mainframe platform (`zlux-server-framework`).
+    - *#link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall]* — fixed critical search modal focus bug, earned \$150 bounty.
   ]
 ]
 
-// ── Projects ───────────────────────────────────────────────────────────────────
-#custom-title("Projects")[
+// ── Currently Building ─────────────────────────────────────────────────────────
+#custom-title("Currently Building")[
   #project-heading(
     [Crelyzor — #link("https://crelyzor.app")[crelyzor.app]],
-    stack: "Next.js, Node.js, PostgreSQL, OpenAI, Deepgram",
+    stack: "React, Express.js, PostgreSQL, Redis, OpenAI, Deepgram",
     project-url: "https://crelyzor.app",
   )[
-    - Building solo — an AI-native workspace that connects contacts, meetings, and tasks; consolidates tools like HiHello, Cal.com, Otter.ai, and Todoist into one product.
-    - *Core features shipped:* AI meeting transcription (Deepgram), OpenAI-powered action item extraction, contact management, and automated task sync.
-    - *Architected from day one* for scale — multi-tenant auth, RBAC, and microservices across the full stack.
-  ]
-
-  #project-heading(
-    [Nexus — #link("https://github.com/orgs/the-nexus-point/repositories")[GitHub] \/ #link("https://nexuspoint.vercel.app")[Website]],
-    stack: "MongoDB, Express.js, React.js, Node.js",
-    project-url: "https://nexuspoint.vercel.app",
-  )[
-    - *Built a live contest portal used by 300+ students* — real-time CodeChef standings, web scraping, student and admin portals, JWT auth.
+    - *Building solo* — a productivity OS where identity, meetings, scheduling, and tasks are one connected system; AI links card contacts to meeting participants, auto-extracts tasks from transcripts, and answers questions across your full conversation history.
+    - *Built end-to-end meeting intelligence pipeline* — Deepgram Nova-2 transcription with speaker diarization, GPT-4o-mini extraction of summaries/action items, and streaming SSE chat (Ask AI) with full transcript context.
+    - *Built timezone-aware booking engine* — slot calculation across availability schedules, Google Calendar busy-time, and existing bookings; serializable transactions prevent double-booking race conditions.
+    - *Integrated Google Calendar bidirectionally* — OAuth, read sync for busy-time injection, write sync for event creation/cancellation, auto-generated Meet links; Recall.ai bots auto-join online meetings and feed into the same transcription pipeline.
+    - *Architected dual-frontend system* — React + Vite for the authenticated dashboard; Next.js for SSR public pages (card profiles, booking pages, shared meetings) with OG previews and vCard downloads.
   ]
 ]
