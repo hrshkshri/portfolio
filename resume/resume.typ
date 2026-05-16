@@ -19,6 +19,7 @@
 #let github = "hrshkshri"
 #let linkedin = "hrshkshri"
 #let personal-site = "hrshkshri.vercel.app"
+#let location = "Delhi, India"
 
 #show: resume.with(
   top-margin: 0.2in,
@@ -29,6 +30,7 @@
   author-name: name,
   phone: phone,
   email: email,
+  location: location,
   website: personal-site,
   linkedin-user-id: linkedin,
   github-username: github,
@@ -40,8 +42,8 @@
 // ── Education ──────────────────────────────────────────────────────────────────
 #custom-title("Education")[
   #education-heading(
-    "Abdul Kalam Technical University",
-    "India",
+    "KIET Group of Institutions",
+    "Ghaziabad, India",
     "Bachelor of Technology",
     "Computer Science & Engineering (AI)",
     datetime(year: 2021, month: 8, day: 1),
@@ -88,14 +90,14 @@
   ]
 ]
 
-// ── Currently Building ─────────────────────────────────────────────────────────
-#custom-title("Currently Building")[
+// ── Projects ───────────────────────────────────────────────────────────────────
+#custom-title("Projects")[
   #project-heading(
     [Crelyzor — #link("https://crelyzor.app")[crelyzor.app]],
     stack: "React, Express.js, PostgreSQL, Redis, OpenAI, Deepgram",
     project-url: "https://crelyzor.app",
   )[
-    - *Building solo* — a productivity OS where identity, meetings, scheduling, and tasks are one connected system; AI links card contacts to meeting participants, auto-extracts tasks from transcripts, and answers questions over the full meeting history.
+    - A productivity OS where identity, meetings, scheduling, and tasks are one connected system; AI links card contacts to meeting participants, auto-extracts tasks from transcripts, and answers questions over the full meeting history.
     - *Built end-to-end meeting intelligence pipeline* — Deepgram Nova-2 transcription with speaker diarization, GPT-4o-mini extraction of summaries/action items, and streaming SSE chat (Ask AI) with full transcript context.
     - *Built timezone-aware booking engine* — slot calculation across availability schedules, Google Calendar busy-time, and existing bookings; serializable transactions prevent double-booking race conditions.
     - *Integrated Google Calendar bidirectionally* — OAuth, read sync for busy-time injection, write sync for event creation/cancellation, auto-generated Meet links; Recall.ai bots auto-join online meetings and feed into the same transcription pipeline.
