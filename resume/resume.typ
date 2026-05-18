@@ -23,8 +23,12 @@
 
 #show: resume.with(
   top-margin: 0.2in,
+  bottom-margin: 0.2in,
+  left-margin: 0.25in,
+  right-margin: 0.25in,
   font: "New Computer Modern",
-  personal-info-font-size: 9.2pt,
+  font-size: 10pt,
+  personal-info-font-size: 9pt,
   author-position: center,
   personal-info-position: center,
   author-name: name,
@@ -54,9 +58,10 @@
 // ── Skills ─────────────────────────────────────────────────────────────────────
 #custom-title("Skills")[
   #skills()[
-    - *Languages & Frameworks:* JavaScript/TypeScript, Python, Node.js, Express.js, React.js, Next.js
-    - *Databases & Tools:* MongoDB, PostgreSQL, Redis, Prisma, Git, Docker, AWS (EC2, Lambda), Firebase, Deepgram, Pinecone, Vertex AI, Google Cloud Tasks
-    - *Concepts:* REST APIs, RBAC, Multi-tenancy, Microservices Architecture, Vector Search, JWT/Auth, CI/CD
+    - *Languages & Frameworks:* TypeScript, JavaScript, Python, Node.js, Express, React, Next.js, Prisma
+    - *AI/ML:* OpenAI (GPT-4o, embeddings), Deepgram (Nova-2, speaker diarization), Pinecone vector search, Vertex AI, Google Cloud Speech-to-Text
+    - *Cloud, Infra & Integrations:* AWS (EC2, Lambda), Vercel, Docker, GCP, Firebase, Bull + Redis queues, node-cron, Google Calendar/Meet, Recall.ai, Razorpay, Brevo
+    - *Databases & Architecture:* PostgreSQL, MongoDB, Redis, Pinecone; Microservices, Multi-tenancy, Vector Search
   ]
 ]
 
@@ -70,12 +75,14 @@
     datetime(year: 2024, month: 11, day: 1),
     "Present",
   )[
-    - *Built the entire platform from scratch* — 11 microservices: LMS, CRM, AI Interviewer, Smart Meeting Assistant, Recommendation Engine, Payments, Notifications, Auth, Internship Portal, Ops Dashboard, Evaluator.
-    - *Designed auth & RBAC system* powering all services — 39+ permissions, 5 user roles, multi-tenant org isolation.
-    - *Built Smart Meeting Assistant* — browser-based recording, Deepgram transcription, OpenAI-generated summaries and action items, one-click push to student roadmaps; used Bull + Redis queues to decouple processing from request cycles, enabling concurrent sessions.
-    - *Built AI Interviewer* — Google Cloud Speech-to-Text, Vertex AI for question generation, video transcoding via Cloud Tasks.
-    - *Built recommendation engine* using OpenAI embeddings + Pinecone vector search — adopted by Leverage Edu and PW, became the primary revenue driver.
-    - *Migrated infrastructure from AWS Lambda to EC2*, eliminating timeout errors across all long-running operations.
+    - *Architected recommendation engine* on OpenAI embeddings + Pinecone vector search — primary revenue driver, adopted by Leverage Edu and PhysicsWallah; powers personalized activity recommendations for student career roadmaps.
+    - *Shipped 10 production microservices* across ExperimentLabs' edtech platform — core (Auth, CRM, Payments, Notifications), AI services (Recommendation Engine, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Sales Operations Dashboard).
+    - *Designed central SSO/identity service* (auth-core: 92 Prisma models, 85 routes) powering all microservices — refactored permission model from 93 → 38 across 6 categories; multi-tenant org isolation via tenant-keyed queries.
+    - *Engineered Smart Meeting Assistant* — counselor–student session recording with AI summaries auto-pushed to student career roadmaps; Bull + Redis queues + Railway worker handle batch transcription across orgs.
+    - *Built AI Interviewer* end-to-end — Google Cloud Speech-to-Text for student answers, Vertex AI for adaptive question generation and scoring, async video transcoding via Cloud Tasks.
+    - *Delivered Payments and Notifications services* — Razorpay subscription billing with webhook reconciliation and Brevo transactional email with node-cron scheduled reminders.
+    - *Migrated long-running services (transcription, video processing, recommendation regeneration) from AWS Lambda to EC2*, eliminating serverless timeouts; added cron monitors for payment reconciliation (every 10 min) and meeting-link retries (every 30 min).
+    - *Shipped frontends end-to-end alongside backends* — 13+ React/Next.js surfaces including counselor CRM, AI Interviewer portal, ops dashboard, embeddable plugin, and marketing site (Next.js SSR).
   ]
 
 ]
