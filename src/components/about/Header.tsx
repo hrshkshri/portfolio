@@ -9,14 +9,14 @@ const Header: React.FC = () => {
         Harsh Keshari
       </h1>
       <p className="text-lg md:text-xl text-neutral-300 mb-4">
-        Software Developer
+        Software Engineer
       </p>
       <p className="text-sm md:text-base text-neutral-400 leading-relaxed mb-6">
         I build software. That's what I am.
         <br /><br />
-        Founding Engineer at Experiment Labs — built the LMS, CRM, AI interviewer, internship platform, payment infrastructure, and more from the ground up.
+        Founding Engineer at Experiment Labs — shipped 10 production microservices across AI, payments, auth, and product; built the recommendation engine that became a primary revenue driver.
         <br /><br />
-        Nights and weekends: building Crelyzor — a workspace where your contacts, meetings, and tasks actually know about each other.
+        Also building Crelyzor — an all-in-one productivity SaaS for solo professionals, live in production with billing, AI meeting intelligence, and scheduling.
       </p>
 
       {/* Social Links */}

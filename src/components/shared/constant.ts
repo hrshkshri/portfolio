@@ -178,9 +178,9 @@ export const experiences: Experience[] = [
       {
         name: "",
         achievements: [
-          "Built the entire platform from scratch — **11 microservices** covering LMS, CRM, AI Interviewer, Smart Meeting Assistant, Recommendation Engine, Payments, Notifications, Auth, Internship Portal, Ops Dashboard, and Evaluator.",
-          "Designed the **auth & RBAC system** powering all services — 39+ permissions, 5 user roles, multi-tenant org isolation.",
-          "Built **Smart Meeting Assistant** — browser-based recording, Deepgram transcription, OpenAI-generated summaries and action items, with one-click push to student roadmaps.",
+          "Shipped **10 production microservices** across ExperimentLabs' edtech platform — core (Auth, CRM, Payments, Notifications), AI services (Recommendation Engine, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Sales Ops Dashboard).",
+          "Designed the **central SSO/identity service** (92 Prisma models, 85 routes) powering all services — refactored permission model from 93 → 38 across 6 categories; multi-tenant org isolation via tenant-keyed queries.",
+          "Engineered **Smart Meeting Assistant** — counselor–student session recording with AI summaries auto-pushed to student career roadmaps; Bull + Redis queues + Railway worker handle batch transcription across orgs.",
           "Built **AI Interviewer** — Google Cloud Speech-to-Text, Vertex AI for question generation, video transcoding via Cloud Tasks.",
           "Built **recommendation engine** using OpenAI embeddings + Pinecone vector search for AI-driven student career suggestions, which became a **major revenue stream**.",
           "Engineered **multi-channel notification service** — email, SMS, WhatsApp — with Redis-backed state, scheduled cron reminders, and rate limiting.",
