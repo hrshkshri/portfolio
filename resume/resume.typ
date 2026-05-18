@@ -22,10 +22,10 @@
 #let location = "Delhi, India"
 
 #show: resume.with(
-  top-margin: 0.2in,
-  bottom-margin: 0.2in,
-  left-margin: 0.25in,
-  right-margin: 0.25in,
+  top-margin: 0.18in,
+  bottom-margin: 0.18in,
+  left-margin: 0.22in,
+  right-margin: 0.22in,
   font: "New Computer Modern",
   font-size: 10pt,
   personal-info-font-size: 9pt,
@@ -81,8 +81,8 @@
     - *Engineered Smart Meeting Assistant* — counselor–student session recording with AI summaries auto-pushed to student career roadmaps; Bull + Redis queues + Railway worker handle batch transcription across orgs.
     - *Built AI Interviewer* end-to-end — Google Cloud Speech-to-Text for student answers, Vertex AI for adaptive question generation and scoring, async video transcoding via Cloud Tasks.
     - *Delivered Payments and Notifications services* — Razorpay subscription billing with webhook reconciliation and Brevo transactional email with node-cron scheduled reminders.
-    - *Migrated long-running services (transcription, video processing, recommendation regeneration) from AWS Lambda to EC2*, eliminating serverless timeouts; added cron monitors for payment reconciliation (every 10 min) and meeting-link retries (every 30 min).
-    - *Shipped frontends end-to-end alongside backends* — 13+ React/Next.js surfaces including counselor CRM, AI Interviewer portal, ops dashboard, embeddable plugin, and marketing site (Next.js SSR).
+    - *Migrated long-running services (transcription, video processing, recommendation regeneration) from AWS Lambda to EC2*, eliminating serverless timeouts; added cron monitors for payment reconciliation and meeting-link retries.
+    - *Shipped frontends end-to-end alongside backends* — 13+ React/Next.js surfaces including counselor CRM, AI Interviewer portal, ops dashboard, embeddable plugin, and marketing site.
   ]
 
 ]
@@ -90,10 +90,9 @@
 // ── Open Source ────────────────────────────────────────────────────────────────
 #custom-title("Open Source")[
   #skills()[
-    - *#link("https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri")[Oppia Foundation]* (Quality Team Lead, Nov 2023 – Apr 2024) — led LaCE quality team, shipped 10 PRs across admin acceptance tests and UI fixes.
-    - *#link("https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri")[CircuitVerse]* — fixed searchbar overlap bug and improved profile page responsiveness.
-    - *#link("https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri")[Zowe]* — contributed to Linux Foundation's open mainframe platform (`zlux-server-framework`).
-    - *#link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall]* — fixed critical search modal focus bug, earned \$150 bounty.
+    - *#link("https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri")[Oppia Foundation]* (Quality Team Lead, Nov 2023 – Apr 2024) — led LaCE, Oppia's frontend quality team; shipped 10 PRs across admin acceptance tests and UI fixes.
+    - *#link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall]* — shipped fix for search modal focus bug; earned \$150 bounty from the maintainer team.
+    - Also contributed to *#link("https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri")[CircuitVerse]* (digital circuit simulation) and *#link("https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri")[Zowe]* (Linux Foundation's open mainframe platform).
   ]
 ]
 
@@ -101,13 +100,14 @@
 #custom-title("Projects")[
   #project-heading(
     [Crelyzor — #link("https://crelyzor.app")[crelyzor.app]],
-    stack: "React, Express.js, PostgreSQL, Redis, OpenAI, Deepgram",
+    stack: "PERN stack · TypeScript · Prisma · Bull/Redis · Next.js · Deepgram Nova-3 · Google Gemini 2.0 Flash · Recall.ai · Resend · Docker · GitHub Actions",
     project-url: "https://crelyzor.app",
   )[
-    - A productivity OS where identity, meetings, scheduling, and tasks are one connected system; AI links card contacts to meeting participants, auto-extracts tasks from transcripts, and answers questions over the full meeting history.
-    - *Built end-to-end meeting intelligence pipeline* — Deepgram Nova-2 transcription with speaker diarization, GPT-4o-mini extraction of summaries/action items, and streaming SSE chat (Ask AI) with full transcript context.
-    - *Built timezone-aware booking engine* — slot calculation across availability schedules, Google Calendar busy-time, and existing bookings; serializable transactions prevent double-booking race conditions.
-    - *Integrated Google Calendar bidirectionally* — OAuth, read sync for busy-time injection, write sync for event creation/cancellation, auto-generated Meet links; Recall.ai bots auto-join online meetings and feed into the same transcription pipeline.
-    - *Architected dual-frontend system* — React + Vite for the authenticated dashboard; Next.js for SSR public pages (card profiles, booking pages, shared meetings) with OG previews and vCard downloads.
+    - *All-in-one productivity SaaS for solo professionals* — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live in production with billing, multi-environment Docker deploys, and a public booking widget embeddable on any site.
+    - *Built end-to-end meeting intelligence pipeline* — Deepgram Nova-3 Multilingual transcription with speaker diarization, Google Gemini 2.0 Flash for summaries + AI-extracted tasks; per-meeting Ask AI with SSE streaming + persisted conversation history; Recall.ai bots auto-join Meet/Zoom on bookings and feed the same pipeline.
+    - *Built timezone-aware scheduling engine* — slot calculation across availability schedules, GCal busy-time, existing bookings, and buffers; serializable transactions prevent double-booking races; bidirectional GCal push webhooks for real-time sync.
+    - *Architected 4-repo production system* — API backend, authenticated dashboard, SSR public site (cards, booking, shared meetings), and separate admin portal; Docker multi-stage builds, 3-environment Compose, nginx+Certbot SSL, GitHub Actions selective deploys.
+    - *Shipped billing infrastructure* — Free/Pro (\$19)/Business tiers, per-resource usage metering (transcription minutes, Recall hours, AI credits, storage), 402 enforcement with in-context upgrade flow, monthly reset cron.
+    - *Hardened production security* — encryption at rest via Google Cloud KMS (per-user DEKs, AES-256-GCM for transcripts/tasks/contacts), GCS bucket CMEK, crypto-shredding on account delete (GDPR); fixed XSS, SSRF on OG route; admin JWT in httpOnly cookies, CSP, rate-limited admin auth.
   ]
 ]
