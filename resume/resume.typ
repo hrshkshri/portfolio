@@ -75,10 +75,10 @@
     datetime(year: 2024, month: 11, day: 1),
     "Present",
   )[
-    - *Architected recommendation engine* on OpenAI embeddings + Pinecone vector search — primary revenue driver, adopted by Leverage Edu and PhysicsWallah; driving personalized activity recommendations for student career roadmaps.
-    - *Launched 10 production microservices* across ExperimentLabs' edtech platform — core (Auth, CRM, Payments, Notifications), AI services (Recommendation Engine, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Sales Operations Dashboard).
-    - *Designed central SSO/identity service* (auth-core: 92 Prisma models, 85 routes) powering all microservices — refactored permission model from 93 → 38 across 6 categories; multi-tenant org isolation via tenant-keyed queries.
-    - *Engineered Smart Meeting Assistant* — counselor–student session recording with AI summaries auto-pushed to student career roadmaps; Bull + Redis queues + Railway worker processing batch transcription across orgs.
+    - *Architected recommendation engine* on OpenAI embeddings + Pinecone vector search — primary revenue driver adopted by Leverage Edu and PhysicsWallah to drive personalized activity recommendations for student career roadmaps.
+    - *Launched 10 production microservices* across ExperimentLabs' edtech platform — core (Auth, CRM, Payments, and Notifications), AI services (Recommendation Engine, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Sales Operations Dashboard).
+    - *Designed central SSO/identity service* (auth-core: 92 Prisma models, 85 routes) powering all microservices — refactored permission model from 93 to 38 roles across 6 categories with multi-tenant org isolation via tenant-keyed queries.
+    - *Engineered Smart Meeting Assistant* — counselor–student session recording with AI summaries auto-pushed to learner profiles; Bull + Redis queues + Railway worker processing batch transcription across orgs.
     - *Developed AI Interviewer* end-to-end — Google Cloud Speech-to-Text for student answers, Vertex AI for adaptive question generation and scoring, async video transcoding via Cloud Tasks.
     - *Implemented Payments and Notifications services* — Razorpay subscription billing with webhook reconciliation and Brevo transactional email with node-cron scheduled reminders.
     - *Migrated long-running services (transcription, video processing, recommendation regeneration) from AWS Lambda to EC2*, eliminating serverless timeouts; added cron monitors for payment reconciliation and meeting-link retries.
@@ -103,8 +103,8 @@
     stack: "PERN stack · TypeScript · Prisma · Bull/Redis · Next.js · Deepgram Nova-3 · Google Gemini 2.0 Flash · Recall.ai · Resend · Docker · GitHub Actions",
     project-url: "https://crelyzor.app",
   )[
-    - *All-in-one productivity SaaS for solo professionals* — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live in production with billing, multi-environment Docker deploys, and a public booking widget embeddable on any site.
-    - *Engineered end-to-end meeting intelligence pipeline* — Deepgram Nova-3 Multilingual transcription with speaker diarization, Google Gemini 2.0 Flash for summaries + AI-extracted tasks; per-meeting Ask AI with SSE streaming + persisted conversation history; Recall.ai bots auto-join Meet/Zoom on bookings and feed the same pipeline.
+    - *Built all-in-one productivity SaaS* that replaces HiHello, Cal.com, Otter.ai, and Todoist for solo professionals — live in production with billing, multi-environment Docker deploys, and a public booking widget embeddable on any site.
+    - *Engineered end-to-end meeting intelligence pipeline* — Deepgram Nova-3 transcription with speaker diarization, Gemini 2.0 Flash for AI summaries and task extraction, SSE-streamed Ask AI with persisted history; Recall.ai bots auto-join Meet/Zoom calls and feed the same pipeline.
     - *Implemented timezone-aware scheduling engine* — slot calculation across availability schedules, GCal busy-time, existing bookings, and buffers; serializable transactions prevent double-booking races; bidirectional GCal push webhooks for real-time sync.
     - *Structured 4-repo production system* — API backend, authenticated dashboard, SSR public site (cards, booking, shared meetings), and separate admin portal; Docker multi-stage builds, 3-environment Compose, nginx+Certbot SSL, GitHub Actions selective deploys.
     - *Launched billing infrastructure* — Free/Pro (\$19)/Business tiers, per-resource usage metering (transcription minutes, Recall hours, AI credits, storage), 402 enforcement with in-context upgrade flow, monthly reset cron.
