@@ -59,7 +59,7 @@
 #custom-title("Skills")[
   #skills()[
     - *Languages & Frameworks:* TypeScript, JavaScript, Python, Node.js, Express, React, Next.js, Prisma
-    - *AI/ML:* OpenAI (GPT-4o, embeddings), Deepgram (Nova-2, speaker diarization), Pinecone vector search, Vertex AI, Google Cloud Speech-to-Text
+    - *AI/ML:* OpenAI (GPT-4o, embeddings), Deepgram (Nova-3, speaker diarization), Pinecone vector search, Vertex AI, Google Cloud Speech-to-Text
     - *Cloud, Infra & Integrations:* AWS (EC2, Lambda), Vercel, Docker, GCP, Firebase, Bull + Redis queues, node-cron, Google Calendar/Meet, Recall.ai, Razorpay, Brevo
     - *Databases & Architecture:* PostgreSQL, MongoDB, Redis, Pinecone; Microservices, Multi-tenancy, Vector Search
   ]
@@ -75,14 +75,14 @@
     datetime(year: 2024, month: 11, day: 1),
     "Present",
   )[
-    - *Architected recommendation engine* on OpenAI embeddings + Pinecone vector search — primary revenue driver, adopted by Leverage Edu and PhysicsWallah; powers personalized activity recommendations for student career roadmaps.
-    - *Shipped 10 production microservices* across ExperimentLabs' edtech platform — core (Auth, CRM, Payments, Notifications), AI services (Recommendation Engine, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Sales Operations Dashboard).
+    - *Architected recommendation engine* on OpenAI embeddings + Pinecone vector search — primary revenue driver, adopted by Leverage Edu and PhysicsWallah; driving personalized activity recommendations for student career roadmaps.
+    - *Launched 10 production microservices* across ExperimentLabs' edtech platform — core (Auth, CRM, Payments, Notifications), AI services (Recommendation Engine, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Sales Operations Dashboard).
     - *Designed central SSO/identity service* (auth-core: 92 Prisma models, 85 routes) powering all microservices — refactored permission model from 93 → 38 across 6 categories; multi-tenant org isolation via tenant-keyed queries.
-    - *Engineered Smart Meeting Assistant* — counselor–student session recording with AI summaries auto-pushed to student career roadmaps; Bull + Redis queues + Railway worker handle batch transcription across orgs.
-    - *Built AI Interviewer* end-to-end — Google Cloud Speech-to-Text for student answers, Vertex AI for adaptive question generation and scoring, async video transcoding via Cloud Tasks.
-    - *Delivered Payments and Notifications services* — Razorpay subscription billing with webhook reconciliation and Brevo transactional email with node-cron scheduled reminders.
+    - *Engineered Smart Meeting Assistant* — counselor–student session recording with AI summaries auto-pushed to student career roadmaps; Bull + Redis queues + Railway worker processing batch transcription across orgs.
+    - *Developed AI Interviewer* end-to-end — Google Cloud Speech-to-Text for student answers, Vertex AI for adaptive question generation and scoring, async video transcoding via Cloud Tasks.
+    - *Implemented Payments and Notifications services* — Razorpay subscription billing with webhook reconciliation and Brevo transactional email with node-cron scheduled reminders.
     - *Migrated long-running services (transcription, video processing, recommendation regeneration) from AWS Lambda to EC2*, eliminating serverless timeouts; added cron monitors for payment reconciliation and meeting-link retries.
-    - *Shipped frontends end-to-end alongside backends* — 13+ React/Next.js surfaces including counselor CRM, AI Interviewer portal, ops dashboard, embeddable plugin, and marketing site.
+    - *Delivered 13+ React/Next.js frontends end-to-end* — counselor CRM, AI Interviewer portal, ops dashboard, embeddable plugin, and marketing site, deployed alongside each backend service.
   ]
 
 ]
@@ -90,8 +90,8 @@
 // ── Open Source ────────────────────────────────────────────────────────────────
 #custom-title("Open Source")[
   #skills()[
-    - *#link("https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri")[Oppia Foundation]* (Quality Team Lead, Nov 2023 – Apr 2024) — led LaCE, Oppia's frontend quality team; shipped 10 PRs across admin acceptance tests and UI fixes.
-    - *#link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall]* — shipped fix for search modal focus bug; earned \$150 bounty from the maintainer team.
+    - *#link("https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri")[Oppia Foundation]* (Quality Team Lead, Nov 2023 – Apr 2024) — led LaCE, Oppia's frontend quality team; merged 10 PRs across admin acceptance tests and UI fixes.
+    - *#link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall]* — resolved search modal focus bug; earned \$150 bounty from the maintainer team.
     - Also contributed to *#link("https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri")[CircuitVerse]* (digital circuit simulation) and *#link("https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri")[Zowe]* (Linux Foundation's open mainframe platform).
   ]
 ]
@@ -104,10 +104,10 @@
     project-url: "https://crelyzor.app",
   )[
     - *All-in-one productivity SaaS for solo professionals* — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live in production with billing, multi-environment Docker deploys, and a public booking widget embeddable on any site.
-    - *Built end-to-end meeting intelligence pipeline* — Deepgram Nova-3 Multilingual transcription with speaker diarization, Google Gemini 2.0 Flash for summaries + AI-extracted tasks; per-meeting Ask AI with SSE streaming + persisted conversation history; Recall.ai bots auto-join Meet/Zoom on bookings and feed the same pipeline.
-    - *Built timezone-aware scheduling engine* — slot calculation across availability schedules, GCal busy-time, existing bookings, and buffers; serializable transactions prevent double-booking races; bidirectional GCal push webhooks for real-time sync.
-    - *Architected 4-repo production system* — API backend, authenticated dashboard, SSR public site (cards, booking, shared meetings), and separate admin portal; Docker multi-stage builds, 3-environment Compose, nginx+Certbot SSL, GitHub Actions selective deploys.
-    - *Shipped billing infrastructure* — Free/Pro (\$19)/Business tiers, per-resource usage metering (transcription minutes, Recall hours, AI credits, storage), 402 enforcement with in-context upgrade flow, monthly reset cron.
+    - *Engineered end-to-end meeting intelligence pipeline* — Deepgram Nova-3 Multilingual transcription with speaker diarization, Google Gemini 2.0 Flash for summaries + AI-extracted tasks; per-meeting Ask AI with SSE streaming + persisted conversation history; Recall.ai bots auto-join Meet/Zoom on bookings and feed the same pipeline.
+    - *Implemented timezone-aware scheduling engine* — slot calculation across availability schedules, GCal busy-time, existing bookings, and buffers; serializable transactions prevent double-booking races; bidirectional GCal push webhooks for real-time sync.
+    - *Structured 4-repo production system* — API backend, authenticated dashboard, SSR public site (cards, booking, shared meetings), and separate admin portal; Docker multi-stage builds, 3-environment Compose, nginx+Certbot SSL, GitHub Actions selective deploys.
+    - *Launched billing infrastructure* — Free/Pro (\$19)/Business tiers, per-resource usage metering (transcription minutes, Recall hours, AI credits, storage), 402 enforcement with in-context upgrade flow, monthly reset cron.
     - *Hardened production security* — encryption at rest via Google Cloud KMS (per-user DEKs, AES-256-GCM for transcripts/tasks/contacts), GCS bucket CMEK, crypto-shredding on account delete (GDPR); fixed XSS, SSRF on OG route; admin JWT in httpOnly cookies, CSP, rate-limited admin auth.
   ]
 ]
