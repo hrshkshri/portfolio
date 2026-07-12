@@ -19,7 +19,11 @@
 #let github = "hrshkshri"
 #let linkedin = "hrshkshri"
 #let personal-site = "hrshkshri.vercel.app"
-#let location = "Delhi, India"
+#let location = "Delhi NCR, India"
+
+// Globally style all links to be a professional blue color (declared before the
+// template so it also colors the header contact links)
+#show link: set text(fill: rgb("#0055CC"))
 
 #show: resume.with(
   top-margin: 0.18in,
@@ -32,16 +36,16 @@
   author-position: center,
   personal-info-position: center,
   author-name: name,
-  phone: phone,
-  email: email,
-  location: location,
-  website: personal-site,
-  linkedin-user-id: linkedin,
-  github-username: github,
 )
 
-// Globally style all links to be a professional blue color
-#show link: set text(fill: rgb("#0055CC"))
+// Custom one-line contact row: LinkedIn/GitHub shown as short hyperlinked words
+// so the header never wraps to a second line.
+#let contact-sep = [#h(0.3em)#text(fill: luma(55%))[|]#h(0.3em)]
+#let contact-link(url, label) = underline(offset: 0.25em)[#link(url)[#label]]
+#align(center, text(9pt)[
+  #phone#contact-sep#location#contact-sep#contact-link("mailto:" + email)[#email]#contact-sep#contact-link("https://" + personal-site)[Portfolio]#contact-sep#contact-link("https://linkedin.com/in/" + linkedin)[LinkedIn]#contact-sep#contact-link("https://github.com/" + github)[GitHub]
+])
+#v(-0.4em)
 
 // ── Education ──────────────────────────────────────────────────────────────────
 #custom-title("Education")[
@@ -59,8 +63,8 @@
 #custom-title("Skills")[
   #skills()[
     - *Languages & Frameworks:* TypeScript, JavaScript, Python, Node.js, Express, React, Next.js, Prisma
-    - *AI/ML:* OpenAI (GPT-4o, embeddings), Deepgram (Nova-3, speaker diarization), Pinecone vector search, Vertex AI, Google Cloud Speech-to-Text
-    - *Cloud, Infra & Integrations:* AWS (EC2, Lambda), Vercel, Docker, GCP, Firebase, Bull + Redis queues, node-cron, Google Calendar/Meet, Recall.ai, Razorpay, Brevo
+    - *AI/ML:* RAG (embeddings, Pinecone) · LLM agents & tool-calling (LangGraph, LangChain) · evals (LLM-as-judge, golden datasets, regression) · LLMs (OpenAI, Google Gemini) · speech & realtime voice (Deepgram, GCP STT)
+    - *Cloud, Infra & DevOps:* AWS (EC2, Lambda), GCP (Cloud Tasks, KMS), Docker (multi-stage), Vercel, GitHub Actions CI/CD, nginx; Bull + Redis queues, node-cron
     - *Databases & Architecture:* PostgreSQL, MongoDB, Redis, Pinecone; Microservices, Multi-tenancy, Vector Search
   ]
 ]
@@ -75,14 +79,13 @@
     datetime(year: 2024, month: 11, day: 1),
     "Present",
   )[
-    - *Architected recommendation engine* on OpenAI embeddings + Pinecone vector search — primary revenue driver adopted by Leverage Edu and PhysicsWallah to drive personalized activity recommendations for student career roadmaps.
-    - *Launched 10 production microservices* across ExperimentLabs' edtech platform — core (Auth, CRM, Payments, and Notifications), AI services (Recommendation Engine, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Sales Operations Dashboard).
-    - *Designed central SSO/identity service* (auth-core: 92 Prisma models, 85 routes) powering all microservices — refactored permission model from 93 to 38 roles across 6 categories with multi-tenant org isolation via tenant-keyed queries.
-    - *Engineered Smart Meeting Assistant* — counselor–student session recording with AI summaries auto-pushed to learner profiles; Bull + Redis queues + Railway worker processing batch transcription across orgs.
-    - *Developed AI Interviewer* end-to-end — Google Cloud Speech-to-Text for student answers, Vertex AI for adaptive question generation and scoring, async video transcoding via Cloud Tasks.
-    - *Implemented Payments and Notifications services* — Razorpay subscription billing with webhook reconciliation and Brevo transactional email with node-cron scheduled reminders.
+    - *Built the recommendation engine* on OpenAI embeddings + Pinecone vector search: the platform's primary revenue driver, serving 3,500+ personalized activity recommendations to students across 8 partner orgs including Leverage Edu and PhysicsWallah.
+    - *Shipped an agentic AI learning copilot*: LangGraph + Gemini agent with realtime voice (WebSocket); grounds replies on each student's activity, progress, and knowledge gaps plus RAG over a 100+ skill library; tool-calling (GitHub, web search, tasks); regression-tested in CI by an LLM-as-judge grader calibrated to human ratings.
+    - *Architected the platform's 10 production microservices* spanning core (Auth, CRM, Payments, Notifications), AI services (Recommendation Engine, Copilot, Smart Meeting Assistant, AI Interviewer), and product modules (Internship Portal, Evaluator, Ops Dashboard); built the central identity provider behind all of them (auth-core) with SSO, JWT + refresh sessions, Google/Zoom OAuth, service-to-service tokens, and a cached RBAC engine enforcing multi-tenant org isolation.
+    - *Engineered Smart Meeting Assistant*: recorded and transcribed 500+ counselor–student sessions with AI summaries auto-pushed to learner profiles; async Bull + Redis queue with a background worker batch-processing transcription across orgs.
+    - *Developed AI Interviewer*: Google Cloud Speech-to-Text for student answers, Vertex AI for adaptive question generation and scoring, async video transcoding via Cloud Tasks.
+    - *Implemented Payments and Notifications services*: Razorpay subscription billing with webhook reconciliation; Brevo transactional email with scheduled reminders.
     - *Migrated long-running services (transcription, video processing, recommendation regeneration) from AWS Lambda to EC2*, eliminating serverless timeouts; added cron monitors for payment reconciliation and meeting-link retries.
-    - *Delivered 13+ React/Next.js frontends end-to-end* — counselor CRM, AI Interviewer portal, ops dashboard, embeddable plugin, and marketing site, deployed alongside each backend service.
   ]
 
 ]
@@ -90,8 +93,8 @@
 // ── Open Source ────────────────────────────────────────────────────────────────
 #custom-title("Open Source")[
   #skills()[
-    - *#link("https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri")[Oppia Foundation]* (Quality Team Lead, Nov 2023 – Apr 2024) — led LaCE, Oppia's frontend quality team; merged 10 PRs across admin acceptance tests and UI fixes.
-    - *#link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall]* — resolved search modal focus bug; earned \$150 bounty from the maintainer team.
+    - *#link("https://github.com/oppia/oppia/pulls?q=is:pr+author:hrshkshri")[Oppia Foundation]* (Quality Team Lead, Nov 2023 – Apr 2024): led LaCE, Oppia's frontend quality team; merged 10 PRs across admin acceptance tests and UI fixes.
+    - *#link("https://github.com/tailcallhq/tailcallhq.github.io/pulls?q=is:pr+author:hrshkshri")[Tailcall]*: resolved search modal focus bug; earned \$150 bounty from the maintainer team.
     - Also contributed to *#link("https://github.com/CircuitVerse/CircuitVerse/pulls?q=is:pr+author:hrshkshri")[CircuitVerse]* (digital circuit simulation) and *#link("https://github.com/zowe/zlux-server-framework/pulls?q=is:pr+author:hrshkshri")[Zowe]* (Linux Foundation's open mainframe platform).
   ]
 ]
@@ -99,15 +102,15 @@
 // ── Projects ───────────────────────────────────────────────────────────────────
 #custom-title("Projects")[
   #project-heading(
-    [Crelyzor — #link("https://crelyzor.app")[crelyzor.app]],
-    stack: "PERN stack · TypeScript · Prisma · Bull/Redis · Next.js · Deepgram Nova-3 · Google Gemini 2.0 Flash · Recall.ai · Resend · Docker · GitHub Actions",
+    [Crelyzor: #link("https://crelyzor.app")[crelyzor.app]],
+    stack: "PERN stack · TypeScript · Prisma · Bull/Redis · Next.js · Deepgram Nova-3 · Google Gemini · Recall.ai · Google Cloud KMS/GCS · Docker · GitHub Actions",
     project-url: "https://crelyzor.app",
   )[
-    - *Built all-in-one productivity SaaS* that replaces HiHello, Cal.com, Otter.ai, and Todoist for solo professionals — live in production with billing, multi-environment Docker deploys, and a public booking widget embeddable on any site.
-    - *Engineered end-to-end meeting intelligence pipeline* — Deepgram Nova-3 transcription with speaker diarization, Gemini 2.0 Flash for AI summaries and task extraction, SSE-streamed Ask AI with persisted history; Recall.ai bots auto-join Meet/Zoom calls and feed the same pipeline.
-    - *Implemented timezone-aware scheduling engine* — slot calculation across availability schedules, GCal busy-time, existing bookings, and buffers; serializable transactions prevent double-booking races; bidirectional GCal push webhooks for real-time sync.
-    - *Structured 4-repo production system* — API backend, authenticated dashboard, SSR public site (cards, booking, shared meetings), and separate admin portal; Docker multi-stage builds, 3-environment Compose, nginx+Certbot SSL, GitHub Actions selective deploys.
-    - *Launched billing infrastructure* — Free/Pro (\$19)/Business tiers, per-resource usage metering (transcription minutes, Recall hours, AI credits, storage), 402 enforcement with in-context upgrade flow, monthly reset cron.
-    - *Hardened production security* — encryption at rest via Google Cloud KMS (per-user DEKs, AES-256-GCM for transcripts/tasks/contacts), GCS bucket CMEK, crypto-shredding on account delete (GDPR); fixed XSS, SSRF on OG route; admin JWT in httpOnly cookies, CSP, rate-limited admin auth.
+    - *Built an all-in-one productivity OS for teams* (cards + scheduling + meeting AI + tasks; replaces HiHello, Cal.com, Otter.ai, Todoist): live in production with usage-metered billing, across a 4-repo system (API, dashboard, SSR public site, admin) with Docker multi-stage builds and GitHub Actions CI/CD.
+    - *Engineered the meeting-intelligence pipeline*: Deepgram Nova-3 diarized transcription, Gemini AI summaries and task extraction, SSE-streamed Ask AI with history, and Recall.ai bots that auto-join Meet/Zoom calls; plus human-in-the-loop transcript and summary editing.
+    - *Shipped multi-user Teams*: shared cards, team booking pages, invites and roles, and team-scoped access control enforced across every meeting, task, and card.
+    - *Designed a timezone-aware scheduling engine*: slot calculation across availability, GCal busy-time, and buffers; serializable transactions prevent double-booking races; bidirectional GCal push webhooks.
+    - *Launched an internal admin and ops portal*: audit logs, system health (queue depth, Redis, KMS), per-team DEK rotation and crypto-shred, and an encryption-coverage dashboard.
+    - *Hardened security and encryption*: field-level encryption at rest (Google Cloud KMS, per-user/team AES-256-GCM DEKs) kept searchable via a blind index, key rotation, GDPR crypto-shredding; fixed XSS/SSRF, httpOnly JWT, CSP, rate-limited admin auth.
   ]
 ]
