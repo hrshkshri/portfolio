@@ -18,7 +18,7 @@ const Building: React.FC = () => {
             All-in-one productivity SaaS for solo professionals — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live with billing, AI meeting intelligence, and scheduling.
           </p>
           <div className="flex items-center gap-2 flex-wrap pt-1">
-            {["PERN Stack", "Deepgram", "Gemini 2.0", "Recall.ai", "Docker"].map((t) => (
+            {["PERN Stack", "TypeScript", "LLM · Gemini", "Deepgram STT", "AI Summarization", "Ask AI (SSE)", "Recall.ai", "Bull · Redis", "Docker"].map((t) => (
               <span
                 key={t}
                 className="text-xs px-2 py-0.5 rounded-full border border-neutral-700 text-neutral-500"
