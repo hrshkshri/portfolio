@@ -237,6 +237,18 @@ export const openSourceContributions: OpenSourceContribution[] = [
 
 export const projectsData: ProjectData[] = [
   {
+    name: "Claukit",
+    tag: "Maintained",
+    githubLink: "https://github.com/hrshkshri/claukit",
+    description: [
+      "Your Claude companion — a **browser extension + CLI** that surfaces token usage, cache reads, and rate limits in real time.",
+      "Shows **input/output token counts** per message, **cache hit tracking**, and visual **usage bars** for the 5-hour and 7-day limits with a reset countdown.",
+      "CLI renders auto-refreshing usage bars in the Claude Code status line; extension follows claude.ai's light/dark theme automatically.",
+    ],
+    category: "Developer Tools",
+    techStack: "TypeScript, Browser Extension (Firefox/Chrome), Node.js CLI",
+  },
+  {
     name: "Nexus",
     tag: "Maintained",
     githubLink: "https://github.com/orgs/the-nexus-point/repositories",

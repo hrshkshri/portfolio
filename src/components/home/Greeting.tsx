@@ -59,7 +59,7 @@ const Greeting: React.FC = () => {
           <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
             building{" "}
             <a
-              href="https://www.crelyzor.app"
+              href="https://crelyzor.hrshkshri.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-200 hover:text-amber-400 transition-colors"

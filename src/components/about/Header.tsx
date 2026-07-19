@@ -13,10 +13,6 @@ const Header: React.FC = () => {
       </p>
       <p className="text-sm md:text-base text-neutral-400 leading-relaxed mb-6">
         I build software. That's what I am.
-        <br /><br />
-        Founding Engineer at Experiment Labs — shipped 10 production microservices across AI, payments, auth, and product; built the recommendation engine that became a primary revenue driver.
-        <br /><br />
-        Also building Crelyzor — an all-in-one productivity SaaS for solo professionals, live in production with billing, AI meeting intelligence, and scheduling.
       </p>
 
       {/* Social Links */}

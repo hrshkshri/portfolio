@@ -30,12 +30,12 @@ const Building: React.FC = () => {
         </div>
 
         <a
-          href="https://www.crelyzor.app"
+          href="https://crelyzor.hrshkshri.com"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors shrink-0"
         >
-          crelyzor.app
+          crelyzor.hrshkshri.com
           <FiExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>
