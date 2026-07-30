@@ -1,12 +1,16 @@
 import React from "react";
 import { FiExternalLink } from "react-icons/fi";
 
+interface ProductLink {
+  href: string;
+  label: string;
+}
+
 interface Product {
   name: string;
   description: string;
   tags: string[];
-  href: string;
-  linkLabel: string;
+  links: ProductLink[];
 }
 
 const products: Product[] = [
@@ -15,16 +19,17 @@ const products: Product[] = [
     description:
       "All-in-one productivity SaaS for solo professionals — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live with billing, AI meeting intelligence, and scheduling.",
     tags: ["PERN Stack", "TypeScript", "LLM · Gemini", "Deepgram STT", "AI Summarization", "Ask AI (SSE)", "Recall.ai", "Bull · Redis", "Docker"],
-    href: "https://crelyzor.hrshkshri.com",
-    linkLabel: "crelyzor.hrshkshri.com",
+    links: [{ href: "https://crelyzor.hrshkshri.com", label: "crelyzor.hrshkshri.com" }],
   },
   {
     name: "Claukit",
     description:
       "Your Claude companion — a browser extension + CLI that surfaces token usage, cache reads, and rate limits in real time, with usage bars for the 5-hour and 7-day limits.",
     tags: ["TypeScript", "Browser Extension", "Node.js CLI"],
-    href: "https://www.npmjs.com/package/claukit",
-    linkLabel: "npmjs.com/package/claukit",
+    links: [
+      { href: "https://www.npmjs.com/package/claukit", label: "npmjs.com/package/claukit" },
+      { href: "https://www.youtube.com/watch?v=opDPxKR_zfE", label: "Demo" },
+    ],
   },
 ];
 
@@ -62,15 +67,20 @@ const Building: React.FC = () => {
               </div>
             </div>
 
-            <a
-              href={product.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors mt-4"
-            >
-              {product.linkLabel}
-              <FiExternalLink className="w-3.5 h-3.5" />
-            </a>
+            <div className="flex items-center gap-4 flex-wrap mt-4">
+              {product.links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors"
+                >
+                  {link.label}
+                  <FiExternalLink className="w-3.5 h-3.5" />
+                </a>
+              ))}
+            </div>
           </div>
         ))}
       </div>
