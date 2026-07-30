@@ -56,18 +56,39 @@ const Greeting: React.FC = () => {
             </h1>
           </div>
 
-          <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
-            building{" "}
-            <a
-              href="https://crelyzor.hrshkshri.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-200 hover:text-amber-400 transition-colors"
-            >
-              Crelyzor
-            </a>{" "}
-            — an AI-native workspace where your contacts, meetings, and tasks are all connected and actually talk to each other.
-          </p>
+          <div className="text-sm text-neutral-400 max-w-sm leading-relaxed">
+            <p className="text-neutral-300 mb-2">Built</p>
+            <ul className="space-y-1.5">
+              <li className="flex gap-2">
+                <span className="text-amber-400/70 select-none">›</span>
+                <span>
+                  <a
+                    href="https://crelyzor.hrshkshri.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-200 hover:text-amber-400 transition-colors"
+                  >
+                    Crelyzor
+                  </a>{" "}
+                  — an AI-native workspace where your contacts, meetings, and tasks actually talk to each other.
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-amber-400/70 select-none">›</span>
+                <span>
+                  <a
+                    href="https://www.npmjs.com/package/claukit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-200 hover:text-amber-400 transition-colors"
+                  >
+                    Claukit
+                  </a>{" "}
+                  — a real-time usage companion for Claude.
+                </span>
+              </li>
+            </ul>
+          </div>
 
           <div className="flex items-center gap-6">
             <a

@@ -1,6 +1,7 @@
 import React from "react";
 import { AiFillGithub, AiFillLinkedin, AiFillMail } from "react-icons/ai";
-import { BsTwitter } from "react-icons/bs";
+import { BsTwitterX, BsFileEarmarkText } from "react-icons/bs";
+import { resumeLink } from "../shared/constant";
 
 const Header: React.FC = () => {
   return (
@@ -8,11 +9,8 @@ const Header: React.FC = () => {
       <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
         Harsh Keshari
       </h1>
-      <p className="text-lg md:text-xl text-neutral-300 mb-4">
+      <p className="text-lg md:text-xl text-neutral-300 mb-6">
         Software Engineer
-      </p>
-      <p className="text-sm md:text-base text-neutral-400 leading-relaxed mb-6">
-        I build software. That's what I am.
       </p>
 
       {/* Social Links */}
@@ -20,18 +18,19 @@ const Header: React.FC = () => {
         {[
           { href: "https://github.com/hrshkshri", icon: AiFillGithub, label: "GitHub" },
           { href: "https://www.linkedin.com/in/hrshkshri/", icon: AiFillLinkedin, label: "LinkedIn" },
-          { href: "https://twitter.com/hrshkshri", icon: BsTwitter, label: "Twitter" },
+          { href: "https://twitter.com/hrshkshri", icon: BsTwitterX, label: "" },
           { href: "mailto:harshkeshari100@gmail.com", icon: AiFillMail, label: "Email" },
+          { href: resumeLink, icon: BsFileEarmarkText, label: "Resume" },
         ].map((link) => (
           <a
-            key={link.label}
+            key={link.href}
             href={link.href}
             target={link.href.startsWith("http") ? "_blank" : undefined}
             rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-amber-400 hover:border-amber-400/30 hover:bg-amber-400/5 transition-all duration-200 text-xs"
           >
             <link.icon className="w-3.5 h-3.5" />
-            {link.label}
+            {link.label && <span>{link.label}</span>}
           </a>
         ))}
       </div>

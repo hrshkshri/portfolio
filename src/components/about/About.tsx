@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import Banner from "./Banner";
 import Building from "./Building";
 import Experience from "./Experience";
-import Projects from "./Projects";
 import OpenSource from "./OpenSource";
 import Header from "./Header";
 
@@ -15,29 +13,20 @@ const About: React.FC = () => {
         {/* Header Section */}
         <div className="mb-12">
           <Header />
-          <Banner />
         </div>
+
+        {/* Experience Section */}
+        <section className="mb-16">
+          <Experience />
+        </section>
+
+        {/* Open Source Section */}
+        <section className="mb-16">
+          <OpenSource />
+        </section>
 
         {/* Currently Building */}
         <Building />
-
-        {/* Journey Timeline */}
-        <div className="space-y-16">
-          {/* Experience Section */}
-          <section>
-            <Experience />
-          </section>
-
-          {/* Open Source Section */}
-          <section>
-            <OpenSource />
-          </section>
-
-          {/* Projects Section */}
-          <section>
-            <Projects />
-          </section>
-        </div>
 
         {/* Footer Note */}
         <div className="mt-16 pt-8 border-t border-neutral-800 text-center">

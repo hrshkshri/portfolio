@@ -72,17 +72,6 @@ interface OpenSourceContribution {
   achievements: string[];
 }
 
-interface ProjectData {
-  name: string;
-  tag?: string;
-  duration?: string;
-  liveLink?: string;
-  githubLink: string;
-  description: string[];
-  category: string;
-  techStack: string;
-}
-
 export const skillsData: SkillCategory[] = [
   {
     category: "Languages",
@@ -155,21 +144,6 @@ export const navLinks: NavLink[] = [
 
 export const experiences: Experience[] = [
   {
-    role: "Backend Developer",
-    company: "Xipper",
-    companyUrl: "https://www.linkedin.com/company/xipper",
-    period: "Sept 2024 - Nov 2024",
-    projects: [
-      {
-        name: "",
-        achievements: [
-          "Built the MVP backend for a hotel booking & management platform from scratch using **Node.js and Express**.",
-          "Designed and shipped REST APIs for room booking, availability management, and authentication.",
-        ],
-      },
-    ],
-  },
-  {
     role: "Founding Engineer",
     company: "Experiment Labs",
     companyUrl: "https://www.linkedin.com/company/experiment-labs",
@@ -234,40 +208,3 @@ export const openSourceContributions: OpenSourceContribution[] = [
   },
 ];
 
-export const projectsData: ProjectData[] = [
-  {
-    name: "Claukit",
-    tag: "Maintained",
-    githubLink: "https://github.com/hrshkshri/claukit",
-    description: [
-      "Your Claude companion — a **browser extension + CLI** that surfaces token usage, cache reads, and rate limits in real time.",
-      "Shows **input/output token counts** per message, **cache hit tracking**, and visual **usage bars** for the 5-hour and 7-day limits with a reset countdown.",
-      "CLI renders auto-refreshing usage bars in the Claude Code status line; extension follows claude.ai's light/dark theme automatically.",
-    ],
-    category: "Developer Tools",
-    techStack: "TypeScript, Browser Extension (Firefox/Chrome), Node.js CLI",
-  },
-  {
-    name: "Nexus",
-    tag: "Maintained",
-    githubLink: "https://github.com/orgs/the-nexus-point/repositories",
-    description: [
-      "Built a **live contest portal used by 300+ students** for real-time coding competition participation and standings on CodeChef.",
-      "Shipped both a student portal (enrollment, live standings) and a secure admin portal (profile management, data scraping, result generation).",
-      "Implemented **web scraping** to pull real-time user data from CodeChef and **JWT-based auth** via Passport.js.",
-    ],
-    category: "Full-Stack Development",
-    techStack: "MERN Stack, Chakra-UI, Tailwind CSS",
-  },
-  {
-    name: "Bitcoin Wallet CLI",
-    tag: "",
-    githubLink: "https://github.com/hrshkshri/bitcoin-cli-tool",
-    description: [
-      "CLI tool to manage Bitcoin wallets, addresses, and transactions — wallet creation, address generation, balance checking, and transaction history.",
-      "Integrated **Blockcypher API** for real-time Bitcoin data.",
-    ],
-    category: "CLI / Systems",
-    techStack: "Node.js, Blockcypher API",
-  },
-];
