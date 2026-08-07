@@ -7,7 +7,7 @@ import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 
 const Calendar: React.FC = () => {
   return (
-    <div className="w-full min-h-screen relative overflow-hidden flex flex-col justify-end bg-black">
+    <div className="w-full min-h-[100svh] relative overflow-hidden flex flex-col bg-black">
 
       {/* Subtle grid texture */}
       <div
@@ -22,23 +22,25 @@ const Calendar: React.FC = () => {
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
 
-      {/* Calendar embed — fills most of the screen */}
-      <div className="absolute inset-0 top-0 bottom-[340px] z-0">
-        <div className="w-full h-full overflow-hidden">
-          <iframe
-            src="https://cal.com/hrshkshri?embed=true&theme=dark"
-            width="100%"
-            height="100%"
-            allow="camera; microphone; autoplay; display-capture; clipboard-write"
-            style={{ border: "none", opacity: 0.85 }}
-          />
-        </div>
+      {/* Calendar embed — takes whatever height the copy below doesn't need.
+          Previously pinned at a hardcoded bottom-[340px], which left a dead
+          black band on mobile where cal.com's short content ran out. */}
+      <div className="relative flex-1 min-h-[300px] md:min-h-[420px] overflow-hidden">
+        {/* absolute, not height="100%": a percentage height cannot resolve
+            against a flex-1 parent with no definite height (it collapses to
+            the 150px iframe default). */}
+        <iframe
+          src="https://cal.com/hrshkshri?embed=true&theme=dark"
+          allow="camera; microphone; autoplay; display-capture; clipboard-write"
+          className="absolute inset-0 w-full h-full"
+          style={{ border: "none", opacity: 0.85 }}
+        />
         {/* Fade bottom of iframe into the page */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent pointer-events-none" />
       </div>
 
       {/* Bottom content — mirrors home page */}
-      <div className="relative z-10 w-full px-8 md:px-16 pb-12 grid grid-cols-2 items-end gap-8">
+      <div className="relative z-10 w-full px-6 md:px-16 pt-6 pb-28 md:pb-12 grid grid-cols-1 md:grid-cols-2 items-end gap-6 md:gap-8">
 
         {/* Left */}
         <div className="space-y-5">
@@ -51,7 +53,7 @@ const Calendar: React.FC = () => {
             </h1>
           </div>
 
-          <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
+          <p className="text-sm text-neutral-400 max-w-md leading-relaxed">
             Pick a time that works for you — or reach out directly at{" "}
             <a
               href="mailto:harshkeshari100@gmail.com"
@@ -61,7 +63,7 @@ const Calendar: React.FC = () => {
             </a>
           </p>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <a
               href="mailto:harshkeshari100@gmail.com"
               className="px-6 py-2.5 bg-white text-neutral-900 text-sm font-semibold rounded-full hover:bg-neutral-200 transition-colors duration-200 flex items-center gap-2"
@@ -79,7 +81,7 @@ const Calendar: React.FC = () => {
         </div>
 
         {/* Right: contact links */}
-        <div className="flex flex-col gap-8 items-end text-right">
+        <div className="flex flex-col gap-8 items-start text-left md:items-end md:text-right">
           <div>
             <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mb-3">Contact</p>
             <div className="flex items-center gap-4">

@@ -1,49 +1,42 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { spotifyService, SpotifyData } from "@/lib/api";
 import { AiFillGithub } from "react-icons/ai";
 import { BsCalendar3, BsFileEarmarkText } from "react-icons/bs";
 
+// `onMobile` marks the links the bottom tab bar doesn't already cover.
+const LINKS = [
+  { label: "View My Work", href: "/about", onMobile: false },
+  { label: "GitHub", href: "/github", icon: AiFillGithub, onMobile: true },
+  { label: "Get In Touch", href: "/calendar", icon: BsCalendar3, onMobile: false },
+  { label: "Resume", href: "/resume.pdf", icon: BsFileEarmarkText, onMobile: true },
+];
+
 const Greeting: React.FC = () => {
-  const [track, setTrack] = useState<SpotifyData | null>(null);
-
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const data = await spotifyService.getNowPlaying();
-        setTrack(data);
-      } catch {
-        // silent
-      }
-    };
-    fetch();
-    const interval = setInterval(fetch, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
+  // Exactly one viewport on every breakpoint — the mobile tab bar floats over the
+  // hero, so the copy below just pads itself clear of it rather than shrinking it.
   return (
-    <div className="w-full min-h-screen relative overflow-hidden flex flex-col justify-end">
+    <div className="w-full min-h-[100svh] relative overflow-hidden flex flex-col justify-end">
 
-      {/* Full bleed photo */}
+      {/* Full bleed photo — anchored high on mobile so the face clears the copy */}
       <div className="absolute inset-0 flex items-center justify-center">
         <Image
           src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Gemini-Generated-Image-from-Photoroom-1-1761154733626.png?width=8000&height=8000&resize=contain"
           alt="Harsh Keshari"
           width={600}
           height={800}
-          className="h-full w-auto object-contain"
+          className="h-full w-full object-cover object-[50%_12%] md:w-auto md:object-contain md:object-center"
           priority
         />
       </div>
 
-      {/* Gradient overlay — transparent top, dark bottom */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+      {/* Scrim — vertical for the bottom bar, horizontal to protect the left column */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/35 to-transparent" />
 
-      {/* Bottom bar — two columns */}
-      <div className="relative z-10 w-full px-8 md:px-16 pb-12 grid grid-cols-2 items-end gap-8">
+      {/* Bottom bar */}
+      <div className="relative z-10 w-full px-6 md:px-16 pb-28 md:pb-12 grid grid-cols-1 md:grid-cols-2 items-end gap-8">
 
         {/* Left: main content */}
         <div className="space-y-5">
@@ -56,87 +49,69 @@ const Greeting: React.FC = () => {
             </h1>
           </div>
 
-          <div className="text-sm text-neutral-400 max-w-sm leading-relaxed">
-            <p className="text-neutral-300 mb-2">Built</p>
-            <ul className="space-y-1.5">
-              <li className="flex gap-2">
-                <span className="text-amber-400/70 select-none">›</span>
-                <span>
-                  <a
-                    href="https://crelyzor.hrshkshri.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-neutral-200 hover:text-amber-400 transition-colors"
-                  >
-                    Crelyzor
-                  </a>{" "}
-                  — an AI-native workspace where your contacts, meetings, and tasks actually talk to each other.
-                </span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-amber-400/70 select-none">›</span>
-                <span>
-                  <a
-                    href="https://www.npmjs.com/package/claukit"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-neutral-200 hover:text-amber-400 transition-colors"
-                  >
-                    Claukit
-                  </a>{" "}
-                  — a real-time usage companion for Claude.
-                </span>
-              </li>
-            </ul>
-          </div>
+          <p className="text-base text-neutral-300 max-w-md leading-relaxed">
+            Full-stack engineer building AI-native products — agentic backends
+            and the interfaces that sit on top of them.
+          </p>
 
-          <div className="flex items-center gap-6">
-            <a
-              href="/about"
-              className="px-6 py-2.5 bg-white text-neutral-900 text-sm font-semibold rounded-full hover:bg-neutral-200 transition-colors duration-200"
-            >
-              View My Work
-            </a>
-            <a
-              href="/calendar"
-              className="text-sm text-neutral-400 hover:text-white transition-colors duration-200"
-            >
-              Get In Touch →
-            </a>
-          </div>
-
-          {track && track.title && (
-            <Link
-              href="/spotify"
-              className="inline-flex items-center gap-2 text-xs text-neutral-600 hover:text-neutral-400 transition-colors group"
-            >
-              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${track.isPlaying ? "bg-green-500 animate-pulse" : "bg-neutral-700"}`} />
+          <ul className="text-sm text-neutral-400 max-w-md leading-relaxed space-y-1.5">
+            <li className="flex gap-2">
+              <span className="text-amber-400/70 select-none">›</span>
               <span>
-                {track.isPlaying ? "listening to" : "last played"}{" "}
-                <span className="text-neutral-400 group-hover:text-neutral-200">{track.title}</span>
-                {" "}· {track.artist}
+                <a
+                  href="https://crelyzor.hrshkshri.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-200 hover:text-amber-400 transition-colors duration-150"
+                >
+                  Crelyzor
+                </a>{" "}
+                — AI-native workspace for contacts, meetings, and tasks.
               </span>
-            </Link>
-          )}
+            </li>
+            <li className="flex gap-2">
+              <span className="text-amber-400/70 select-none">›</span>
+              <span>
+                <a
+                  href="https://www.npmjs.com/package/claukit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-200 hover:text-amber-400 transition-colors duration-150"
+                >
+                  Claukit
+                </a>{" "}
+                — real-time usage companion for Claude.
+              </span>
+            </li>
+          </ul>
+
+          {/* Mobile only — desktop uses the right column. */}
+          <div className="flex md:hidden items-center gap-5">
+            {LINKS.filter((l) => l.onMobile).map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="flex items-center gap-2 text-sm text-neutral-400 hover:text-neutral-100 transition-colors duration-150"
+              >
+                {link.icon && <link.icon className="w-4 h-4" />}
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
 
-        {/* Right: links + stack */}
-        <div className="flex flex-col gap-8 items-end text-right">
-
-          {/* Links */}
+        {/* Right: links. Hidden on mobile — the tab bar covers it. */}
+        <div className="hidden md:flex flex-col gap-8 items-end text-right">
           <div>
-            <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mb-3">Links</p>
+            <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mb-3">
+              Links
+            </p>
             <div className="space-y-2">
-              {[
-                { label: "About", href: "/about" },
-                { label: "GitHub", href: "/github", icon: AiFillGithub },
-                { label: "Schedule", href: "/calendar", icon: BsCalendar3 },
-                { label: "Resume", href: "/resume.pdf", icon: BsFileEarmarkText },
-              ].map((link) => (
+              {LINKS.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="flex items-center justify-end gap-2 text-xl text-neutral-400 hover:text-neutral-100 transition-colors duration-200"
+                  className="flex items-center justify-end gap-2 text-base text-neutral-400 hover:text-neutral-100 transition-colors duration-150"
                 >
                   {link.label}
                   {link.icon && <link.icon className="w-4 h-4" />}
@@ -144,8 +119,6 @@ const Greeting: React.FC = () => {
               ))}
             </div>
           </div>
-
-
         </div>
       </div>
 

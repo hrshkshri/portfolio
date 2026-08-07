@@ -11,7 +11,6 @@ import {
   SiAngular,
   SiPostgresql,
   SiMysql,
-  SiSpotify,
 } from "react-icons/si";
 import { FaReact, FaNodeJs, FaLinux } from "react-icons/fa";
 import {
@@ -133,7 +132,6 @@ export const socialLinks: SocialLink[] = [
     icon: AiFillMail,
     label: "Email",
   },
-  { href: "/spotify", icon: SiSpotify, label: "Spotify" },
 ];
 
 export const navLinks: NavLink[] = [

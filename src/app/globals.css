@@ -14,9 +14,22 @@ nextjs-portal {
 }
 
 /* Dark theme base */
+/* The overscroll/rubber-band area is painted with the canvas background. Neither
+   html nor body declared a background *color* (body only had a gradient image),
+   so it fell back to the UA default — white. Set a real color on html. */
+html {
+  background-color: #0f0f0f;
+  color-scheme: dark;
+}
+
 body {
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  background-color: #0f0f0f;
+  background-image: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  /* svh, not vh: on mobile `100vh` is the URL-bar-hidden height, which makes
+     every page taller than the visible viewport and leaves a dead scroll gap
+     that toggles the URL bar on each swipe. vh line is the pre-2022 fallback. */
   min-height: 100vh;
+  min-height: 100svh;
 }
 
 /* Custom scrollbar */

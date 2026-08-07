@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       </p>
 
       {/* Social Links */}
-      <div className="flex items-center gap-2 mb-8">
+      <div className="flex flex-wrap items-center gap-2 mb-8">
         {[
           { href: "https://github.com/hrshkshri", icon: AiFillGithub, label: "GitHub" },
           { href: "https://www.linkedin.com/in/hrshkshri/", icon: AiFillLinkedin, label: "LinkedIn" },

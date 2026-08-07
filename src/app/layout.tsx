@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ErrorReporter from "@/components/ErrorReporter";
 import NavigationWrapper from "@/components/layout/NavigationWrapper";
@@ -73,6 +73,12 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
+};
+
+// Keeps the mobile browser chrome (URL bar, safe areas) dark instead of white.
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#0f0f0f",
 };
 
 export default function RootLayout({

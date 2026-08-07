@@ -12,7 +12,7 @@ export default function NavigationWrapper({ children }: NavigationWrapperProps) 
   const pathname = usePathname();
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-[100svh]">
       {/* Desktop Sidebar - hidden on mobile, reduced width */}
       <aside className="hidden md:flex md:w-48 md:flex-col md:fixed md:inset-y-0 bg-neutral-900/50 backdrop-blur-sm border-r border-neutral-800">
         <div className="flex flex-col h-full">
@@ -29,7 +29,13 @@ export default function NavigationWrapper({ children }: NavigationWrapperProps) 
       </aside>
 
       {/* Main Content - with left margin on desktop to account for sidebar */}
-      <main className="flex-1 md:ml-48 pb-20 md:pb-0">
+      {/* min-w-0: a flex item defaults to min-width:auto, so any wide descendant
+          makes <main> grow past the viewport instead of shrinking — which turns a
+          local overflow into a page-wide horizontal scroll. */}
+      {/* No bottom padding: the mobile bar floats *over* the content, so reserving
+          a strip here would expose the body gradient under each full-bleed page.
+          Pages add their own bottom clearance instead. */}
+      <main className="flex-1 min-w-0 md:ml-48">
         {children}
       </main>
 

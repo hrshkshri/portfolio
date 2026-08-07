@@ -32,7 +32,8 @@ export interface GitHubEvent {
 export interface GitHubData {
   user: GitHubUser;
   repos: GitHubRepo[];
-  events: GitHubEvent[];
+  /** Optional: /api/github no longer fetches events, since no UI renders them. */
+  events?: GitHubEvent[];
 }
 
 class GitHubService {

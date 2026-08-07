@@ -9,7 +9,7 @@ import Header from "./Header";
 const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#0f0f0f] text-neutral-100">
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-16">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 pt-8 md:pt-16 pb-28 md:pb-16">
         {/* Header Section */}
         <div className="mb-12">
           <Header />
