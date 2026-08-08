@@ -1,7 +1,8 @@
-import serverAxios from './axios';
-
 const GITHUB_USERNAME = 'hrshkshri';
 const GITHUB_API_BASE = 'https://api.github.com';
+
+/** How long Next's data cache holds a GitHub response. */
+const REVALIDATE_SECONDS = 3600;
 
 export interface GitHubUser {
   name: string;
@@ -36,67 +37,77 @@ export class GitHubRateLimitError extends Error {
   }
 }
 
+/** Non-2xx from GitHub. fetch resolves on error statuses, so this is what
+ *  turns them into something throwable that still carries the headers. */
+class GitHubHttpError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly headers: Headers
+  ) {
+    super(`GitHub responded ${status}`);
+    this.name = 'GitHubHttpError';
+  }
+}
+
 /** Last successful payload, kept in module scope so a rate-limited window can
  *  serve stale data instead of failing the whole page. */
 let lastGood: { data: GitHubData; at: number } | null = null;
 
+/**
+ * Returns seconds until reset when rate limited, or `false` when the error is
+ * something else. GitHub signals exhaustion as 403 with x-ratelimit-remaining:0
+ * as well as the more obvious 429, so both are matched.
+ */
 function isRateLimited(error: unknown): number | null | false {
-  const res = (error as { response?: { status?: number; headers?: Record<string, string> } })?.response;
-  if (!res) return false;
-  const remaining = res.headers?.["x-ratelimit-remaining"];
-  if (res.status === 429 || (res.status === 403 && remaining === "0")) {
-    const reset = Number(res.headers?.["x-ratelimit-reset"]);
-    return Number.isFinite(reset) ? Math.max(0, reset - Math.floor(Date.now() / 1000)) : null;
+  if (!(error instanceof GitHubHttpError)) return false;
+
+  const remaining = error.headers.get('x-ratelimit-remaining');
+  if (error.status === 429 || (error.status === 403 && remaining === '0')) {
+    const reset = Number(error.headers.get('x-ratelimit-reset'));
+    return Number.isFinite(reset)
+      ? Math.max(0, reset - Math.floor(Date.now() / 1000))
+      : null;
   }
   return false;
 }
 
 class GitHubServerService {
-  private baseURL: string;
-  private username: string;
+  private baseURL = GITHUB_API_BASE;
+  private username = GITHUB_USERNAME;
 
-  constructor() {
-    this.baseURL = GITHUB_API_BASE;
-    this.username = GITHUB_USERNAME;
-  }
-
-  /** Unauthenticated GitHub allows 60 req/hr per IP — shared across every
-   *  visitor. With GITHUB_TOKEN set that becomes 5,000/hr. */
+  /** Unauthenticated GitHub allows 60 req/hr per IP — and on shared hosting
+   *  that IP is shared with other tenants. With GITHUB_TOKEN it is 5,000/hr
+   *  against your own account. */
   private get headers(): Record<string, string> {
     const headers: Record<string, string> = {
-      Accept: 'application/vnd.github.v3+json',
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
     };
     const token = process.env.GITHUB_TOKEN;
     if (token) headers.Authorization = `Bearer ${token}`;
     return headers;
   }
 
-  /**
-   * Fetch GitHub user data
-   */
-  async getUser(): Promise<GitHubUser> {
-    const response = await serverAxios.get<GitHubUser>(
-      `${this.baseURL}/users/${this.username}`,
-      { headers: this.headers }
-    );
-    return response.data;
+  private async request<T>(path: string): Promise<T> {
+    const response = await fetch(`${this.baseURL}${path}`, {
+      headers: this.headers,
+      next: { revalidate: REVALIDATE_SECONDS },
+    });
+
+    if (!response.ok) {
+      throw new GitHubHttpError(response.status, response.headers);
+    }
+    return response.json() as Promise<T>;
   }
 
-  /**
-   * Fetch user's repositories
-   */
-  async getRepos(limit: number = 6): Promise<GitHubRepo[]> {
-    const response = await serverAxios.get<GitHubRepo[]>(
-      `${this.baseURL}/users/${this.username}/repos`,
-      {
-        params: {
-          sort: 'updated',
-          per_page: limit,
-        },
-        headers: this.headers,
-      }
+  getUser(): Promise<GitHubUser> {
+    return this.request<GitHubUser>(`/users/${this.username}`);
+  }
+
+  getRepos(limit = 6): Promise<GitHubRepo[]> {
+    return this.request<GitHubRepo[]>(
+      `/users/${this.username}/repos?sort=updated&per_page=${limit}`
     );
-    return response.data;
   }
 
   /**

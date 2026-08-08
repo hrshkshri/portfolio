@@ -47,7 +47,6 @@ See `.env.example`. Only one variable is required for full functionality:
 ```
 src/
   app/              App Router routes, metadata, sitemap.ts, robots.ts
-    api/github/     Cached GitHub proxy (stale-on-error fallback)
   components/
     about/          About page sections
     calendar/       Scheduling page (cal.com embed)
@@ -56,8 +55,7 @@ src/
     layout/         Sidebar + mobile tab bar
     shared/         Content constants, structured data, helpers
   lib/
-    api/            Client-side fetchers (axios)
-    server/         Server-only GitHub service
+    server/         Server-only GitHub service (native fetch, cached 1h)
     site.ts         Canonical origin — single source of truth
 resume/             Typst source for the résumé PDF
 ```
@@ -65,4 +63,6 @@ resume/             Typst source for the résumé PDF
 ## Notes
 
 - `/home` permanently redirects to `/`.
-- The GitHub route caches for an hour and falls back to the last good payload if the API fails, so a rate-limit window degrades to slightly-stale data rather than an error page.
+- `/github` is a Server Component. The GitHub fetch is cached for an hour and
+  falls back to the last good payload if the API fails, so a rate-limit window
+  degrades to slightly-stale data rather than an error page.
