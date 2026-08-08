@@ -94,7 +94,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={rampartOne.variable}>
-      <body className="antialiased">
+      {/* Extensions (Grammarly et al.) stamp attributes on <body> before hydration */}
+      <body className="antialiased" suppressHydrationWarning>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-neutral-900 focus:text-sm focus:font-semibold"
