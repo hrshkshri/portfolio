@@ -64,7 +64,7 @@ export const openSourceContributions: OpenSourceContribution[] = [
   {
     role: "Quality Team Lead",
     organization: "Oppia Foundation",
-    organizationUrl: "https://www.github.com/oppia",
+    organizationUrl: "https://github.com/oppia/oppia/pulls?q=+hrshkshri+",
     period: "Nov 2023 - April 2024",
     achievements: [
       "Led the **LaCE quality team** at Oppia — managed contributor onboarding, task assignments, and code reviews across all user-facing features.",

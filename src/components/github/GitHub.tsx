@@ -7,6 +7,15 @@ import { renderTextWithBold } from "@/components/shared/utils";
 import { MdArrowOutward } from "react-icons/md";
 
 /**
+ * Third-party activity graph. custom_title overrides the service default
+ * ("<Full Name>'s Contribution Graph"), which reads oddly in first person here.
+ */
+const activityGraphUrl = (username: string) =>
+  `https://github-readme-activity-graph.vercel.app/graph?username=${username}&custom_title=${encodeURIComponent(
+    "My contribution graph",
+  )}&theme=github-dark&hide_border=true&bg_color=000000&color=39d353&line=39d353&point=ffffff`;
+
+/**
  * Server Component. This used to be a client component fetching in useEffect,
  * which meant: blank -> "Loading..." -> content, over two network hops
  * (browser -> /api/github -> GitHub). Now the data is fetched on the server in
@@ -38,7 +47,7 @@ const GitHub = async () => {
             desktop-only element. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`https://github-readme-activity-graph.vercel.app/graph?username=${user.login}&theme=github-dark&hide_border=true&bg_color=000000&color=39d353&line=39d353&point=ffffff`}
+          src={activityGraphUrl(user.login)}
           alt=""
           aria-hidden="true"
           loading="lazy"
@@ -63,7 +72,7 @@ const GitHub = async () => {
               aspect ratio so the card doesn't shift when the graph loads. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`https://github-readme-activity-graph.vercel.app/graph?username=${user.login}&theme=github-dark&hide_border=true&bg_color=000000&color=39d353&line=39d353&point=ffffff`}
+            src={activityGraphUrl(user.login)}
             alt={`GitHub contribution graph for @${user.login} over the last 12 months`}
             width={1000}
             height={350}
