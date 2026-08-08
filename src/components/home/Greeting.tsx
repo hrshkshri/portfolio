@@ -7,7 +7,7 @@ import { BsCalendar3, BsFileEarmarkText } from "react-icons/bs";
 
 // `onMobile` marks the links the bottom tab bar doesn't already cover.
 const LINKS = [
-  { label: "View My Work", href: "/about", onMobile: false },
+  { label: "View My Work", href: "/work", onMobile: false },
   { label: "GitHub", href: "/github", icon: AiFillGithub, onMobile: true },
   { label: "Get In Touch", href: "/calendar", icon: BsCalendar3, onMobile: false },
   { label: "Resume", href: "/resume.pdf", icon: BsFileEarmarkText, onMobile: true },
