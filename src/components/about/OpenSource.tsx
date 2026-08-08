@@ -55,7 +55,7 @@ const OpenSource: React.FC = () => {
 
             <a
                 href="/github"
-                className="mt-6 inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-amber-400 transition-colors duration-200"
+                className="mt-6 inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-amber-400 transition-colors duration-200"
             >
                 See more on GitHub
                 <MdArrowOutward className="w-3.5 h-3.5" />

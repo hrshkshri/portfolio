@@ -8,14 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       fontFamily: {
-        Work: ["Work Sans", "sans-serif"],
-        Rampart: ["Rampart One", "cursive"],
+        // Only Rampart One is actually used (the three display headings), so it
+        // is the only family loaded. Work Sans and Inter used to be fetched from
+        // Google Fonts on every page load and applied to nothing.
+        Rampart: ["var(--font-rampart)", "cursive"],
       },
     },
   },

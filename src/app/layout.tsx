@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import { Rampart_One } from "next/font/google";
 import "./globals.css";
-import ErrorReporter from "@/components/ErrorReporter";
 import NavigationWrapper from "@/components/layout/NavigationWrapper";
+import { SITE_URL } from "@/lib/site";
+
+const rampartOne = Rampart_One({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-rampart",
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hrshkshri.me"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Harsh Keshari | Full Stack Developer",
     template: "%s | Harsh Keshari",
@@ -21,9 +29,10 @@ export const metadata: Metadata = {
     "Web Development",
     "Software Engineer",
   ],
-  authors: [{ name: "Harsh Keshari", url: "https://hrshkshri.me" }],
+  authors: [{ name: "Harsh Keshari", url: SITE_URL }],
   creator: "Harsh Keshari",
   publisher: "Harsh Keshari",
+  alternates: { canonical: "/" },
   robots: {
     index: true,
     follow: true,
@@ -38,34 +47,31 @@ export const metadata: Metadata = {
   openGraph: {
     type: "profile",
     locale: "en_US",
-    url: "https://hrshkshri.me",
+    url: SITE_URL,
     siteName: "Harsh Keshari Portfolio",
     title: "Harsh Keshari | Full Stack Developer",
     description:
       "Full Stack Developer passionate about building scalable web applications and contributing to open source.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Harsh Keshari - Full Stack Developer",
-        type: "image/png",
+        type: "image/jpeg",
       },
     ],
-    profile: {
-      firstName: "Harsh",
-      lastName: "Keshari",
-      username: "hrshkshri",
-      gender: "male",
-    },
-  } as any,
+    firstName: "Harsh",
+    lastName: "Keshari",
+    username: "hrshkshri",
+  },
   twitter: {
     card: "summary_large_image",
     title: "Harsh Keshari | Full Stack Developer",
     description:
       "Full Stack Developer passionate about building scalable web applications and contributing to open source.",
     creator: "@hrshkshri",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -87,9 +93,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={rampartOne.variable}>
       <body className="antialiased">
-        <ErrorReporter />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-neutral-900 focus:text-sm focus:font-semibold"
+        >
+          Skip to content
+        </a>
         <NavigationWrapper>{children}</NavigationWrapper>
       </body>
     </html>

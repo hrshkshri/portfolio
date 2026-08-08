@@ -37,7 +37,7 @@ const Building: React.FC = () => {
   return (
     <div className="mb-12">
       <h1 className="text-xl font-bold">Projects</h1>
-      <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mt-5 mb-4">
+      <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mt-5 mb-4">
         Live in Production
       </p>
 
@@ -59,7 +59,7 @@ const Building: React.FC = () => {
                 {product.tags.map((t) => (
                   <span
                     key={t}
-                    className="text-xs px-2 py-0.5 rounded-full border border-neutral-700 text-neutral-500"
+                    className="text-xs px-2 py-0.5 rounded-full border border-neutral-700 text-neutral-400"
                   >
                     {t}
                   </span>

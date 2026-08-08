@@ -7,4 +7,4 @@ export { default as serverAxios } from './axios';
 export { githubServerService } from './github.service';
 
 // Re-export types
-export type { GitHubData, GitHubUser, GitHubRepo, GitHubEvent } from './github.service';
+export type { GitHubData, GitHubUser, GitHubRepo } from './github.service';

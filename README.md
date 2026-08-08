@@ -1,37 +1,68 @@
-# Harsh Keshari
+# hrshkshri.com
 
-This is the repository is for my personal website.
+Personal site and portfolio for Harsh Keshari — full-stack engineer.
 
-## Technologies Used
+**Live:** [www.hrshkshri.com](https://www.hrshkshri.com)
 
-- React.js
-- Next.js
-- Particle.js
-- Tailwind CSS
-- React Icons
+## Stack
 
-## Features
+- **Next.js 16** (App Router) + **React 19**
+- **TypeScript** (strict)
+- **Tailwind CSS 3**
+- **next/font** for self-hosted Google Fonts (Work Sans, Rampart One)
+- Deployed on **Vercel**
 
-- Responsive design for optimal viewing on various devices.
-- Integration of React.js and Next.js for a modern and dynamic web application.
-- Utilization of Tailwind CSS for easy and efficient styling.
-- Particle.js for 3D background animation.
-- Integration of React Icons for easily adding icons to the website.
+## Getting started
 
-## Getting Started
+Requires Node 20+ and [pnpm](https://pnpm.io).
 
-1. Clone the repository: `git clone https://github.com/hrshkshri/portfolio`
-2. Install dependencies: `npm install`
-3. Start the development server: `npm run dev`
-4. Open your browser and visit: `http://localhost:3000`
+```bash
+pnpm install
+cp .env.example .env   # then fill in the values
+pnpm dev               # http://localhost:3000
+```
 
-## Project Structure
+### Scripts
 
-- `/pages`: Contains the different pages of the website.
-- `/components`: Contains reusable components used throughout the website.
-- `/styles`: Contains CSS files and stylesheets for customizing the website's appearance.
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Dev server |
+| `pnpm build` | Production build |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | ESLint (flat config) |
+| `pnpm typecheck` | `tsc --noEmit` |
+| `pnpm resume` | Compile `resume/resume.typ` → `public/resume.pdf` via [Typst](https://typst.app) |
 
-## Contributions
+## Environment
 
-Contributions are welcome! If you find any issues or have suggestions for improvement, feel free to open a pull request.
+See `.env.example`. Only one variable is required for full functionality:
 
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `GITHUB_TOKEN` | Recommended | Raises the GitHub API limit from 60/hr per IP (shared across all visitors) to 5,000/hr. Without it, `/github` degrades to cached or empty data under traffic. A fine-grained token with **no scopes** is enough — it only reads public data. |
+| `NEXT_PUBLIC_SITE_URL` | Optional | Overrides the canonical origin used for metadata, OG tags, sitemap and robots. Defaults to `https://www.hrshkshri.com`. |
+
+## Structure
+
+```
+src/
+  app/              App Router routes, metadata, sitemap.ts, robots.ts
+    api/github/     Cached GitHub proxy (stale-on-error fallback)
+  components/
+    about/          About page sections
+    calendar/       Scheduling page (cal.com embed)
+    github/         GitHub activity page
+    home/           Landing hero
+    layout/         Sidebar + mobile tab bar
+    shared/         Content constants, structured data, helpers
+  lib/
+    api/            Client-side fetchers (axios)
+    server/         Server-only GitHub service
+    site.ts         Canonical origin — single source of truth
+resume/             Typst source for the résumé PDF
+```
+
+## Notes
+
+- `/home` permanently redirects to `/`.
+- The GitHub route caches for an hour and falls back to the last good payload if the API fails, so a rate-limit window degrades to slightly-stale data rather than an error page.

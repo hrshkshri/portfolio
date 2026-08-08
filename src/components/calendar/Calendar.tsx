@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FiMail, FiExternalLink } from "react-icons/fi";
+import { FiMail } from "react-icons/fi";
 import { AiFillGithub } from "react-icons/ai";
 import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 
@@ -83,22 +83,25 @@ const Calendar: React.FC = () => {
         {/* Right: contact links */}
         <div className="flex flex-col gap-8 items-start text-left md:items-end md:text-right">
           <div>
-            <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mb-3">Contact</p>
+            <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mb-3">Contact</p>
             <div className="flex items-center gap-4">
               {[
-                { href: "mailto:harshkeshari100@gmail.com", icon: FiMail },
-                { href: "https://github.com/hrshkshri", icon: AiFillGithub },
-                { href: "https://linkedin.com/in/hrshkshri", icon: BsLinkedin },
-                { href: "https://twitter.com/hrshkshri", icon: BsTwitterX },
+                { href: "mailto:harshkeshari100@gmail.com", icon: FiMail, label: "Email" },
+                { href: "https://github.com/hrshkshri", icon: AiFillGithub, label: "GitHub" },
+                { href: "https://linkedin.com/in/hrshkshri", icon: BsLinkedin, label: "LinkedIn" },
+                { href: "https://twitter.com/hrshkshri", icon: BsTwitterX, label: "X (Twitter)" },
               ].map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
+                  // Icon-only link: without this, screen readers announce "link"
+                  // with no indication of where it goes.
+                  aria-label={link.label}
                   target={link.href.startsWith("http") ? "_blank" : undefined}
                   rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="text-neutral-400 hover:text-neutral-100 transition-colors duration-200"
+                  className="text-neutral-400 hover:text-neutral-100 transition-colors duration-200 rounded"
                 >
-                  <link.icon className="w-5 h-5" />
+                  <link.icon className="w-5 h-5" aria-hidden="true" />
                 </a>
               ))}
             </div>

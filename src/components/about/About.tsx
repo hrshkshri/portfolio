@@ -30,7 +30,7 @@ const About: React.FC = () => {
 
         {/* Footer Note */}
         <div className="mt-16 pt-8 border-t border-neutral-800 text-center">
-          <p className="text-neutral-500 text-sm">
+          <p className="text-neutral-400 text-sm">
             This journey continues... 🚀
           </p>
         </div>

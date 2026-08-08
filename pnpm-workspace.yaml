@@ -1,3 +1,7 @@
-allowBuilds:
-  sharp: true
-  unrs-resolver: true
+packages:
+  - '.'
+# pnpm 10 reads the build-script allowlist from here, not package.json.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - unrs-resolver

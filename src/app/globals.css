@@ -1,19 +1,11 @@
-/* Updated: 2025-10-22T18:26:39.088Z */
-/* Updated: 2025-10-22T17:28:40.764Z */
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Rampart+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Hide Next.js error overlay portal */
-nextjs-portal {
-  display: none !important;
-}
+/* Fonts are loaded via next/font in layout.tsx (self-hosted, preloaded, no
+   layout shift) rather than @import — which was render-blocking and pulled in
+   two families that were never applied. */
 
-/* Dark theme base */
 /* The overscroll/rubber-band area is painted with the canvas background. Neither
    html nor body declared a background *color* (body only had a gradient image),
    so it fell back to the UA default — white. Set a real color on html. */
@@ -30,6 +22,25 @@ body {
      that toggles the URL bar on each swipe. vh line is the pre-2022 fallback. */
   min-height: 100vh;
   min-height: 100svh;
+}
+
+/* Visible keyboard focus on a near-black background. The UA default ring is
+   too low-contrast here to be usable. */
+:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom scrollbar */

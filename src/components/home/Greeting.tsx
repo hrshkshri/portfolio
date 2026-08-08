@@ -21,13 +21,17 @@ const Greeting: React.FC = () => {
 
       {/* Full bleed photo — anchored high on mobile so the face clears the copy */}
       <div className="absolute inset-0 flex items-center justify-center">
+        {/* Local, not the 665 KB PNG on a third-party Supabase bucket that was
+            being requested at 8000x8000. This is the LCP element. */}
         <Image
-          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Gemini-Generated-Image-from-Photoroom-1-1761154733626.png?width=8000&height=8000&resize=contain"
+          src="/hero-harsh.webp"
           alt="Harsh Keshari"
-          width={600}
-          height={800}
+          width={731}
+          height={1280}
+          sizes="(max-width: 768px) 100vw, 60vw"
           className="h-full w-full object-cover object-[50%_12%] md:w-auto md:object-contain md:object-center"
           priority
+          fetchPriority="high"
         />
       </div>
 
@@ -103,7 +107,7 @@ const Greeting: React.FC = () => {
         {/* Right: links. Hidden on mobile — the tab bar covers it. */}
         <div className="hidden md:flex flex-col gap-8 items-end text-right">
           <div>
-            <p className="text-xs tracking-[0.2em] uppercase text-neutral-600 mb-3">
+            <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mb-3">
               Links
             </p>
             <div className="space-y-2">

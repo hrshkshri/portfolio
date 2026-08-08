@@ -2,7 +2,13 @@ import { NextResponse } from 'next/server';
 import { githubServerService } from '@/lib/server';
 import { GitHubRateLimitError } from '@/lib/server/github.service';
 
-export const revalidate = 3600; // Revalidate every hour
+/**
+ * Dynamic, not ISR-prerendered. With `revalidate` this route was baked at build
+ * time — so a deploy that happened to hit the GitHub rate limit would serve the
+ * cached *error* for a full hour. Caching now happens at the CDN via
+ * Cache-Control, which lets us cache successes and refuse to cache failures.
+ */
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
@@ -11,7 +17,10 @@ export async function GET() {
     return NextResponse.json(data, {
       status: 200,
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=1800',
+        // Stale payloads get a short TTL so we retry the real API sooner.
+        'Cache-Control': stale
+          ? 'public, s-maxage=60, stale-while-revalidate=300'
+          : 'public, s-maxage=3600, stale-while-revalidate=86400',
         // Signals the payload came from the fallback cache, not a fresh fetch.
         'X-Data-Stale': String(stale),
       },
@@ -27,9 +36,12 @@ export async function GET() {
         },
         {
           status: 429,
-          headers: error.retryAfterSeconds
-            ? { 'Retry-After': String(error.retryAfterSeconds) }
-            : undefined,
+          headers: {
+            'Cache-Control': 'no-store',
+            ...(error.retryAfterSeconds
+              ? { 'Retry-After': String(error.retryAfterSeconds) }
+              : {}),
+          },
         }
       );
     }
@@ -37,7 +49,7 @@ export async function GET() {
     console.error('Error in GitHub API route:', error);
     return NextResponse.json(
       { error: 'Failed to fetch GitHub data' },
-      { status: 500 }
+      { status: 500, headers: { 'Cache-Control': 'no-store' } }
     );
   }
 }

@@ -1,22 +1,18 @@
 import GitHub from "@/components/github/GitHub";
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+// Regenerate hourly; the GitHub data does not change faster than that.
+export const revalidate = 3600;
+
+export const metadata = pageMetadata({
   title: "GitHub Activity",
+  path: "/github",
   description:
     "Explore Harsh Keshari's GitHub profile, repositories, contributions, and open source projects. View latest activity and coding statistics.",
-  openGraph: {
-    title: "GitHub Activity | Harsh Keshari",
-    description:
-      "Explore my GitHub profile, repositories, contributions, and open source projects.",
-    url: "https://hrshkshri.me/github",
-  },
-  twitter: {
-    title: "GitHub Activity | Harsh Keshari",
-    description:
-      "Explore my GitHub profile, repositories, contributions, and open source projects.",
-  },
-};
+  socialTitle: "GitHub Activity | Harsh Keshari",
+  socialDescription:
+    "Explore my GitHub profile, repositories, contributions, and open source projects.",
+});
 
 export default function GitHubPage() {
   return <GitHub />;

@@ -24,26 +24,9 @@ export interface GitHubRepo {
   updated_at: string;
 }
 
-export interface GitHubEvent {
-  id: string;
-  type: string;
-  actor: {
-    login: string;
-    avatar_url: string;
-  };
-  repo: {
-    name: string;
-    url: string;
-  };
-  created_at: string;
-  payload?: any;
-}
-
 export interface GitHubData {
   user: GitHubUser;
   repos: GitHubRepo[];
-  /** Not fetched by getAllData — no UI consumes it. Call getEvents() directly. */
-  events?: GitHubEvent[];
 }
 
 export class GitHubRateLimitError extends Error {
@@ -108,22 +91,6 @@ class GitHubServerService {
       {
         params: {
           sort: 'updated',
-          per_page: limit,
-        },
-        headers: this.headers,
-      }
-    );
-    return response.data;
-  }
-
-  /**
-   * Fetch user's public events (activity)
-   */
-  async getEvents(limit: number = 10): Promise<GitHubEvent[]> {
-    const response = await serverAxios.get<GitHubEvent[]>(
-      `${this.baseURL}/users/${this.username}/events/public`,
-      {
-        params: {
           per_page: limit,
         },
         headers: this.headers,
