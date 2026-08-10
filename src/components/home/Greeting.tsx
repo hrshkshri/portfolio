@@ -87,6 +87,20 @@ const Greeting: React.FC = () => {
                 — real-time usage companion for Claude.
               </span>
             </li>
+            <li className="flex gap-2">
+              <span className="text-amber-400/70 select-none">›</span>
+              <span>
+                <a
+                  href="https://fitted.hrshkshri.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-200 hover:text-amber-400 transition-colors duration-150"
+                >
+                  Fitted
+                </a>{" "}
+                — your wardrobe, digitized: build outfits, plan the week.
+              </span>
+            </li>
           </ul>
 
           {/* Mobile only — desktop uses the right column. */}

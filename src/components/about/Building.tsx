@@ -6,8 +6,16 @@ interface ProductLink {
   label: string;
 }
 
+interface TeamCredit {
+  name: string;
+  href: string;
+}
+
 interface Product {
   name: string;
+  badge?: string;
+  /** Shown when the project wasn't solo — credits the collaborator. */
+  team?: TeamCredit;
   description: string;
   tags: string[];
   links: ProductLink[];
@@ -31,6 +39,15 @@ const products: Product[] = [
       { href: "https://www.youtube.com/watch?v=opDPxKR_zfE", label: "Demo" },
     ],
   },
+  {
+    name: "Fitted",
+    badge: "Android Beta",
+    team: { name: "Ashwath Kannan", href: "https://github.com/Ash-2k3" },
+    description:
+      "Your wardrobe, digitized — snap a photo of a garment, get an auto-cut-out flat lay, swipe tops and bottoms into outfits, and plan them on a calendar. Expo app on Android, FastAPI backend on Cloud Run, photos in private storage behind presigned URLs.",
+    tags: ["Expo · React Native", "FastAPI · Python", "Postgres · SQLAlchemy", "rembg · U²-Net", "GCP Cloud Run", "Cloud SQL · GCS"],
+    links: [{ href: "https://fitted.hrshkshri.com", label: "fitted.hrshkshri.com" }],
+  },
 ];
 
 const Building: React.FC = () => {
@@ -51,10 +68,29 @@ const Building: React.FC = () => {
               <div className="flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                 <h2 className="text-xl font-semibold text-white">{product.name}</h2>
+                {product.badge && (
+                  <span className="text-[10px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-400/90">
+                    {product.badge}
+                  </span>
+                )}
               </div>
               <p className="text-sm text-neutral-400 leading-relaxed max-w-lg">
                 {product.description}
               </p>
+              {product.team && (
+                <p className="text-xs text-neutral-500">
+                  Built with{" "}
+                  <a
+                    href={product.team.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-400 underline decoration-neutral-700 underline-offset-2 hover:text-amber-400 hover:decoration-amber-400/50 transition-colors"
+                  >
+                    {product.team.name}
+                  </a>
+                  .
+                </p>
+              )}
               <div className="flex items-center gap-2 flex-wrap pt-1">
                 {product.tags.map((t) => (
                   <span
