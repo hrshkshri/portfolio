@@ -14,14 +14,14 @@ const rampartOne = Rampart_One({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Harsh Keshari | Full Stack Developer",
+    default: "Harsh Keshari — Software Developer",
     template: "%s | Harsh Keshari",
   },
   description:
-    "Full Stack Developer passionate about building scalable web applications and contributing to open source. Currently working as a Fullstack Engineer at Experiment Labs.",
+    "Software developer at Experiment Labs. I build web apps and work on open source.",
   keywords: [
     "Harsh Keshari",
-    "Full Stack Developer",
+    "Software Developer",
     "React",
     "Next.js",
     "Node.js",
@@ -49,15 +49,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Harsh Keshari Portfolio",
-    title: "Harsh Keshari | Full Stack Developer",
-    description:
-      "Full Stack Developer passionate about building scalable web applications and contributing to open source.",
+    title: "Harsh Keshari — Software Developer",
+    description: "Software developer at Experiment Labs.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Harsh Keshari - Full Stack Developer",
+        alt: "Harsh Keshari — Software Developer",
         type: "image/jpeg",
       },
     ],
@@ -67,9 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Harsh Keshari | Full Stack Developer",
-    description:
-      "Full Stack Developer passionate about building scalable web applications and contributing to open source.",
+    title: "Harsh Keshari — Software Developer",
+    description: "Software developer at Experiment Labs.",
     creator: "@hrshkshri",
     images: ["/og-image.jpg"],
   },

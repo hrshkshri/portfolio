@@ -8,10 +8,9 @@ export const metadata = pageMetadata({
   title: "GitHub Activity",
   path: "/github",
   description:
-    "Explore Harsh Keshari's GitHub profile, repositories, contributions, and open source projects. View latest activity and coding statistics.",
-  socialTitle: "GitHub Activity | Harsh Keshari",
-  socialDescription:
-    "Explore my GitHub profile, repositories, contributions, and open source projects.",
+    "My GitHub activity — repos, contributions, and what I've been committing lately.",
+  socialTitle: "Harsh Keshari on GitHub",
+  socialDescription: "Repos, contributions, and recent commits.",
 });
 
 export default function GitHubPage() {

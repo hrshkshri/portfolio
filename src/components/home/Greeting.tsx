@@ -54,8 +54,8 @@ const Greeting: React.FC = () => {
           </div>
 
           <p className="text-base text-neutral-300 max-w-md leading-relaxed">
-            Full-stack engineer building AI-native products — agentic backends
-            and the interfaces that sit on top of them.
+            Software developer at Experiment Labs. I build web apps — the
+            backends and the interfaces that sit on top of them.
           </p>
 
           <ul className="text-sm text-neutral-400 max-w-md leading-relaxed space-y-1.5">

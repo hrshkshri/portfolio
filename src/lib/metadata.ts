@@ -13,7 +13,7 @@ const OG_IMAGE = {
   url: "/og-image.jpg",
   width: 1200,
   height: 630,
-  alt: "Harsh Keshari - Full Stack Developer",
+  alt: "Harsh Keshari — Software Developer",
   type: "image/jpeg",
 };
 

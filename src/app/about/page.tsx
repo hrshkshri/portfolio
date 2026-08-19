@@ -8,10 +8,9 @@ export const metadata = pageMetadata({
   title: "About",
   path: "/about",
   description:
-    "Learn more about Harsh Keshari - Full Stack Developer at Experiment Labs. Explore my professional experience, open source contributions, and personal projects.",
-  socialTitle: "About Harsh Keshari | Full Stack Developer",
-  socialDescription:
-    "Professional experience, open source contributions, and projects by Harsh Keshari - Full Stack Developer passionate about building scalable web applications.",
+    "Where I work, what I've built, and what I've contributed to in open source.",
+  socialTitle: "About Harsh Keshari",
+  socialDescription: "Where I work, what I've built, and my open source work.",
 });
 
 const personSchema = {
@@ -20,13 +19,13 @@ const personSchema = {
   name: "Harsh Keshari",
   url: SITE_URL,
   image: `${SITE_URL}/og-image.jpg`,
-  jobTitle: "Full Stack Developer",
+  jobTitle: "Software Developer",
   worksFor: {
     "@type": "Organization",
     name: "Experiment Labs",
   },
   description:
-    "Full Stack Developer passionate about building scalable web applications and contributing to open source.",
+    "Software developer at Experiment Labs. I build web apps and work on open source.",
   sameAs: [
     "https://github.com/hrshkshri",
     "https://www.linkedin.com/in/hrshkshri/",
@@ -37,7 +36,7 @@ const personSchema = {
     "React",
     "Next.js",
     "Node.js",
-    "Full Stack Development",
+    "TypeScript",
     "Open Source",
     "Web Development",
   ],
