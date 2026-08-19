@@ -27,7 +27,10 @@ const products: Product[] = [
     description:
       "All-in-one productivity SaaS for solo professionals — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live with billing, AI meeting intelligence, and scheduling.",
     tags: ["PERN Stack", "TypeScript", "LLM · Gemini", "Deepgram STT", "AI Summarization", "Ask AI (SSE)", "Recall.ai", "Bull · Redis", "Docker"],
-    links: [{ href: "https://crelyzor.hrshkshri.com", label: "crelyzor.hrshkshri.com" }],
+    links: [
+      { href: "https://crelyzor.hrshkshri.com", label: "crelyzor.hrshkshri.com" },
+      { href: "https://youtu.be/lQWSQ-r3zXQ", label: "Demo" },
+    ],
   },
   {
     name: "Claukit",
