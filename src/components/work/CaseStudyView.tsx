@@ -3,7 +3,10 @@ import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
 import type { CaseStudy, Flow } from "@/content/work";
 import { renderTextWithBold } from "@/components/shared/utils";
+import ArchitectureDiagram from "./ArchitectureDiagram";
+import { Metrics, DataModelTree, FailureModeTable } from "./StudyBlocks";
 
+/** The inline pipeline strip — a critical path, not a topology. */
 const Diagram: React.FC<{ flow: Flow }> = ({ flow }) => (
   <figure className="my-7 border border-neutral-800/60 rounded-2xl bg-black/40 px-5 py-6">
     <div className="flex flex-wrap items-center justify-center gap-2.5">
@@ -44,20 +47,37 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
         </Link>
 
         <header className="mt-5">
-          <p className="text-xs tracking-[0.2em] uppercase text-neutral-400">
-            {study.org ? `${study.org} · ${study.period}` : study.period}
-          </p>
+          <div className="flex items-center gap-3 flex-wrap">
+            <p className="text-xs tracking-[0.2em] uppercase text-neutral-400">
+              {study.period}
+            </p>
+            {study.org && (
+              <span className="text-[10px] tracking-[0.12em] uppercase px-2.5 py-1 rounded-full border border-neutral-700 text-neutral-300">
+                {study.org}
+              </span>
+            )}
+          </div>
           <h1 className="font-Rampart text-5xl md:text-7xl text-white leading-none mt-3">
             {study.title}.
           </h1>
           <p className="text-base text-neutral-300 max-w-xl leading-relaxed mt-5">
             {study.summary}
           </p>
+          {study.metrics && <Metrics metrics={study.metrics} />}
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_200px] gap-10 md:gap-14 mt-12 items-start">
           <article>
-            {study.sections.map((section) => (
+            {study.restricted && (
+              <p className="text-xs text-neutral-400 leading-relaxed border-l-2 border-neutral-700 pl-4 mb-9">
+                Employer work. The architecture here is described at the level of
+                the pattern — no internal service names, schema, or infrastructure
+                detail. What&apos;s public is what I can explain without publishing
+                someone else&apos;s system.
+              </p>
+            )}
+
+            {study.sections.map((section, si) => (
               <section key={section.heading} className="mb-9 last:mb-0">
                 <h2 className="text-xs tracking-[0.16em] uppercase text-neutral-400 font-medium mb-3">
                   {section.heading}
@@ -70,9 +90,37 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                     {renderTextWithBold(para)}
                   </p>
                 ))}
+                {section.architecture && (
+                  <ArchitectureDiagram
+                    arch={section.architecture}
+                    id={`${study.slug}-${si}`}
+                  />
+                )}
+                {section.dataModel && <DataModelTree model={section.dataModel} />}
+                {section.failureModes && <FailureModeTable modes={section.failureModes} />}
                 {section.flow && <Diagram flow={section.flow} />}
               </section>
             ))}
+
+            {study.whatIdChange && (
+              <section className="mt-12 pt-8 border-t border-neutral-800">
+                <h2 className="text-xs tracking-[0.16em] uppercase text-neutral-400 font-medium mb-3">
+                  What I&apos;d change
+                </h2>
+                <ul className="space-y-3.5">
+                  {study.whatIdChange.map((item, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="text-amber-500/70 text-sm mt-1 shrink-0" aria-hidden="true">
+                        ◦
+                      </span>
+                      <p className="text-[15px] text-neutral-300 leading-[1.75]">
+                        {renderTextWithBold(item)}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </article>
 
           <dl className="md:border-l border-t md:border-t-0 border-neutral-800 pt-6 md:pt-0 md:pl-5">

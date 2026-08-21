@@ -13,6 +13,8 @@ const config: Config = {
         // is the only family loaded. Work Sans and Inter used to be fetched from
         // Google Fonts on every page load and applied to nothing.
         Rampart: ["var(--font-rampart)", "cursive"],
+        // Architecture diagram lettering — see the note in layout.tsx.
+        Sketch: ["var(--font-sketch)", "cursive"],
       },
     },
   },

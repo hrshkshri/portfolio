@@ -16,17 +16,78 @@ export interface Flow {
   caption: string;
 }
 
+/** One box in an architecture diagram. `id` is referenced by edges. */
+export interface ArchNode {
+  id: string;
+  label: string;
+  /** Second line — stack or role, kept short enough to fit the box. */
+  sub?: string;
+  hl?: boolean;
+}
+
+export interface ArchTier {
+  /** Rendered in the left gutter: CLIENT, API, STORE… */
+  label: string;
+  nodes: ArchNode[];
+}
+
+export interface ArchEdge {
+  from: string;
+  to: string;
+  label?: string;
+  /** Dashed reads as "async" — a hop the caller doesn't wait on. */
+  dashed?: boolean;
+  hl?: boolean;
+}
+
+/**
+ * Positions are computed by ArchitectureDiagram, not authored here — this
+ * describes topology only.
+ */
+export interface Architecture {
+  tiers: ArchTier[];
+  edges: ArchEdge[];
+  caption: string;
+}
+
+export interface Entity {
+  name: string;
+  /** Cardinality or a field note — "1:n", "soft-delete", "unique per day". */
+  note?: string;
+  children?: Entity[];
+}
+
+export interface DataModel {
+  caption: string;
+  entities: Entity[];
+}
+
+export interface FailureMode {
+  trigger: string;
+  behaviour: string;
+  recovery: string;
+}
+
+/** A headline figure. Verified against the repo — never estimated. */
+export interface Metric {
+  value: string;
+  label: string;
+}
+
 export interface Section {
   heading: string;
   /** Paragraphs. `**bold**` is rendered via renderTextWithBold. */
   body: string[];
   flow?: Flow;
+  architecture?: Architecture;
+  dataModel?: DataModel;
+  failureModes?: FailureMode[];
 }
 
 export interface CaseStudy {
   slug: string;
   title: string;
-  /** Employer, when the work wasn't solo. */
+  /** Employer, when the work wasn't solo. Renders as a badge. */
   org?: string;
   period: string;
   role: string;
@@ -35,7 +96,17 @@ export interface CaseStudy {
   tags: string[];
   href?: { label: string; url: string };
   facts: { label: string; value: string }[];
+  /** Headline numbers under the title. */
+  metrics?: Metric[];
+  /**
+   * Employer work. Renders a note explaining that the architecture is described
+   * at pattern level, and is the flag that keeps schema entities, internal
+   * service names and failure-mode tables off these pages.
+   */
+  restricted?: boolean;
   sections: Section[];
+  /** Honest retrospective. Reads better than a diagram with no flaws in it. */
+  whatIdChange?: string[];
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -48,12 +119,19 @@ export const caseStudies: CaseStudy[] = [
       "Four SaaS tools collapsed into one workspace for solo professionals — cards, scheduling, meeting intelligence and tasks that actually share state. Live with billing.",
     tags: ["PostgreSQL", "Prisma", "Deepgram", "Recall.ai", "Bull · Redis", "React", "Next.js"],
     href: { label: "crelyzor.hrshkshri.com", url: "https://crelyzor.hrshkshri.com" },
+    metrics: [
+      { value: "47", label: "Prisma models" },
+      { value: "30–120s", label: "transcription window" },
+      { value: "3", label: "independent repos" },
+      { value: "1", label: "backend, one database" },
+    ],
     facts: [
       { label: "Role", value: "Solo — design, build, ship" },
-      { label: "Scale", value: "47 Prisma models across 4 repos" },
-      { label: "Stack", value: "Node · Express · Postgres · Prisma" },
+      { label: "Scale", value: "47 Prisma models across 3 repos" },
+      { label: "Stack", value: "Node 20 · Express 5 · Prisma 6" },
+      { label: "Database", value: "PostgreSQL (Neon, serverless)" },
       { label: "AI", value: "Deepgram Nova-2, GPT-4o-mini" },
-      { label: "Async", value: "Bull queue on Upstash Redis" },
+      { label: "Async", value: "Bull on Upstash Redis" },
       { label: "Status", value: "Live, billing enabled" },
     ],
     sections: [
@@ -65,17 +143,65 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
       {
-        heading: "What I built",
+        heading: "System architecture",
         body: [
           "One workspace where a card contact becomes a meeting participant, a meeting generates tasks, and the AI can answer questions about any of it. Four product pillars over a single relational model — **47 Prisma tables** — so the connections are joins rather than integrations.",
-          "The split is deliberate: an authenticated React dashboard, and a separate Next.js app for public card and booking pages. Different domain, zero auth, real SEO requirements, and none of the dashboard's bundle weight.",
+          "Two frontends, one backend, one database. The split is deliberate: an authenticated React dashboard, and a separate Next.js app for public card and booking pages. Different domain, zero auth, real SEO requirements, and none of the dashboard's bundle weight. They're **three independent repos**, not a workspace — their deploy targets have nothing in common, and a shared lockfile would only couple them.",
         ],
+        architecture: {
+          tiers: [
+            {
+              label: "Client",
+              nodes: [
+                { id: "dash", label: "Dashboard", sub: "React 19 · Vite" },
+                { id: "pub", label: "Public pages", sub: "Next.js · SSR" },
+              ],
+            },
+            {
+              label: "API",
+              nodes: [{ id: "api", label: "calendar-backend", sub: "Express 5 · Prisma 6" }],
+            },
+            {
+              label: "Store",
+              nodes: [
+                { id: "pg", label: "PostgreSQL", sub: "Neon, serverless" },
+                { id: "q", label: "Bull queue", sub: "Upstash Redis", hl: true },
+                { id: "gcs", label: "Cloud Storage", sub: "recordings" },
+              ],
+            },
+            {
+              label: "Worker",
+              nodes: [{ id: "w", label: "Worker process", sub: "separate dyno" }],
+            },
+            {
+              label: "AI",
+              nodes: [
+                { id: "dg", label: "Deepgram", sub: "Nova-2 · diarized" },
+                { id: "llm", label: "GPT-4o-mini", sub: "summary · actions" },
+              ],
+            },
+          ],
+          edges: [
+            { from: "dash", to: "api" },
+            { from: "pub", to: "api" },
+            { from: "api", to: "pg" },
+            { from: "api", to: "q", label: "enqueue", hl: true },
+            { from: "api", to: "gcs", label: "upload" },
+            { from: "q", to: "w", label: "job", dashed: true, hl: true },
+            { from: "w", to: "dg" },
+            { from: "w", to: "llm" },
+            { from: "w", to: "pg", label: "results" },
+          ],
+          caption:
+            "The queue is the seam. Everything below it runs after the HTTP response has already been sent, and the worker writes results back to the same row the API served.",
+        },
       },
       {
         heading: "The hard part: meeting AI that doesn't feel slow",
         body: [
           "Transcribing and summarising a recording takes **30 to 120 seconds**. You cannot hold an HTTP connection open for that, and putting a spinner in front of it means nobody uses the feature twice.",
-          "So the pipeline runs entirely off the request path. The upload returns immediately; a **Bull queue** on Upstash Redis hands the job to a worker process, and results land on the meeting record when they're ready. Bull earned its place over a hand-rolled queue for retries and job status — transcription fails often enough that both matter.",
+          "So the pipeline runs entirely off the request path. The upload returns immediately; a **Bull queue** on Upstash Redis hands the job to a worker running as its own process, and results land on the meeting record when they're ready. Bull earned its place over a hand-rolled queue for retries and job status — transcription fails often enough that both matter.",
+          "State is explicit rather than inferred. A meeting's `transcriptionStatus` walks **NONE → UPLOADED → PROCESSING → COMPLETED**, with **FAILED** as a real terminal state rather than a row that sits in PROCESSING forever. The frontend reads that field, so a stuck job looks stuck instead of looking slow.",
         ],
         flow: {
           nodes: [
@@ -91,20 +217,218 @@ export const caseStudies: CaseStudy[] = [
         },
       },
       {
+        heading: "Failure modes",
+        body: [
+          "Two queues with deliberately different retry budgets. Transcription retries **3 times with 5-second exponential backoff** — if Deepgram is down, it's down, and burning attempts costs money without changing the outcome. The Recall.ai webhook retries **8 times at 30 seconds**, because a bot's recording genuinely isn't ready yet and the right response is to wait longer, not to give up sooner.",
+        ],
+        failureModes: [
+          {
+            trigger: "Deepgram 5xx or timeout",
+            behaviour: "Job retries, meeting holds at PROCESSING",
+            recovery: "3 attempts, exponential from 5s → FAILED",
+          },
+          {
+            trigger: "Recording not ready at webhook",
+            behaviour: "Job re-queued, no partial write",
+            recovery: "8 attempts, exponential from 30s",
+          },
+          {
+            trigger: "Worker process dies mid-job",
+            behaviour: "Bull redelivers on next worker boot",
+            recovery: "Job is idempotent — re-transcribes cleanly",
+          },
+          {
+            trigger: "LLM returns unusable output",
+            behaviour: "Transcript still persists; summary null",
+            recovery: "Regenerate endpoint re-runs only that step",
+          },
+        ],
+      },
+      {
+        heading: "Data model",
+        body: [
+          "The shape is the argument for Postgres. Every arrow below is a foreign key that a document store would have made me denormalise and then keep in sync by hand.",
+        ],
+        dataModel: {
+          caption:
+            "Recording, transcript and segments are three tables rather than one nested blob — segments are queried on their own for speaker filtering and timestamp seeks.",
+          entities: [
+            {
+              name: "User",
+              children: [
+                {
+                  name: "Card",
+                  note: "1:n",
+                  children: [
+                    { name: "CardContact", note: "1:n" },
+                    { name: "CardView", note: "1:n — analytics" },
+                  ],
+                },
+                {
+                  name: "Meeting",
+                  note: "1:n",
+                  children: [
+                    { name: "MeetingParticipant", note: "n:m with User" },
+                    {
+                      name: "MeetingRecording",
+                      note: "1:1",
+                      children: [
+                        {
+                          name: "MeetingTranscript",
+                          note: "1:1",
+                          children: [{ name: "TranscriptSegment", note: "1:n — speaker + offset" }],
+                        },
+                      ],
+                    },
+                    { name: "MeetingAISummary", note: "1:1" },
+                    { name: "MeetingActionItem", note: "1:n" },
+                    { name: "MeetingStateHistory", note: "1:n — audit" },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
         heading: "Choices worth defending",
         body: [
           "**Deepgram Nova-2 over Whisper.** Whisper is the obvious default and I rejected it, because it has no speaker diarization. A meeting transcript that can't tell you *who said what* is close to useless for summarisation — and it's the one thing you can't add later in post-processing.",
           "**GPT-4o-mini over GPT-4o.** Meeting transcripts fit comfortably in the smaller context, and the task is structured extraction rather than reasoning. Roughly **10× cheaper** at acceptable quality, with a one-string upgrade path if that stops being true.",
           "**Postgres over MongoDB.** Meetings have participants, participants have roles, recordings have transcripts, transcripts have segments. Document storage would have meant denormalising all of it and then maintaining the denormalisation.",
           "**Recall.ai over building the bot.** A Zoom and Meet bot means maintaining OAuth apps, bot infrastructure and recording pipelines — none of which is the product. Recall streams audio to Deepgram under my own credentials, so the Phase 1 pipeline runs unchanged.",
+          "**Google OAuth as the only login.** Solo professionals all have Google accounts, and Calendar sync needs the OAuth grant anyway. No password storage, no reset flow, no credential-stuffing surface — the cheapest security posture is the one with nothing to steal.",
         ],
       },
       {
         heading: "Where it stands",
         body: [
-          "Live with billing and paying users. The same worker pool handles batch processing across accounts, and Ask AI streams over SSE — a first token in a few hundred milliseconds reads as faster than a complete answer four seconds later, even though it finishes at the same time.",
+          "Live with billing and paying users. Ask AI streams over SSE — a first token in a few hundred milliseconds reads as faster than a complete answer four seconds later, even though it finishes at the same time.",
         ],
       },
+    ],
+    whatIdChange: [
+      "**The frontend polls `transcriptionStatus`** on an interval while a job runs — even though SSE is already wired up for Ask AI. The transport to push status exists; the pipeline just doesn't use it. Polling was the faster thing to ship and it's still there.",
+      "**Exhausted jobs have no operator surface.** `removeOnComplete: 100` keeps recent successes for debugging, but a job that burns all 3 attempts sets the meeting to FAILED and disappears from the queue. I can see *that* it failed, not *why*, without going to the logs. A dead-letter list would have cost an afternoon.",
+      "**Two frontends share a design language by convention, not by code.** No shared token package — the docs literally say \"same design language by convention.\" That holds while one person writes both, and stops holding the moment that isn't true.",
+    ],
+  },
+
+  {
+    slug: "recommender",
+    title: "Recommender",
+    org: "Experiment Labs",
+    period: "2025 — now",
+    role: "Founding Engineer",
+    restricted: true,
+    summary:
+      "A recommendation service that generates rather than retrieves — and then refuses to trust its own output until three independent gates have checked it.",
+    tags: ["Express", "Gemini", "Structured output", "Prompt gates", "MongoDB", "TypeScript"],
+    metrics: [
+      { value: "3", label: "verification gates" },
+      { value: "5", label: "ideas per category, enforced" },
+      { value: "3", label: "attempts before give-up" },
+      { value: "0", label: "thinking tokens billed" },
+    ],
+    facts: [
+      { label: "Role", value: "Founding Engineer" },
+      { label: "Shape", value: "Generate-then-verify pipeline" },
+      { label: "Model", value: "Gemini 2.5 Flash, structured output" },
+      { label: "Verification", value: "3 gates + cap/dedupe" },
+      { label: "Store", value: "Document DB" },
+      { label: "Runtime", value: "Express · TypeScript" },
+    ],
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "Recommend next activities to a learner based on their profile — interests, past experience, and how far they've already progressed. The obvious build is retrieval: embed a catalogue, vector-search it, rank the results. That's what the service originally was.",
+          "It has a ceiling. A fixed catalogue can only return things already in the catalogue, and the interesting recommendations are the ones nobody wrote down yet — specific to this learner's combination of interests. So the service moved from **retrieving** ideas to **generating** them.",
+          "Which trades one hard problem for a worse one. Retrieval can only return real rows. A generator will happily invent an activity that doesn't exist, is wildly beyond the learner's level, or opens with a statistic it made up.",
+        ],
+      },
+      {
+        heading: "Generate, then verify",
+        body: [
+          "The architecture is a loop, not a pipeline. The model produces a category's ideas against a strict JSON schema; three independent gates then check the result; a rejection sends structured feedback back into a regeneration. **Three attempts**, then it stops.",
+          "The important property is that **no gate trusts the prompt**. Every one of them re-checks in code something the prompt already asked for — because the prompt asking is not evidence that the model complied.",
+        ],
+        architecture: {
+          tiers: [
+            {
+              label: "Caller",
+              nodes: [{ id: "plat", label: "Platform service", sub: "bulk request" }],
+            },
+            {
+              label: "Service",
+              nodes: [{ id: "api", label: "Recommendation API", sub: "Express · TypeScript" }],
+            },
+            {
+              label: "Generate",
+              nodes: [
+                { id: "prompt", label: "Prompt builder", sub: "per category" },
+                { id: "llm", label: "LLM", sub: "strict JSON schema", hl: true },
+              ],
+            },
+            {
+              label: "Verify",
+              nodes: [
+                { id: "g1", label: "Level gate", sub: "above current standing" },
+                { id: "g2", label: "Personal gate", sub: "anchored in profile" },
+                { id: "g3", label: "Claim gate", sub: "no invented stats" },
+              ],
+            },
+            {
+              label: "Return",
+              nodes: [{ id: "cap", label: "Cap + dedupe", sub: "every return path", hl: true }],
+            },
+          ],
+          edges: [
+            { from: "plat", to: "api" },
+            { from: "api", to: "prompt" },
+            { from: "prompt", to: "llm" },
+            { from: "llm", to: "g1" },
+            { from: "llm", to: "g2" },
+            { from: "llm", to: "g3" },
+            { from: "g2", to: "llm", label: "reject → regenerate", dashed: true, hl: true },
+            { from: "g1", to: "cap" },
+            { from: "g2", to: "cap" },
+            { from: "g3", to: "cap" },
+          ],
+          caption:
+            "The dashed edge is the whole design: a rejection is not an error, it's another attempt with the reason attached. Cap-and-dedupe sits after the gates because it has to run even when they've given up.",
+        },
+      },
+      {
+        heading: "What each gate refuses",
+        body: [
+          "**The level gate** checks that ideas sit above the standing the learner has already reached. This is the one piece of the retired retrieval pipeline that survived: that code filtered candidates by minimum level *before* ranking them. Retrieval is gone, so the same comparison now runs against generated ideas instead — same arithmetic, moved to the other side of the model.",
+          "**The personalization gate** checks each idea is anchored in the learner's stated interests rather than in their academic subject alone. The prompt had always asked for this; nothing verified it, so personalization was whatever the model felt like on a given run. Stating the requirement as a *field* and then checking the field is the move.",
+          "**The claim gate** rejects fabricated statistics — the \"only 3% of…\", \"1 in 4 workers…\" openers the model liked to invent. It's a regex, deliberately. A second auditing LLM call hallucinates too and catches roughly half as much; n-sampling costs k× tokens on every request. The fabrication has a shape we specified, so it's a closed set, and a regex costs nothing and never flakes.",
+          "It's narrow on purpose. \"8–16 weeks\" and \"2 interests\" are scope, not evidence, and have to pass.",
+        ],
+      },
+      {
+        heading: "The bug that shaped the exit path",
+        body: [
+          "Every template asks for exactly five ideas. Nothing enforced it — the schema left the array unbounded and no gate counted.",
+          "A single call returned **66 ideas**, nine of the titles repeated four times each, all of them a type the template explicitly forbids. The gates caught the violations correctly, exhausted all three attempts, and then the caller passed the last attempt through **as-is** — straight into the database, where a human saw 66 suggestions under one activity.",
+          "The fix is the boring one, in the right place: force the answer down to a deduplicated, capped list on **every return path**, including the exhausted-retries fallback — which is the one that actually leaked. Not in the prompt, which already asked and was ignored. Not in the schema, which can bound an array's length but cannot express \"no two items share a title.\"",
+          "The lesson I actually took: **a validation layer that can be bypassed by its own failure path is not a validation layer.** The gates worked perfectly. The give-up branch didn't go through them.",
+        ],
+      },
+      {
+        heading: "Cost is a design parameter",
+        body: [
+          "The model bills reasoning as output tokens, which makes it a cost lever rather than a quality dial. Measured: **zero thinking tokens** at the lowest setting versus thousands at the highest, for longer output and only marginally better ideas. Running it at zero is what keeps the current model cheaper than the one it replaced.",
+          "It's set per-environment rather than in code, so raising it is a config change when a category turns out to need the headroom — not a deploy.",
+        ],
+      },
+    ],
+    whatIdChange: [
+      "**A dependency for the retired pipeline is still installed and still initialised at boot.** The vector database client is constructed on startup and referenced by nothing on any live path; the controller that would have used it isn't even routed. It has been dead since the move to generation. It costs a package, a boot-time credential check, and — worse — it makes the architecture doc *look* accurate to anyone who only reads imports.",
+      "**The architecture doc still describes this as a vector-search service.** The code changed shape entirely and the document didn't move. That's the more expensive version of the same bug: I found it by reading the source, but anyone onboarding would have believed the doc. Documentation that isn't tied to anything executable goes stale silently.",
+      "**The same forty lines of profile validation are copy-pasted across three handlers.** They've already drifted slightly. One schema validated at the edge would delete all of it.",
     ],
   },
 
@@ -114,34 +438,112 @@ export const caseStudies: CaseStudy[] = [
     org: "Experiment Labs",
     period: "2025 — now",
     role: "Founding Engineer",
+    restricted: true,
     summary:
-      "An agentic tutor with realtime voice, grounded on each learner's actual progress — plus an LLM-as-judge harness in CI so answer quality can't silently regress.",
-    tags: ["LangGraph", "Gemini", "WebSocket", "RAG", "LLM-as-judge", "TypeScript"],
+      "An agentic tutor with realtime voice, grounded in each learner's actual progress — and an eval harness in CI so answer quality can't regress without someone noticing.",
+    tags: ["LangGraph", "Gemini", "WebSocket", "LLM-as-judge", "Eval harness", "TypeScript"],
+    metrics: [
+      { value: "63", label: "skill guides in-repo" },
+      { value: "3", label: "grading tiers" },
+      { value: "0.70", label: "CI pass threshold" },
+      { value: "~16k", label: "lines of TypeScript" },
+    ],
     facts: [
       { label: "Role", value: "Founding Engineer" },
-      { label: "Agent", value: "LangGraph + Gemini" },
-      { label: "Voice", value: "Realtime over WebSocket" },
-      { label: "Grounding", value: "RAG over a 100+ skill library" },
+      { label: "Agent", value: "LangGraph over Gemini" },
+      { label: "Voice", value: "Realtime, WebSocket relay" },
+      { label: "Memory", value: "Two layers — local + global" },
       { label: "Quality", value: "3-tier eval harness, CI gate" },
-      { label: "Size", value: "~15k lines TypeScript" },
+      { label: "Size", value: "~16k lines TypeScript" },
     ],
     sections: [
       {
         heading: "The problem",
         body: [
-          "A generic chatbot bolted onto a learning platform gives everyone the same answer. It doesn't know what a learner has already completed, where they got stuck last week, or which skills the curriculum expects next — so its advice is plausible and useless.",
+          "A generic chatbot bolted onto a learning platform gives everyone the same answer. It doesn't know what a learner has already completed, where they got stuck last week, or what the curriculum expects next — so its advice is fluent, plausible, and useless.",
+          "The harder version of the problem: a tutor that *watches someone work* has to remember them. Across sessions, across weeks, across different pieces of work — without letting one project's context bleed into another's.",
         ],
       },
       {
-        heading: "What I built",
+        heading: "Shape of the system",
         body: [
-          "A **LangGraph** agent over Gemini that grounds every reply in the learner's own progress and knowledge gaps via RAG across a **100+ skill library**, with tool-calling out to GitHub, web search and the task system. Voice runs realtime over a WebSocket so it can be spoken to rather than typed at.",
+          "Three things run behind one API: an **in-session assistant** that watches a learner work and responds to text, screenshots and voice; an **agentic chat** built on LangGraph that can search a local skill corpus and the web before answering; and a **memory layer** both of them write into.",
+          "Voice is the outlier. It isn't a request — it's a relay holding two sockets open at once, which is why it can't live on the same host as everything else.",
+        ],
+        architecture: {
+          tiers: [
+            {
+              label: "Client",
+              nodes: [
+                { id: "ui", label: "Learner UI", sub: "text · screenshot" },
+                { id: "vc", label: "Voice client", sub: "audio in / out" },
+              ],
+            },
+            {
+              label: "API",
+              nodes: [{ id: "api", label: "Copilot service", sub: "identity-gated" }],
+            },
+            {
+              label: "Agent",
+              nodes: [
+                { id: "sess", label: "Session assistant", sub: "tone-tagged replies" },
+                { id: "graph", label: "Agentic chat", sub: "LangGraph + tools", hl: true },
+                { id: "skills", label: "Skill corpus", sub: "63 guides, in-repo" },
+              ],
+            },
+            {
+              label: "Model",
+              nodes: [
+                { id: "llm", label: "LLM", sub: "text + vision" },
+                { id: "live", label: "LLM Live", sub: "streaming audio", hl: true },
+              ],
+            },
+            {
+              label: "Memory",
+              nodes: [
+                { id: "local", label: "Activity memory", sub: "this work only" },
+                { id: "glob", label: "Global memory", sub: "cross-activity patterns" },
+                { id: "trace", label: "Trace log", sub: "fire-and-forget" },
+              ],
+            },
+          ],
+          edges: [
+            { from: "ui", to: "api" },
+            { from: "vc", to: "api", label: "WebSocket", hl: true },
+            { from: "api", to: "sess" },
+            { from: "api", to: "graph" },
+            { from: "graph", to: "skills", label: "search" },
+            { from: "sess", to: "llm" },
+            { from: "graph", to: "llm" },
+            { from: "api", to: "live", label: "relay", hl: true },
+            { from: "sess", to: "local" },
+            { from: "graph", to: "glob" },
+            { from: "api", to: "trace", dashed: true },
+          ],
+          caption:
+            "Two agent tracks share one API and one memory layer — which is exactly the duplication called out at the bottom of this page. Voice bypasses the agent tracks entirely and relays straight through, because a live audio socket can't wait on a graph.",
+        },
+      },
+      {
+        heading: "Two layers of memory",
+        body: [
+          "Memory is split deliberately. **Per-activity memory** holds a rolling summary and the knowledge gaps observed for that one piece of work. **Global memory** holds patterns that recur across everything the learner does — \"struggles with written structure\" belongs here, \"hasn't set up the database yet\" does not.",
+          "One flat memory store would have been less code and would have produced a tutor that brings up a research project while you're building a website. The split is the feature.",
+          "When a session opens, context is assembled in order — global patterns, then this activity's rolling summary, then its open gaps, then where exactly the learner is right now. Extraction after a session is **best-effort**: if it fails, the session still ends cleanly. A memory write is never allowed to break the thing the learner was doing.",
+        ],
+      },
+      {
+        heading: "The model is not allowed to mark work complete",
+        body: [
+          "The agent has a tool that looks like it completes a task. It doesn't. It **signals readiness** and routes the learner to a completion check — and the shared status writer refuses a completed write that doesn't carry an explicit confirmation.",
+          "This was a deliberate walk-back. Letting the model close out work is the obvious affordance and it's wrong in both directions: silently marking incomplete work as done is bad, and refusing with no explanation is worse. So the check is **read-only** and returns the unmet requirements as a checklist — the learner sees what's left, and one tap does the actual write.",
+          "**Never silent, never dead-stop.** No path writes completion without a human confirming, and no failed check leaves someone stuck without knowing why. The model advises; it does not have authority.",
         ],
       },
       {
         heading: "The hard part: knowing whether it got worse",
         body: [
-          "Generative output has no build error. Change a prompt, swap a model, add a skill — the thing still responds fluently, and you have no idea if it's now subtly wrong. Manual spot-checking doesn't scale past the first few weeks, and it's exactly the kind of testing that quietly stops happening.",
+          "Generative output has no build error. Change a prompt, swap a model, add a skill — the thing still responds fluently, and you have no idea if it's now subtly wrong. Manual spot-checking doesn't survive past the first few weeks; it's exactly the kind of testing that quietly stops happening.",
           "So quality became a **CI gate**. A versioned golden dataset gets graded on every change, and the run exits non-zero if any case regresses.",
         ],
         flow: {
@@ -159,64 +561,299 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "How the grading works",
         body: [
-          "Three tiers, ordered cheap to expensive. **Deterministic** validates plan structure with Zod — week counts, required and forbidden keywords — for free, and short-circuits the rest on failure. **Semantic** compares embeddings against a reference answer, used strictly as an on-topic signal and never as the correctness verdict. **Judge** is Gemini scoring 1–5 on faithfulness, relevance, completeness and pedagogy, with faithfulness weighted highest.",
-          "The detail that makes it trustworthy: goldens are **expected-behaviour specs, not exact answers**. Grading a generative system on string equality just teaches you that it produced different words. And the judge is **calibrated against human grades**, so its scores track what a person would have said rather than what an LLM finds agreeable.",
+          "Three tiers, ordered cheap to expensive. **Deterministic** validates structure with Zod — required and forbidden keywords, expected counts — for free, and short-circuits the rest on failure. **Semantic** compares embeddings against a reference answer, used strictly as an on-topic signal and never as the correctness verdict. **Judge** scores 1–5 on faithfulness, relevance, completeness and pedagogy, with faithfulness weighted highest. The overall score is the deterministic gate multiplied by the normalised judge score; **0.70** passes.",
+          "Two details make it trustworthy. Goldens are **expected-behaviour specs, not exact answers** — grading a generative system on string equality only teaches you that it produced different words. And the judge is **calibrated against human grades**, so its scores track what a person would have said rather than what a model finds agreeable. An uncalibrated LLM judge is a confidence generator, not a measurement.",
+          "Every generative call also writes a trace — model, prompt version, latency, tokens, thumbs. Those writes are **fire-and-forget**: telemetry capture never blocks or breaks generation. The traces are what let the golden set grow from real traffic instead of from someone remembering to write test cases.",
         ],
       },
       {
-        heading: "Where it stands",
+        heading: "Voice, and where it can't run",
         body: [
-          "Running in CI. The harness also supports harvesting real traffic into the golden set — completed plans and positive feedback become new positive cases, poor ones get a corrected reference — so coverage grows from production instead of from someone remembering to write test cases.",
+          "Voice is a **WebSocket relay**: the client opens a socket to the backend, the backend opens a second socket to the model's live endpoint, and audio flows both ways with the session's screenshots interleaved. The last stretch of text conversation is handed over on connect, so speaking to it continues where typing left off rather than starting cold.",
+          "The operational consequence is unavoidable and worth stating plainly: **serverless cannot hold a long-lived socket.** The rest of the API is perfectly happy on a serverless host; voice needs a persistent one. That's not a preference, it's a constraint, and pretending otherwise produces a feature that works locally and is dead in production.",
         ],
       },
+    ],
+    whatIdChange: [
+      "**There are two AI tracks in one codebase.** The in-session assistant and the agentic chat evolved separately — different models, different prompts, different memory-write paths. Each made sense when it was built. Together they mean a behaviour change has two places to land and two ways to drift, and a reader has to know which one they're debugging before any of it makes sense. They should converge.",
+      "**Voice and the API want different hosts,** so a single deploy target can't serve the whole product. It's the correct consequence of the constraint above, but it doubles the operational surface and it's the thing most likely to be misconfigured by whoever deploys it next.",
+      "**The eval harness only covers the planning surface today.** Chat and the in-session assistant — where learners actually spend their time — have telemetry but no golden set. The harness was built to be extended there and hasn't been. Coverage that stops at the easiest surface is the failure mode eval harnesses usually die of.",
     ],
   },
 
   {
-    slug: "identity-platform",
-    title: "Identity Platform",
+    slug: "experiment-labs-platform",
+    title: "The Platform",
     org: "Experiment Labs",
     period: "2024 — now",
     role: "Founding Engineer",
+    restricted: true,
     summary:
-      "The SSO and identity hub every product on the platform authenticates through — multi-tenant RBAC, service-to-service trust, and ten backends that had to agree on who a user is.",
-    tags: ["Express", "Prisma", "PostgreSQL", "SSO", "RBAC", "Redis"],
+      "Ten backend services and a shared identity hub — how a multi-product platform agrees on who a user is, and what happens when a payment webhook doesn't arrive.",
+    tags: ["Multi-service", "SSO", "RBAC", "PostgreSQL", "MongoDB", "Redis", "Webhooks"],
+    metrics: [
+      { value: "10", label: "backend services" },
+      { value: "6", label: "product frontends" },
+      { value: "2", label: "database engines, on purpose" },
+      { value: "100", label: "models in the identity schema" },
+    ],
     facts: [
       { label: "Role", value: "Founding Engineer" },
-      { label: "Scale", value: "98 Prisma models, 52 route modules" },
-      { label: "Stack", value: "Express · Prisma · PostgreSQL" },
-      { label: "Auth", value: "SSO, JWT + refresh, Google/Zoom OAuth" },
-      { label: "Cache", value: "Upstash Redis" },
-      { label: "Consumers", value: "10 production services" },
+      { label: "Shape", value: "Service-oriented, shared identity" },
+      { label: "Identity", value: "SSO, JWT + refresh, OAuth" },
+      { label: "Persistence", value: "Relational + document, split by shape" },
+      { label: "Cache", value: "Managed Redis" },
+      { label: "Async", value: "Queue workers + scheduled reconcilers" },
     ],
     sections: [
       {
         heading: "The problem",
         body: [
-          "Ten backends — CRM, payments, notifications, recommendations, meeting intelligence, interviewing, internships — each with its own idea of who a user was and what they were allowed to do. Every new product meant reimplementing auth, and every permission change meant finding all ten copies of it.",
+          "Ten backends — CRM, payments, notifications, recommendations, meeting intelligence, interviewing, internships — each with its own idea of who a user was and what they were allowed to do. Every new product meant reimplementing authentication, and every permission change meant finding all ten copies of it.",
         ],
       },
       {
-        heading: "What I built",
+        heading: "Shape of the platform",
         body: [
-          "**auth-core**: a central identity service every product authenticates through. **98 Prisma models** and **52 route modules** covering SSO, JWT with refresh sessions, Google and Zoom OAuth, and a cached RBAC engine that enforces multi-tenant organisation isolation.",
-          "Services don't talk to each other anonymously — internal calls carry signed service tokens, so a compromised product can't impersonate the platform.",
+          "One identity hub that every product authenticates through, and a deliberate split in persistence underneath it. Services don't call each other anonymously — internal calls carry signed service tokens, so a product can't quietly act as the platform.",
+          "The **authorization cache** is what keeps the hub from becoming the bottleneck. Resolving permissions from the database on every request would put every product's every call behind one database. Resolved permissions are cached and invalidated on role change, and **tenant identity is part of the cache key** — which turns cross-tenant leakage into a cache miss rather than something you hope a reviewer catches.",
+        ],
+        architecture: {
+          tiers: [
+            {
+              label: "Clients",
+              nodes: [
+                { id: "apps", label: "Product web apps", sub: "six frontends" },
+                { id: "embed", label: "Embeddable plugin", sub: "third-party hosts" },
+              ],
+            },
+            {
+              label: "Identity",
+              nodes: [{ id: "idp", label: "Identity & SSO hub", sub: "authN + cached authZ", hl: true }],
+            },
+            {
+              label: "Services",
+              nodes: [
+                { id: "rel", label: "Ledger services", sub: "payments · notifications" },
+                { id: "doc", label: "Product services", sub: "domain-shaped data" },
+              ],
+            },
+            {
+              label: "Async",
+              nodes: [
+                { id: "queue", label: "Queue workers", sub: "media pipelines" },
+                { id: "cron", label: "Reconcilers", sub: "scheduled sweeps", hl: true },
+              ],
+            },
+            {
+              label: "Store",
+              nodes: [
+                { id: "sql", label: "Relational", sub: "identity · money" },
+                { id: "nosql", label: "Document", sub: "product domains" },
+                { id: "cache", label: "Cache", sub: "resolved permissions" },
+              ],
+            },
+          ],
+          edges: [
+            { from: "apps", to: "idp" },
+            { from: "embed", to: "idp" },
+            { from: "idp", to: "rel", label: "signed token", hl: true },
+            { from: "idp", to: "doc", label: "signed token", hl: true },
+            { from: "idp", to: "cache" },
+            { from: "rel", to: "sql" },
+            { from: "doc", to: "nosql" },
+            { from: "doc", to: "queue", dashed: true },
+            { from: "cron", to: "rel", label: "sweep", dashed: true, hl: true },
+          ],
+          caption:
+            "Described at the level of the pattern rather than the deployment. Every product enters through identity; nothing talks to anything else without a signed token; the reconcilers exist because webhooks are a fast path, not a guarantee.",
+        },
+      },
+      {
+        heading: "Two databases, on purpose",
+        body: [
+          "Identity, money and notification logs run on **relational** storage. Product domains run on **document** storage. That isn't indecision, and it isn't two teams disagreeing.",
+          "Identity and payments are constrained, audited, and must not drift — they want foreign keys, transactions, and a schema that refuses bad states. Product data is schema-fluid and iterated on weekly, and running that against migrations is friction with no payoff. The split costs one extra ORM dialect and buys the right tool on both sides of the line.",
+          "The place it earns its keep is the audit trail. When someone asks why an account has access it shouldn't, the answer has to be reconstructible — and \"reconstructible\" is a property of constrained storage, not of a document you can shape however you like at write time.",
         ],
       },
       {
-        heading: "The hard part: permissions on every request",
+        heading: "The webhook is the fast path, not the truth",
         body: [
-          "RBAC that reads from Postgres on every authorisation check turns the identity service into the platform's bottleneck — every product's every request now waits on one database.",
-          "Resolved permissions are cached in Redis and invalidated on role change, so the common path never touches Postgres. Multi-tenant isolation is enforced at that layer too: the tenant is part of the cache key, which makes cross-org leakage a cache miss rather than a code review question.",
+          "Payment is the flow where distributed-systems reality shows up. The provider fires a webhook when a payment captures — and sometimes it doesn't arrive, arrives twice, or arrives before the record it refers to has been written.",
+          "So the webhook is treated as an **optimisation**, not as the source of truth. Events are recorded idempotently so a duplicate delivery is a no-op, and a **scheduled reconciler** independently sweeps for unresolved orders and settles them against the provider's own view. If every webhook vanished tomorrow, the system would be slower and still correct.",
+          "That's the whole design principle: **anything that must be true cannot depend on someone else's HTTP request reaching you.**",
+        ],
+      },
+    ],
+    whatIdChange: [
+      "**The persistence boundary drifted.** The relational-versus-document line is defensible where it was drawn originally, but some later services picked their engine by what the team had used most recently rather than by the shape of the data. The rule is right; it stopped being applied consistently, and nothing enforces it at review time.",
+      "**Architecture documentation isn't tied to anything executable, so it goes stale silently.** I found one service described as a vector-search engine when it hadn't been for months — the code changed shape entirely and the document didn't move. Docs that can't fail a build always eventually lie.",
+      "**Async is done two different ways** across the platform — a Redis-backed queue in one place, a managed cloud task queue in another. Both work. Nobody would have chosen both on purpose, and the second one exists mostly because of a hosting constraint at the time rather than a considered difference in requirements.",
+    ],
+  },
+
+  {
+    slug: "fitted",
+    title: "Fitted",
+    period: "2026",
+    role: "Solo backend + infra, with Ashwath Kannan on the app",
+    summary:
+      "Photograph a garment, get a clean cut-out, build outfits and plan them on a calendar. An Android beta where the interesting problems turned out to be privacy and taxonomy.",
+    tags: ["FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "Cloud Run", "rembg · U²-Net"],
+    href: { label: "fitted.hrshkshri.com", url: "https://fitted.hrshkshri.com" },
+    metrics: [
+      { value: "2", label: "processors, user-chosen" },
+      { value: "1", label: "tag table for three entity types" },
+      { value: "0", label: "coordinates stored, ever" },
+      { value: "256-bit", label: "share tokens, hashed at rest" },
+    ],
+    facts: [
+      { label: "Role", value: "Backend, data model, infra" },
+      { label: "App", value: "Expo · React Native (Ashwath Kannan)" },
+      { label: "Backend", value: "FastAPI · SQLAlchemy 2 · Alembic" },
+      { label: "Hosting", value: "Cloud Run · Cloud SQL · GCS" },
+      { label: "Cut-out", value: "rembg / U²-Net, baked into the image" },
+      { label: "Status", value: "Android beta" },
+    ],
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "People own more clothes than they can hold in their head, so they wear the same rotation and forget the rest. The app's job is to make a wardrobe *visible*: photograph each garment, get a clean flat-lay cut-out, and build outfits from what you actually own.",
+          "The photography is the easy part. What makes it a real product is everything around the photo — and what makes it a real *engineering* problem is that a wardrobe is a set of photographs of the inside of someone's home.",
         ],
       },
       {
-        heading: "A split worth explaining",
+        heading: "Architecture",
         body: [
-          "The platform runs **PostgreSQL for identity, notifications and payments**, and **MongoDB for the product services** — CRM, meeting intelligence, recommendations, interviewing.",
-          "That isn't indecision. Identity, money and audit trails are relational, constrained, and must not drift — they want foreign keys and transactions. Product data is document-shaped and schema-fluid, and iterating on it weekly against migrations is friction with no payoff. Splitting on that boundary costs one extra ORM and buys the right tool on both sides.",
+          "A thin app, a FastAPI backend that owns all the logic, and a strict layering rule: **routers → services → models, never skipping**. Routers parse and return an envelope; services hold business logic and own transactions; models are the ORM. It's unglamorous and it's the reason a second person could work in the app while I worked in the backend.",
+          "The app **never calls an image processor directly**. It uploads to the backend with a chosen mode, and the backend runs the processor server-side. That keeps third-party credentials off the device, makes the processor swappable without an app release, and means a failed cut-out is handled in one place.",
+        ],
+        architecture: {
+          tiers: [
+            {
+              label: "Client",
+              nodes: [
+                { id: "app", label: "Expo app", sub: "React Native · Android" },
+                { id: "web", label: "Marketing site", sub: "static, no API" },
+              ],
+            },
+            {
+              label: "API",
+              nodes: [{ id: "api", label: "FastAPI", sub: "Cloud Run" }],
+            },
+            {
+              label: "Process",
+              nodes: [
+                { id: "cut", label: "Cut-out", sub: "rembg · U²-Net", hl: true },
+                { id: "gem", label: "Ghost mannequin", sub: "generative" },
+              ],
+            },
+            {
+              label: "Store",
+              nodes: [
+                { id: "pg", label: "Cloud SQL", sub: "Postgres · Alembic" },
+                { id: "obj", label: "Object storage", sub: "private, presigned", hl: true },
+                { id: "goog", label: "Google Identity", sub: "ID token verify" },
+              ],
+            },
+          ],
+          edges: [
+            { from: "app", to: "api" },
+            { from: "api", to: "goog", label: "verify aud" },
+            { from: "api", to: "cut", label: "process_mode", hl: true },
+            { from: "api", to: "gem" },
+            { from: "api", to: "pg" },
+            { from: "cut", to: "obj" },
+            { from: "gem", to: "obj" },
+          ],
+          caption:
+            "The processors sit behind the API, never in the app. The bucket is never public — every read is a short-lived, user-scoped presigned URL, and the original photo is kept even when processing succeeds.",
+        },
+      },
+      {
+        heading: "One tag table, three entity types",
+        body: [
+          "The obvious model gives clothes a category — tops, formal, winter. I didn't build that, because every fixed taxonomy is wrong for somebody, and the interesting queries cut across entity types anyway.",
+          "Instead a **tag is a standalone, user-created label** that attaches to a wardrobe, a garment, *and* an outfit through three join tables. Selecting a tag slices the whole app horizontally; the user then chooses which kinds of thing to show. No fixed vocabulary — people invent their own.",
+          "The part I'm happiest with: **an outfit's effective tags are computed, never stored.** They're the union of the outfit's own tags with the tags of both garments in it. Tag a blazer `party` and jeans `casual` and the outfit surfaces under both, plus anything you tag it directly. Storing that union would mean recomputing it on every tag edit to either garment — a denormalisation with a guaranteed drift bug in it. Wear counts and last-worn are derived the same way, straight from the calendar.",
+        ],
+        dataModel: {
+          caption:
+            "Every domain table carries soft-delete columns. Join tables are the deliberate exception — composite key, hard delete on detach, because a detached tag is not history worth keeping.",
+          entities: [
+            {
+              name: "User",
+              note: "google_sub unique — no passwords stored",
+              children: [
+                {
+                  name: "Wardrobe",
+                  note: "1:n · a default always exists",
+                  children: [
+                    { name: "Shelf", note: "1:n — named section" },
+                    { name: "WardrobeShare", note: "0:1 active — token hashed" },
+                  ],
+                },
+                {
+                  name: "ClothingItem",
+                  note: "1:n · draft until type is set",
+                  children: [
+                    { name: "original_photo_key", note: "always kept" },
+                    { name: "processed_photo_key", note: "nullable — null means processing failed" },
+                  ],
+                },
+                { name: "Outfit", note: "upper + lower → ClothingItem" },
+                { name: "CalendarEntry", note: "one active outfit per day" },
+                { name: "Tag", note: "n:m with wardrobe, item and outfit" },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        heading: "Privacy as a data-model decision",
+        body: [
+          "A wardrobe app accumulates photographs of the inside of someone's home, tagged with where things are. The privacy work had to be structural rather than a policy page.",
+          "**No geolocation is stored on any entity.** Wardrobes carry an optional *typed label* — \"Home\", \"Office\", \"Suitcase\" — which covers every real \"where are these clothes\" need. It is a string the user types, never a coordinate. You cannot leak a location you never collected.",
+          "**The bucket is never public.** Keys are namespaced per user and every read goes through a short-lived, user-scoped presigned URL. Account deletion removes the user's entire storage prefix, not just their rows.",
+          "**Share links are hashed at rest.** A share stores the SHA-256 of a 256-bit token; the raw token exists only in the URL the user copies. A database dump doesn't hand anyone a working link, and the shared view is a minimal projection rather than the full record.",
+          "**Token verification fails closed.** Sign-in checks the Google ID token's audience against an explicit allowlist of client IDs. If none are configured, verification *errors* rather than skipping the check — the failure mode of a misconfigured deploy is \"nobody can log in,\" not \"anyone can.\"",
         ],
       },
+      {
+        heading: "Failure modes",
+        body: [
+          "The one that matters is background removal, because it's the step most likely to fail and the one a user has already spent effort on by the time it runs.",
+        ],
+        failureModes: [
+          {
+            trigger: "Processor fails or times out",
+            behaviour: "Original kept, processed key left null",
+            recovery: "User continues — type and colour still confirmable",
+          },
+          {
+            trigger: "Item photographed but not typed",
+            behaviour: "Stays a draft, excluded from grid and outfits",
+            recovery: "Finalised whenever the user sets a type",
+          },
+          {
+            trigger: "Two outfits planned on one day",
+            behaviour: "Rejected — unique on (user, date) where active",
+            recovery: "Soft-deleted history may share the date",
+          },
+          {
+            trigger: "Share link revoked or expired",
+            behaviour: "Public view 404s, no partial render",
+            recovery: "Owner issues a fresh token; old hash never matches",
+          },
+        ],
+      },
+    ],
+    whatIdChange: [
+      "**Processing is synchronous inside the upload request.** Background removal on a cold Cloud Run instance is slow enough that this should be a queued job with the client polling — the same shape I already built on another project. It's fine at beta traffic and it's the first thing that breaks under load.",
+      "**`process_mode` is a user-facing choice that probably shouldn't be.** Asking someone to pick between two background removers before they've seen either output is an implementation detail leaking into the UI. The right version picks a default and offers a reprocess.",
+      "**There's no test for the effective-tags union.** It's the cleverest logic in the codebase and the most likely to break silently when the query changes, and it's covered by nothing.",
     ],
   },
 
@@ -227,12 +864,18 @@ export const caseStudies: CaseStudy[] = [
     role: "Solo — open source",
     summary:
       "A browser extension and CLI that surface Claude token usage, cache reads and rate limits in real time — by observing an app I don't control.",
-    tags: ["TypeScript", "Browser Extension", "Node CLI", "esbuild"],
+    tags: ["TypeScript", "Browser Extension", "Node CLI", "esbuild", "Manifest V3"],
     href: { label: "npmjs.com/package/claukit", url: "https://www.npmjs.com/package/claukit" },
+    metrics: [
+      { value: "0", label: "runtime dependencies" },
+      { value: "0", label: "bytes of chat sent anywhere" },
+      { value: "3", label: "browser cookie formats read" },
+      { value: "~2.4k", label: "lines of source" },
+    ],
     facts: [
       { label: "Role", value: "Solo — open source" },
       { label: "Ships as", value: "Firefox add-on + npm CLI" },
-      { label: "Stack", value: "TypeScript, esbuild" },
+      { label: "Stack", value: "TypeScript, esbuild, MV3" },
       { label: "Tokenizer", value: "o200k_base, counted locally" },
       { label: "Size", value: "~2.4k lines" },
       { label: "Status", value: "Published, v0.5" },
@@ -247,35 +890,70 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "The hard part: you can't see the network from a content script",
         body: [
-          "Browser extensions run content scripts in an **isolated world**. You get the DOM, but not the page's own `window.fetch` — so you cannot observe the requests you actually care about from where extensions are designed to run.",
-          "The fix is a two-part bridge. A host script is injected into the **page context**, where it wraps `fetch` for real, and it talks to the content script over `postMessage` with a small request/response protocol.",
-          "One detail matters more than it looks: the host captures `window.fetch` **before any framework can wrap it**, and patches `history.pushState` and `replaceState` to detect SPA navigation. Get the ordering wrong and you're instrumenting React's wrapper instead of the network, and it silently under-reports.",
+          "Browser extensions run content scripts in an **isolated world**. You get the DOM, but not the page's own `window.fetch` — so you cannot observe the requests you actually care about from the place extensions are designed to run.",
+          "The fix is a two-part bridge. A host script is injected into the **page context**, where it wraps `fetch` for real, and it talks back to the content script over `postMessage` with a small request/response protocol.",
+          "One ordering detail matters more than it looks: the host captures `window.fetch` **before any framework can wrap it**, and patches `history.pushState` and `replaceState` to catch SPA navigation. Get that wrong and you're instrumenting React's wrapper instead of the network, and it under-reports without ever erroring.",
         ],
-        flow: {
-          nodes: [
-            { label: "Page context" },
-            { label: "fetch wrapper", hl: true },
-            { label: "postMessage" },
-            { label: "Content script" },
-            { label: "Usage UI" },
+        architecture: {
+          tiers: [
+            {
+              label: "Page",
+              nodes: [
+                { id: "site", label: "claude.ai", sub: "app's own JS" },
+                { id: "hook", label: "fetch wrapper", sub: "captured first", hl: true },
+              ],
+            },
+            {
+              label: "Bridge",
+              nodes: [{ id: "pm", label: "postMessage", sub: "request / response", hl: true }],
+            },
+            {
+              label: "Extension",
+              nodes: [
+                { id: "cs", label: "Content script", sub: "isolated world" },
+                { id: "tok", label: "Tokenizer", sub: "o200k_base, vendored" },
+              ],
+            },
+            {
+              label: "Surface",
+              nodes: [
+                { id: "ui", label: "Usage panel", sub: "in-page overlay" },
+                { id: "cli", label: "Status line", sub: "npm CLI" },
+              ],
+            },
+          ],
+          edges: [
+            { from: "site", to: "hook", label: "fetch()", hl: true },
+            { from: "hook", to: "pm" },
+            { from: "pm", to: "cs" },
+            { from: "cs", to: "tok" },
+            { from: "cs", to: "ui" },
+            { from: "cli", to: "ui", label: "same data, other host", dashed: true },
           ],
           caption:
-            "The bridge exists purely because the two halves of an extension can't see the same window.",
+            "The bridge exists purely because the two halves of an extension cannot see the same window. Everything right of it runs in the extension's world; nothing crosses back except counts.",
         },
       },
       {
         heading: "Counting tokens without a server",
         body: [
-          "Token counts are computed **locally**, with the `o200k_base` tokenizer vendored into the bundle. Sending conversation content to a counting service to find out how big it is would be an absurd privacy trade for a usage meter. It costs bundle size and nothing else.",
+          "Token counts are computed **locally**, with the `o200k_base` tokenizer vendored into the bundle. Sending conversation content to a counting service to find out how big it is would be an absurd privacy trade for a usage meter — the thing you'd be leaking is the thing you're measuring.",
+          "It costs bundle size and nothing else. The extension ships with **zero runtime dependencies**, so there's no supply chain to audit on something that sits on top of your chat.",
         ],
       },
       {
-        heading: "The CLI half",
+        heading: "The CLI half, and three cookie formats",
         body: [
-          "The same data renders in the Claude Code status line via an npm CLI. To avoid making you paste cookies, `claukit setup` reads the session directly from the browser — which means three different storage formats: Chrome's AES-encrypted store (unlocked with a PBKDF2-derived key, and copied first because Chrome holds a lock on the live file), Firefox's SQLite, and Safari's binary format.",
-          "When that fails — common on macOS, or when the cookie is memory-only — it degrades to a guided manual paste instead of an error.",
+          "The same data renders in the Claude Code status line via an npm CLI. To avoid making anyone paste cookies by hand, `claukit setup` reads the session directly from the browser — which means three entirely different storage formats.",
+          "**Chrome** encrypts its cookie store with AES under a key derived via PBKDF2, and holds a lock on the live file — so it has to be copied before it can be read. **Firefox** keeps SQLite. **Safari** uses its own binary layout.",
+          "When all of that fails — common on macOS, or when the cookie is memory-only — it **degrades to a guided manual paste** rather than an error. That fallback is the actual feature. An auto-detect that works on four setups out of five and hard-fails on the fifth is worse than one that always finishes, because the person on the fifth setup has no idea whether they're holding it wrong.",
         ],
       },
+    ],
+    whatIdChange: [
+      "**It reads an API surface I don't own and that nobody promised me.** Response shapes are validated defensively and the UI degrades rather than crashing when a field disappears, but any redesign upstream can break it and there's no contract to appeal to. That's inherent to the idea, not a bug — worth stating plainly rather than pretending the thing is robust.",
+      "**Chrome Web Store submission is still unfinished,** so Chrome users load an unpacked build. That's a distribution gap, and it's the single biggest reason the install count understates use.",
+      "**The tokenizer is vendored, not pinned to a source of truth.** If the upstream vocabulary changes, my counts drift and nothing tells me — the failure is silent and looks like a small counting bug rather than a stale dependency.",
     ],
   },
 ];

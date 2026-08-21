@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Rampart_One } from "next/font/google";
+import { Rampart_One, Kalam } from "next/font/google";
 import "./globals.css";
 import NavigationWrapper from "@/components/layout/NavigationWrapper";
 import { SITE_URL } from "@/lib/site";
@@ -9,6 +9,16 @@ const rampartOne = Rampart_One({
   weight: "400",
   display: "swap",
   variable: "--font-rampart",
+});
+
+// Diagram labels only. The architecture sketches read as hand-drawn, so the
+// lettering has to match the stroke — a geometric sans inside a wobbly box
+// looks like a mistake rather than a choice. Never applied to body copy.
+const kalam = Kalam({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-sketch",
 });
 
 export const metadata: Metadata = {
@@ -91,7 +101,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={rampartOne.variable}>
+    <html lang="en" className={`${rampartOne.variable} ${kalam.variable}`}>
       {/* Extensions (Grammarly et al.) stamp attributes on <body> before hydration */}
       <body className="antialiased" suppressHydrationWarning>
         <a
