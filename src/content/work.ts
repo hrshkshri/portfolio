@@ -68,12 +68,68 @@ export interface FailureMode {
   recovery: string;
 }
 
+/* ── system diagrams ──────────────────────────────────────────────────────
+ * Placement lives in the content here, unlike the tier `Architecture` above.
+ * A datacenter boundary wrapping four nodes while a store sits outside it is
+ * not something a tier stack can express, and these get read far more often
+ * than they get edited. Grid units are fractional, so a group can be a third
+ * of a row taller than its contents and still be described the same way.
+ */
+
+export interface DiagramNode {
+  id: string;
+  label: string;
+  /** Second line — the one-phrase "what is it". */
+  sub?: string;
+  col: number;
+  row: number;
+  /** Column / row span. Default 2 × 1. */
+  cw?: number;
+  rh?: number;
+  shape?: "box" | "circle";
+  hl?: boolean;
+  /** Shown on hover, focus or tap. This is where the real explanation goes. */
+  note?: string;
+  /** The gotcha — rendered as an amber callout under the note. */
+  caution?: string;
+}
+
+export interface DiagramGroup {
+  id: string;
+  label?: string;
+  col: number;
+  row: number;
+  cw: number;
+  rh: number;
+  /** Solid reads as one real unit; dashed as a boundary or region. */
+  solid?: boolean;
+}
+
+export interface DiagramEdge {
+  from: string;
+  to: string;
+  label?: string;
+  dashed?: boolean;
+  hl?: boolean;
+}
+
+export interface SystemArchitecture {
+  /** Grid columns. Defaults to 12. */
+  cols?: number;
+  rows: number;
+  nodes: DiagramNode[];
+  groups?: DiagramGroup[];
+  edges: DiagramEdge[];
+  caption: string;
+}
+
 export interface Section {
   heading: string;
   /** Paragraphs. `**bold**` is rendered via renderTextWithBold. */
   body: string[];
   flow?: Flow;
   architecture?: Architecture;
+  systemDiagram?: SystemArchitecture;
   dataModel?: DataModel;
   failureModes?: FailureMode[];
 }
@@ -121,55 +177,124 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "System architecture",
         body: [
-          "One workspace where a card contact becomes a meeting participant, a meeting generates tasks, and the AI can answer questions about any of it. Four product pillars over a single relational model — **47 Prisma tables** — so the connections are joins rather than integrations.",
-          "Two frontends, one backend, one database. The split is deliberate: an authenticated React dashboard, and a separate Next.js app for public card and booking pages. Different domain, zero auth, real SEO requirements, and none of the dashboard's bundle weight. They're **three independent repos**, not a workspace — their deploy targets have nothing in common, and a shared lockfile would only couple them.",
+          "Two frontends, one backend, one database — and **three independent repos**, not a workspace. Their deploy targets have nothing in common, and a shared lockfile would only couple them.",
         ],
-        architecture: {
-          tiers: [
+        systemDiagram: {
+          rows: 7.2,
+          groups: [
+            { id: "g-client", label: "Clients", col: 2.7, row: 0, cw: 6.1, rh: 1.6, solid: true },
             {
-              label: "Client",
-              nodes: [
-                { id: "dash", label: "Dashboard", sub: "React 19 · Vite" },
-                { id: "pub", label: "Public pages", sub: "Next.js · SSR" },
-              ],
+              id: "g-async",
+              label: "Async — off the request path",
+              col: 0.4,
+              row: 4.1,
+              cw: 6.3,
+              rh: 2.9,
+            },
+          ],
+          nodes: [
+            {
+              id: "dash",
+              label: "Dashboard",
+              sub: "React 19 · Vite",
+              col: 3.0,
+              row: 0.5,
+              cw: 2.6,
+              rh: 0.9,
+              note: "The authenticated app — meetings, cards, tasks and the meeting-AI interface. Client-rendered, because nothing here is worth indexing and every view sits behind a login.",
             },
             {
-              label: "API",
-              nodes: [{ id: "api", label: "calendar-backend", sub: "Express 5 · Prisma 6" }],
+              id: "pub",
+              label: "Public pages",
+              sub: "Next.js · SSR",
+              col: 5.9,
+              row: 0.5,
+              cw: 2.6,
+              rh: 0.9,
+              note: "Card pages and booking links, on their own domain with no auth at all. Server-rendered because these are the only pages that have to look right in a search result or a link preview.",
+              caution:
+                "Its own repo and its own deploy — the one thing keeping dashboard bundle weight off a page a stranger loads.",
             },
             {
-              label: "Store",
-              nodes: [
-                { id: "pg", label: "PostgreSQL", sub: "Neon, serverless" },
-                { id: "q", label: "Bull queue", sub: "Upstash Redis", hl: true },
-                { id: "gcs", label: "Cloud Storage", sub: "recordings" },
-              ],
+              id: "api",
+              label: "calendar-backend",
+              sub: "Express 5 · Prisma 6",
+              col: 4.2,
+              row: 2.3,
+              cw: 3.2,
+              note: "One service owning every route: auth, meetings, cards, the meeting-AI endpoints and the public read paths. Prisma talks to Postgres; nothing else does.",
             },
             {
-              label: "Worker",
-              nodes: [{ id: "w", label: "Worker process", sub: "separate dyno" }],
+              id: "gcs",
+              label: "Cloud Storage",
+              sub: "recordings",
+              col: 8.6,
+              row: 2.3,
+              cw: 2.6,
+              note: "Raw audio lands here first and the worker reads it back out. Keeping recordings out of the database is what lets a transcript row stay small enough to query cheaply.",
             },
             {
-              label: "AI",
-              nodes: [
-                { id: "dg", label: "Deepgram", sub: "Nova-2 · diarized" },
-                { id: "llm", label: "GPT-4o-mini", sub: "summary · actions" },
-              ],
+              id: "pg",
+              label: "PostgreSQL",
+              sub: "Neon, serverless",
+              col: 8.6,
+              row: 4.6,
+              cw: 2.6,
+              note: "All 47 tables. The worker writes results back onto the same meeting row the API already served, which is the entire reason this is relational rather than document storage.",
+            },
+            {
+              id: "q",
+              label: "Bull queue",
+              sub: "Upstash Redis",
+              col: 0.7,
+              row: 4.6,
+              cw: 2.6,
+              hl: true,
+              note: "The seam. Upload enqueues a job and returns immediately, so a 30–120 second transcription never sits inside an HTTP request. Bull carries retry counts and job state, so a failure is observable rather than silent.",
+              caution:
+                "Bull needs a real TCP connection to Redis, not a REST client — which is also why the worker can't be serverless.",
+            },
+            {
+              id: "w",
+              label: "Worker process",
+              sub: "long-lived",
+              col: 3.8,
+              row: 4.6,
+              cw: 2.6,
+              note: "A separate always-on process. Pulls the job, fetches the audio, calls transcription then the model, and writes results back. Three attempts with exponential backoff before the meeting is marked FAILED.",
+            },
+            {
+              id: "dg",
+              label: "Deepgram",
+              sub: "Nova-2 · diarized",
+              col: 0.7,
+              row: 5.9,
+              cw: 2.6,
+              note: "Speech to text with speaker diarization on. Whisper was the obvious default and can't tell you who said what — the one property you cannot add afterwards in post-processing.",
+            },
+            {
+              id: "llm",
+              label: "GPT-4o-mini",
+              sub: "summary · actions",
+              col: 3.8,
+              row: 5.9,
+              cw: 2.6,
+              note: "Turns the transcript into a summary, key points and action items. Structured extraction rather than reasoning, which is why the small model is the correct one — about 10× cheaper at the same usable quality.",
             },
           ],
           edges: [
             { from: "dash", to: "api" },
             { from: "pub", to: "api" },
-            { from: "api", to: "pg" },
-            { from: "api", to: "q", label: "enqueue", hl: true },
             { from: "api", to: "gcs", label: "upload" },
+            { from: "api", to: "pg", label: "reads / writes" },
+            { from: "api", to: "q", label: "enqueue", hl: true },
             { from: "q", to: "w", label: "job", dashed: true, hl: true },
             { from: "w", to: "dg" },
             { from: "w", to: "llm" },
             { from: "w", to: "pg", label: "results" },
           ],
           caption:
-            "The queue is the seam. Everything below it runs after the HTTP response has already been sent, and the worker writes results back to the same row the API served.",
+            "The queue is the seam — everything inside the dashed boundary runs after the HTTP response has already been sent.",
         },
       },
       {

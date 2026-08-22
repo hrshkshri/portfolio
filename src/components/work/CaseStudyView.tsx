@@ -4,6 +4,7 @@ import { MdArrowOutward } from "react-icons/md";
 import type { CaseStudy, Flow } from "@/content/work";
 import { renderTextWithBold } from "@/components/shared/utils";
 import ArchitectureDiagram from "./ArchitectureDiagram";
+import SystemDiagram from "./SystemDiagram";
 import { DataModelTree, FailureModeTable } from "./StudyBlocks";
 
 /** The inline pipeline strip — a critical path, not a topology. */
@@ -89,6 +90,9 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                     {renderTextWithBold(para)}
                   </p>
                 ))}
+                {section.systemDiagram && (
+                  <SystemDiagram arch={section.systemDiagram} id={`${study.slug}-${si}`} />
+                )}
                 {section.architecture && (
                   <ArchitectureDiagram
                     arch={section.architecture}
