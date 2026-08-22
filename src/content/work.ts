@@ -985,36 +985,9 @@ export const caseStudies: CaseStudy[] = [
         },
       },
       {
-        heading: "Failure modes",
-        body: [
-          "Every one of these is somebody else's system changing under me, which is the condition of the whole project rather than an edge case.",
-        ],
-        failureModes: [
-          {
-            trigger: "Upstream response shape changes",
-            behaviour: "Unparseable fields are dropped, not assumed",
-            recovery: "Panel shows fewer numbers rather than crashing",
-          },
-          {
-            trigger: "Cookie decryption fails",
-            behaviour: "Setup can't read the session automatically",
-            recovery: "Guided manual paste, step by step",
-          },
-          {
-            trigger: "Chrome holds a lock on the live file",
-            behaviour: "A direct read would fail outright",
-            recovery: "File is copied first, then read from the copy",
-          },
-          {
-            trigger: "Session cookie is memory-only",
-            behaviour: "Nothing on disk to find, on any browser",
-            recovery: "Same manual paste path",
-          },
-        ],
-      },
-      {
         heading: "Trade-offs",
         body: [
+          "**Parsing defensively rather than trusting the shape.** Every field is read as something that might not be there, so when a response changes underneath me the panel drops the number it can no longer read and keeps showing the rest. The alternative — assuming the shape and throwing — turns somebody else's deploy into a broken extension.",
           "**Counting locally rather than on a server.** The `o200k_base` tokenizer is vendored into the bundle, so no conversation content ever leaves the machine. It costs bundle size and nothing else — and the alternative would have leaked exactly what the tool exists to measure.",
           "**Zero runtime dependencies.** Nothing to audit in a supply chain, on something that sits on top of your chat and reads every response.",
           "**A fallback instead of a hard failure.** Cookie auto-detection could not be made reliable across three browsers and two operating systems, so it degrades to a guided paste. An auto-detect that works on four setups out of five and hard-fails on the fifth is worse than one that always finishes — the person on the fifth has no idea whether they're holding it wrong.",
