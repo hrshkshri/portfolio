@@ -672,7 +672,7 @@ export const caseStudies: CaseStudy[] = [
     role: "Founding Engineer",
     restricted: true,
     summary:
-      "Ten backend services and a shared identity hub — how a multi-product platform agrees on who a user is, and what happens when a payment webhook doesn't arrive.",
+      "Ten backend services, one identity hub, and the loop that makes three of them a single system.",
     tags: ["Multi-service", "SSO", "RBAC", "PostgreSQL", "MongoDB", "Redis", "Webhooks"],
     facts: [
       { label: "Role", value: "Founding Engineer" },
