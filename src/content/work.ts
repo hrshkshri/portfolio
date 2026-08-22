@@ -343,54 +343,9 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
       {
-        heading: "Data model",
-        body: [
-          "The shape is the argument for Postgres. Every arrow below is a foreign key that a document store would have made me denormalise and then keep in sync by hand.",
-        ],
-        dataModel: {
-          caption:
-            "Recording, transcript and segments are three tables rather than one nested blob — segments are queried on their own for speaker filtering and timestamp seeks.",
-          entities: [
-            {
-              name: "User",
-              children: [
-                {
-                  name: "Card",
-                  note: "1:n",
-                  children: [
-                    { name: "CardContact", note: "1:n" },
-                    { name: "CardView", note: "1:n — analytics" },
-                  ],
-                },
-                {
-                  name: "Meeting",
-                  note: "1:n",
-                  children: [
-                    { name: "MeetingParticipant", note: "n:m with User" },
-                    {
-                      name: "MeetingRecording",
-                      note: "1:1",
-                      children: [
-                        {
-                          name: "MeetingTranscript",
-                          note: "1:1",
-                          children: [{ name: "TranscriptSegment", note: "1:n — speaker + offset" }],
-                        },
-                      ],
-                    },
-                    { name: "MeetingAISummary", note: "1:1" },
-                    { name: "MeetingActionItem", note: "1:n" },
-                    { name: "MeetingStateHistory", note: "1:n — audit" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      },
-      {
         heading: "Trade-offs",
         body: [
+          "**Postgres over MongoDB.** Meetings have participants, recordings have transcripts, transcripts have segments — every one of those is a foreign key a document store would have made me denormalise and then keep in sync by hand. It also let recording, transcript and segments stay three tables rather than one nested blob, so segments can be queried on their own for speaker filtering and timestamp seeks.",
           "**Deepgram Nova-2 over Whisper.** Whisper is the obvious default and has no speaker diarization. A transcript that can't tell you *who said what* is close to useless for summarisation, and it's the one property you cannot add afterwards in post-processing.",
           "**GPT-4o-mini over GPT-4o.** Transcripts fit comfortably in the smaller context and the task is structured extraction rather than reasoning — roughly **10× cheaper** at the same usable quality, with a one-string upgrade path if that stops being true.",
           "**Recall.ai over building the bot.** A Zoom and Meet bot means maintaining OAuth apps, bot infrastructure and recording pipelines — none of which is the product. Recall streams audio to Deepgram under my own credentials, so the pipeline above runs unchanged whether the audio came from an upload or a bot.",
