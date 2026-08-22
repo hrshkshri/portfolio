@@ -100,26 +100,6 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                 {section.flow && <Diagram flow={section.flow} />}
               </section>
             ))}
-
-            {study.whatIdChange && (
-              <section className="mt-12 pt-8 border-t border-neutral-800">
-                <h2 className="text-xs tracking-[0.16em] uppercase text-neutral-400 font-medium mb-3">
-                  What I&apos;d change
-                </h2>
-                <ul className="space-y-3.5">
-                  {study.whatIdChange.map((item, i) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="text-amber-500/70 text-sm mt-1 shrink-0" aria-hidden="true">
-                        ◦
-                      </span>
-                      <p className="text-[15px] text-neutral-300 leading-[1.75]">
-                        {renderTextWithBold(item)}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
           </article>
 
           <dl className="md:border-l border-t md:border-t-0 border-neutral-800 pt-6 md:pt-0 md:pl-5">

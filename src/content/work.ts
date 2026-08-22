@@ -97,8 +97,6 @@ export interface CaseStudy {
    */
   restricted?: boolean;
   sections: Section[];
-  /** Honest retrospective. Reads better than a diagram with no flaws in it. */
-  whatIdChange?: string[];
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -121,13 +119,6 @@ export const caseStudies: CaseStudy[] = [
       { label: "Status", value: "Live, billing enabled" },
     ],
     sections: [
-      {
-        heading: "The problem",
-        body: [
-          "A solo consultant runs their week across five tools that don't know about each other. The contact lives in HiHello, the booking in Cal.com, the meeting recording in Otter, and the follow-up task in Todoist — if it gets created at all.",
-          "None of that work is individually hard. The **stitching** is where it falls apart: every handoff between tools is a manual copy-paste that eventually stops happening.",
-        ],
-      },
       {
         heading: "System architecture",
         body: [
@@ -293,11 +284,6 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
     ],
-    whatIdChange: [
-      "**The frontend polls `transcriptionStatus`** on an interval while a job runs — even though SSE is already wired up for Ask AI. The transport to push status exists; the pipeline just doesn't use it. Polling was the faster thing to ship and it's still there.",
-      "**Exhausted jobs have no operator surface.** `removeOnComplete: 100` keeps recent successes for debugging, but a job that burns all 3 attempts sets the meeting to FAILED and disappears from the queue. I can see *that* it failed, not *why*, without going to the logs. A dead-letter list would have cost an afternoon.",
-      "**Two frontends share a design language by convention, not by code.** No shared token package — the docs literally say \"same design language by convention.\" That holds while one person writes both, and stops holding the moment that isn't true.",
-    ],
   },
 
   {
@@ -320,16 +306,9 @@ export const caseStudies: CaseStudy[] = [
     ],
     sections: [
       {
-        heading: "The problem",
-        body: [
-          "Recommend next activities to a learner based on their profile — interests, past experience, and how far they've already progressed. The obvious build is retrieval: embed a catalogue, vector-search it, rank the results. That's what the service originally was.",
-          "It has a ceiling. A fixed catalogue can only return things already in the catalogue, and the interesting recommendations are the ones nobody wrote down yet — specific to this learner's combination of interests. So the service moved from **retrieving** ideas to **generating** them.",
-          "Which trades one hard problem for a worse one. Retrieval can only return real rows. A generator will happily invent an activity that doesn't exist, is wildly beyond the learner's level, or opens with a statistic it made up.",
-        ],
-      },
-      {
         heading: "Generate, then verify",
         body: [
+          "The service used to be retrieval — embed a catalogue, vector-search it, rank the results. That has a ceiling: a fixed catalogue can only return what's already in it, and the useful recommendations are the ones nobody wrote down, specific to one learner's combination of interests. So it moved from **retrieving** ideas to **generating** them, which trades one hard problem for a worse one. Retrieval can only return real rows. A generator will happily invent an activity that doesn't exist, sits wildly beyond the learner's level, or opens with a statistic it made up.",
           "The architecture is a loop, not a pipeline. The model produces a category's ideas against a strict JSON schema; three independent gates then check the result; a rejection sends structured feedback back into a regeneration. **Three attempts**, then it stops.",
           "The important property is that **no gate trusts the prompt**. Every one of them re-checks in code something the prompt already asked for — because the prompt asking is not evidence that the model complied.",
         ],
@@ -405,11 +384,6 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
     ],
-    whatIdChange: [
-      "**A dependency for the retired pipeline is still installed and still initialised at boot.** The vector database client is constructed on startup and referenced by nothing on any live path; the controller that would have used it isn't even routed. It has been dead since the move to generation. It costs a package, a boot-time credential check, and — worse — it makes the architecture doc *look* accurate to anyone who only reads imports.",
-      "**The architecture doc still describes this as a vector-search service.** The code changed shape entirely and the document didn't move. That's the more expensive version of the same bug: I found it by reading the source, but anyone onboarding would have believed the doc. Documentation that isn't tied to anything executable goes stale silently.",
-      "**The same forty lines of profile validation are copy-pasted across three handlers.** They've already drifted slightly. One schema validated at the edge would delete all of it.",
-    ],
   },
 
   {
@@ -432,15 +406,9 @@ export const caseStudies: CaseStudy[] = [
     ],
     sections: [
       {
-        heading: "The problem",
-        body: [
-          "A generic chatbot bolted onto a learning platform gives everyone the same answer. It doesn't know what a learner has already completed, where they got stuck last week, or what the curriculum expects next — so its advice is fluent, plausible, and useless.",
-          "The harder version of the problem: a tutor that *watches someone work* has to remember them. Across sessions, across weeks, across different pieces of work — without letting one project's context bleed into another's.",
-        ],
-      },
-      {
         heading: "Shape of the system",
         body: [
+          "A tutor that *watches someone work* has to remember them — across sessions, across weeks, across different pieces of work, without letting one project's context bleed into another's. That constraint shapes everything below it.",
           "Three things run behind one API: an **in-session assistant** that watches a learner work and responds to text, screenshots and voice; an **agentic chat** built on LangGraph that can search a local skill corpus and the web before answering; and a **memory layer** both of them write into.",
           "Voice is the outlier. It isn't a request — it's a relay holding two sockets open at once, which is why it can't live on the same host as everything else.",
         ],
@@ -548,11 +516,6 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
     ],
-    whatIdChange: [
-      "**There are two AI tracks in one codebase.** The in-session assistant and the agentic chat evolved separately — different models, different prompts, different memory-write paths. Each made sense when it was built. Together they mean a behaviour change has two places to land and two ways to drift, and a reader has to know which one they're debugging before any of it makes sense. They should converge.",
-      "**Voice and the API want different hosts,** so a single deploy target can't serve the whole product. It's the correct consequence of the constraint above, but it doubles the operational surface and it's the thing most likely to be misconfigured by whoever deploys it next.",
-      "**The eval harness only covers the planning surface today.** Chat and the in-session assistant — where learners actually spend their time — have telemetry but no golden set. The harness was built to be extended there and hasn't been. Coverage that stops at the easiest surface is the failure mode eval harnesses usually die of.",
-    ],
   },
 
   {
@@ -575,14 +538,9 @@ export const caseStudies: CaseStudy[] = [
     ],
     sections: [
       {
-        heading: "The problem",
-        body: [
-          "Ten backends — CRM, payments, notifications, recommendations, meeting intelligence, interviewing, internships — each with its own idea of who a user was and what they were allowed to do. Every new product meant reimplementing authentication, and every permission change meant finding all ten copies of it.",
-        ],
-      },
-      {
         heading: "Shape of the platform",
         body: [
+          "Ten backends — CRM, payments, notifications, recommendations, meeting intelligence, interviewing, internships — each starting out with its own idea of who a user was and what they were allowed to do. Every new product meant reimplementing authentication, and every permission change meant finding all ten copies of it.",
           "One identity hub that every product authenticates through, and a deliberate split in persistence underneath it. Services don't call each other anonymously — internal calls carry signed service tokens, so a product can't quietly act as the platform.",
           "The **authorization cache** is what keeps the hub from becoming the bottleneck. Resolving permissions from the database on every request would put every product's every call behind one database. Resolved permissions are cached and invalidated on role change, and **tenant identity is part of the cache key** — which turns cross-tenant leakage into a cache miss rather than something you hope a reviewer catches.",
         ],
@@ -654,11 +612,6 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
     ],
-    whatIdChange: [
-      "**The persistence boundary drifted.** The relational-versus-document line is defensible where it was drawn originally, but some later services picked their engine by what the team had used most recently rather than by the shape of the data. The rule is right; it stopped being applied consistently, and nothing enforces it at review time.",
-      "**Architecture documentation isn't tied to anything executable, so it goes stale silently.** I found one service described as a vector-search engine when it hadn't been for months — the code changed shape entirely and the document didn't move. Docs that can't fail a build always eventually lie.",
-      "**Async is done two different ways** across the platform — a Redis-backed queue in one place, a managed cloud task queue in another. Both work. Nobody would have chosen both on purpose, and the second one exists mostly because of a hosting constraint at the time rather than a considered difference in requirements.",
-    ],
   },
 
   {
@@ -679,13 +632,6 @@ export const caseStudies: CaseStudy[] = [
       { label: "Status", value: "Android beta" },
     ],
     sections: [
-      {
-        heading: "The problem",
-        body: [
-          "People own more clothes than they can hold in their head, so they wear the same rotation and forget the rest. The app's job is to make a wardrobe *visible*: photograph each garment, get a clean flat-lay cut-out, and build outfits from what you actually own.",
-          "The photography is the easy part. What makes it a real product is everything around the photo — and what makes it a real *engineering* problem is that a wardrobe is a set of photographs of the inside of someone's home.",
-        ],
-      },
       {
         heading: "Architecture",
         body: [
@@ -812,11 +758,6 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
     ],
-    whatIdChange: [
-      "**Processing is synchronous inside the upload request.** Background removal on a cold Cloud Run instance is slow enough that this should be a queued job with the client polling — the same shape I already built on another project. It's fine at beta traffic and it's the first thing that breaks under load.",
-      "**`process_mode` is a user-facing choice that probably shouldn't be.** Asking someone to pick between two background removers before they've seen either output is an implementation detail leaking into the UI. The right version picks a default and offers a reprocess.",
-      "**There's no test for the effective-tags union.** It's the cleverest logic in the codebase and the most likely to break silently when the query changes, and it's covered by nothing.",
-    ],
   },
 
   {
@@ -837,12 +778,6 @@ export const caseStudies: CaseStudy[] = [
       { label: "Status", value: "Published, v0.5" },
     ],
     sections: [
-      {
-        heading: "The problem",
-        body: [
-          "Claude tells you when you've hit a limit, not how close you are. There's no token counter, no cache visibility, and no countdown — so heavy users are flying blind until they're cut off mid-task.",
-        ],
-      },
       {
         heading: "The hard part: you can't see the network from a content script",
         body: [
@@ -905,11 +840,6 @@ export const caseStudies: CaseStudy[] = [
           "When all of that fails — common on macOS, or when the cookie is memory-only — it **degrades to a guided manual paste** rather than an error. That fallback is the actual feature. An auto-detect that works on four setups out of five and hard-fails on the fifth is worse than one that always finishes, because the person on the fifth setup has no idea whether they're holding it wrong.",
         ],
       },
-    ],
-    whatIdChange: [
-      "**It reads an API surface I don't own and that nobody promised me.** Response shapes are validated defensively and the UI degrades rather than crashing when a field disappears, but any redesign upstream can break it and there's no contract to appeal to. That's inherent to the idea, not a bug — worth stating plainly rather than pretending the thing is robust.",
-      "**Chrome Web Store submission is still unfinished,** so Chrome users load an unpacked build. That's a distribution gap, and it's the single biggest reason the install count understates use.",
-      "**The tokenizer is vendored, not pinned to a source of truth.** If the upstream vocabulary changes, my counts drift and nothing tells me — the failure is silent and looks like a small counting bug rather than a stale dependency.",
     ],
   },
 ];
