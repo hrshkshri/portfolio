@@ -83,8 +83,11 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
             )}
 
             {study.sections.map((section, si) => (
-              <section key={section.heading} className="mb-9 last:mb-0">
-                <h2 className="text-xs tracking-[0.16em] uppercase text-neutral-400 font-medium mb-3">
+              <section key={section.heading} className="mb-12 last:mb-0">
+                {/* Sentence case, not the uppercase label treatment these used
+                    to have. These headings are whole sentences, and long
+                    uppercase runs get harder to read, not more emphatic. */}
+                <h2 className="text-lg md:text-xl font-semibold text-neutral-100 leading-snug mb-4">
                   {section.heading}
                 </h2>
                 {section.body.map((para, i) => (
