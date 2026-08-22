@@ -19,7 +19,7 @@ import type { SystemArchitecture, DiagramNode } from "@/content/work";
  * described in the same vocabulary.
  */
 
-const CANVAS_W = 980;
+const CANVAS_W = 860; // fits inside max-w-4xl (896) with room to breathe
 const PAD = 24;
 const ROW_H = 92; // vertical pitch of one row unit
 const NODE_GAP = 14; // inset that makes nodes sit inside their cell
