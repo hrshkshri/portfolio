@@ -19,6 +19,8 @@ interface Experience {
   companyUrl: string;
   period: string;
   projects: Project[];
+  /** Slug in src/content/work.ts — links the role through to its write-up. */
+  caseStudy?: string;
 }
 
 interface OpenSourceContribution {
@@ -44,6 +46,7 @@ export const experiences: Experience[] = [
     company: "Experiment Labs",
     companyUrl: "https://www.linkedin.com/company/experiment-labs",
     period: "Nov 2024 - Present",
+    caseStudy: "experiment-labs-platform",
     projects: [
       {
         name: "",

@@ -41,6 +41,17 @@ const Experience: React.FC = () => {
                                     </li>
                                 ))}
                             </ul>
+
+                            {experience.caseStudy && (
+                                <Link
+                                    href={`/work/${experience.caseStudy}`}
+                                    aria-label={`Read the ${experience.company} platform case study`}
+                                    className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-400 mt-4 ml-2"
+                                >
+                                    Read the platform case study
+                                    <MdArrowOutward className="w-3 h-3" aria-hidden="true" />
+                                </Link>
+                            )}
                         </div>
                     </div>
                 ))}
