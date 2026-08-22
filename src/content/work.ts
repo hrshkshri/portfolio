@@ -300,22 +300,18 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "The hard part: meeting AI that doesn't feel slow",
         body: [
-          "Transcribing and summarising a recording takes **30 to 120 seconds**. You cannot hold an HTTP connection open for that, and putting a spinner in front of it means nobody uses the feature twice.",
-          "So the pipeline runs entirely off the request path. The upload returns immediately; a **Bull queue** on Upstash Redis hands the job to a worker running as its own process, and results land on the meeting record when they're ready. Bull earned its place over a hand-rolled queue for retries and job status — transcription fails often enough that both matter.",
-          "Both models in that pipeline are deliberate rejections of the obvious default. **Deepgram Nova-2 over Whisper**, because Whisper has no speaker diarization — a transcript that can't tell you *who said what* is close to useless for summarisation, and it's the one thing you can't add later in post-processing. **GPT-4o-mini over GPT-4o**, because transcripts fit comfortably in the smaller context and the task is structured extraction rather than reasoning: roughly **10× cheaper** at acceptable quality, with a one-string upgrade path if that stops being true.",
-          "State is explicit rather than inferred. A meeting's `transcriptionStatus` walks **NONE → UPLOADED → PROCESSING → COMPLETED**, with **FAILED** as a real terminal state rather than a row that sits in PROCESSING forever. The frontend reads that field, so a stuck job looks stuck instead of looking slow.",
+          "Transcription takes **30 to 120 seconds**. You cannot hold an HTTP connection open for that, and a spinner in front of it means nobody uses the feature twice — so none of it runs on the request path.",
+          "The price of going async is that **slow and stuck start to look identical**. So the state is written down rather than inferred:",
         ],
         flow: {
           nodes: [
-            { label: "Recording" },
-            { label: "Upload returns" },
-            { label: "Bull queue", hl: true },
-            { label: "Deepgram" },
-            { label: "GPT-4o-mini" },
-            { label: "Meeting record" },
+            { label: "NONE" },
+            { label: "UPLOADED" },
+            { label: "PROCESSING", hl: true },
+            { label: "COMPLETED" },
           ],
           caption:
-            "Everything right of the queue is off the request path. The user never waits on it.",
+            "FAILED branches off PROCESSING as a real terminal state, instead of a row sitting there forever. The frontend reads the field, so a stuck job looks stuck rather than looking slow.",
         },
       },
       {
