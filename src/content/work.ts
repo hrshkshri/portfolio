@@ -16,40 +16,6 @@ export interface Flow {
   caption: string;
 }
 
-/** One box in an architecture diagram. `id` is referenced by edges. */
-export interface ArchNode {
-  id: string;
-  label: string;
-  /** Second line — stack or role, kept short enough to fit the box. */
-  sub?: string;
-  hl?: boolean;
-}
-
-export interface ArchTier {
-  /** Rendered in the left gutter: CLIENT, API, STORE… */
-  label: string;
-  nodes: ArchNode[];
-}
-
-export interface ArchEdge {
-  from: string;
-  to: string;
-  label?: string;
-  /** Dashed reads as "async" — a hop the caller doesn't wait on. */
-  dashed?: boolean;
-  hl?: boolean;
-}
-
-/**
- * Positions are computed by ArchitectureDiagram, not authored here — this
- * describes topology only.
- */
-export interface Architecture {
-  tiers: ArchTier[];
-  edges: ArchEdge[];
-  caption: string;
-}
-
 export interface FailureMode {
   trigger: string;
   behaviour: string;
@@ -57,8 +23,8 @@ export interface FailureMode {
 }
 
 /* ── system diagrams ──────────────────────────────────────────────────────
- * Placement lives in the content here, unlike the tier `Architecture` above.
- * A datacenter boundary wrapping four nodes while a store sits outside it is
+ * Placement lives in the content rather than being computed. A datacenter
+ * boundary wrapping four nodes while a store sits outside it is
  * not something a tier stack can express, and these get read far more often
  * than they get edited. Grid units are fractional, so a group can be a third
  * of a row taller than its contents and still be described the same way.
@@ -129,7 +95,6 @@ export interface Section {
    */
   bullets?: string[];
   flow?: Flow;
-  architecture?: Architecture;
   systemDiagram?: SystemArchitecture;
   failureModes?: FailureMode[];
 }
@@ -384,43 +349,92 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Generate, then verify",
         body: [
-          "The service used to be retrieval — embed a catalogue, vector-search it, rank the results. That has a ceiling: a fixed catalogue can only return what's already in it, and the useful recommendations are the ones nobody wrote down, specific to one learner's combination of interests. So it moved from **retrieving** ideas to **generating** them, which trades one hard problem for a worse one. Retrieval can only return real rows. A generator will happily invent an activity that doesn't exist, sits wildly beyond the learner's level, or opens with a statistic it made up.",
-          "The architecture is a loop, not a pipeline. The model produces a category's ideas against a strict JSON schema; three independent gates then check the result; a rejection sends structured feedback back into a regeneration. **Three attempts**, then it stops.",
-          "The important property is that **no gate trusts the prompt**. Every one of them re-checks in code something the prompt already asked for — because the prompt asking is not evidence that the model complied.",
+          "The service used to be retrieval — embed a catalogue, vector-search it, rank the results. That has a ceiling: a fixed catalogue can only return what's already in it, and the useful recommendations are the ones nobody wrote down. So I rebuilt it as **generation**, which trades one hard problem for a worse one. Retrieval can only return real rows; a generator will happily invent an activity that doesn't exist.",
+          "So the architecture is a loop, not a pipeline, and **no gate trusts the prompt**. Every one re-checks in code something the prompt already asked for — because the prompt asking is not evidence the model complied.",
         ],
-        architecture: {
-          tiers: [
+        systemDiagram: {
+          rows: 7.1,
+          groups: [
             {
-              label: "Caller",
-              nodes: [{ id: "plat", label: "Platform service", sub: "bulk request" }],
+              id: "verify",
+              label: "Verify — each gate re-checks what the prompt only asked for",
+              col: 0.2,
+              row: 3.9,
+              cw: 11.6,
+              rh: 1.9,
+            },
+          ],
+          nodes: [
+            {
+              id: "caller",
+              label: "Platform",
+              sub: "bulk request",
+              col: 4.3,
+              row: 0,
+              cw: 3.4,
+              note: "Asks for ideas across several categories for one learner, in a single call, using the profile and score the loop has already produced.",
             },
             {
-              label: "Service",
-              nodes: [{ id: "api", label: "Recommendation API", sub: "Express · TypeScript" }],
+              id: "prompt",
+              label: "Prompt builder",
+              sub: "one per category",
+              col: 4.3,
+              row: 1.3,
+              cw: 3.4,
+              note: "Renders the learner's profile — interests, past experience, how far they've already progressed — into a category-specific prompt. Each category has its own template and its own rules about what counts as a good idea.",
             },
             {
-              label: "Generate",
-              nodes: [
-                { id: "prompt", label: "Prompt builder", sub: "per category" },
-                { id: "llm", label: "LLM", sub: "strict JSON schema", hl: true },
-              ],
+              id: "llm",
+              label: "LLM",
+              sub: "strict JSON schema",
+              col: 4.3,
+              row: 2.6,
+              cw: 3.4,
+              hl: true,
+              note: "Produces a category's ideas against a schema that is load-bearing rather than decorative — the gates read specific fields off it, so a rejected schema has to fail loudly instead of quietly persisting something unusable.",
+                          },
+            {
+              id: "g1",
+              label: "Level gate",
+              sub: "above current standing",
+              col: 0.45,
+              row: 4.3,
+              cw: 3.4,
+              note: "Checks the ideas sit above the level this learner has already reached, so nothing suggested is work they have already done.",
             },
             {
-              label: "Verify",
-              nodes: [
-                { id: "g1", label: "Level gate", sub: "above current standing" },
-                { id: "g2", label: "Personal gate", sub: "anchored in profile" },
-                { id: "g3", label: "Claim gate", sub: "no invented stats" },
-              ],
+              id: "g2",
+              label: "Personal gate",
+              sub: "anchored in profile",
+              col: 4.3,
+              row: 4.3,
+              cw: 3.4,
+              note: "Checks each idea is anchored in the learner's own stated interests rather than their academic subject alone.",
             },
             {
-              label: "Return",
-              nodes: [{ id: "cap", label: "Cap + dedupe", sub: "every return path", hl: true }],
+              id: "g3",
+              label: "Claim gate",
+              sub: "no invented stats",
+              col: 8.15,
+              row: 4.3,
+              cw: 3.4,
+              note: "Rejects fabricated statistics — the \"only 3% of…\" openers the model liked to invent.",
+            },
+            {
+              id: "cap",
+              label: "Cap + dedupe",
+              sub: "every return path",
+              col: 4.3,
+              row: 6.1,
+              cw: 3.4,
+              hl: true,
+              note: "Forces the answer down to a deduplicated, capped list on every return path — including the one taken when the gates have given up.",
+              caution:
+                "A validation layer that can be bypassed by its own failure path is not a validation layer.",
             },
           ],
           edges: [
-            { from: "plat", to: "api" },
-            { from: "api", to: "prompt" },
+            { from: "caller", to: "prompt" },
             { from: "prompt", to: "llm" },
             { from: "llm", to: "g1" },
             { from: "llm", to: "g2" },
@@ -431,7 +445,7 @@ export const caseStudies: CaseStudy[] = [
             { from: "g3", to: "cap" },
           ],
           caption:
-            "The dashed edge is the whole design: a rejection is not an error, it's another attempt with the reason attached. Cap-and-dedupe sits after the gates because it has to run even when they've given up.",
+            "The dashed edge is the whole design: a rejection isn't an error, it's another attempt with the reason attached. Three attempts, then it stops — and cap-and-dedupe still runs, because the give-up branch is the one that leaked.",
         },
       },
       {
@@ -484,44 +498,103 @@ export const caseStudies: CaseStudy[] = [
         heading: "Shape of the system",
         body: [
           "A tutor that *watches someone work* has to remember them — across sessions, across weeks, across different pieces of work, without letting one project's context bleed into another's. That constraint shapes everything below it.",
-          "Three things run behind one API: an **in-session assistant** that watches a learner work and responds to text, screenshots and voice; an **agentic chat** built on LangGraph that can search a local skill corpus and the web before answering; and a **memory layer** both of them write into.",
-          "Voice is the outlier. It isn't a request — it's a relay holding two sockets open at once, which is why it can't live on the same host as everything else.",
         ],
-        architecture: {
-          tiers: [
+        systemDiagram: {
+          rows: 6.0,
+          groups: [
             {
-              label: "Client",
-              nodes: [
-                { id: "ui", label: "Learner UI", sub: "text · screenshot" },
-                { id: "vc", label: "Voice client", sub: "audio in / out" },
-              ],
+              id: "agents",
+              label: "Agent layer — two tracks, and a relay that bypasses both",
+              col: 0.2,
+              row: 2.6,
+              cw: 11.6,
+              rh: 1.9,
+            },
+          ],
+          nodes: [
+            {
+              id: "ui",
+              label: "Learner UI",
+              sub: "text · screenshot",
+              col: 0.45,
+              row: 0,
+              cw: 3.4,
+              note: "Where a learner works through the activity they picked, sending text or a screenshot of what's in front of them.",
             },
             {
-              label: "API",
-              nodes: [{ id: "api", label: "Copilot service", sub: "identity-gated" }],
+              id: "vc",
+              label: "Voice client",
+              sub: "audio in / out",
+              col: 8.15,
+              row: 0,
+              cw: 3.4,
+              note: "Audio both ways. Not a request — a socket held open for as long as the session lasts, which is what makes it the awkward one to host.",
             },
             {
-              label: "Agent",
-              nodes: [
-                { id: "sess", label: "Session assistant", sub: "tone-tagged replies" },
-                { id: "graph", label: "Agentic chat", sub: "LangGraph + tools", hl: true },
-                { id: "skills", label: "Skill corpus", sub: "63 guides, in-repo" },
-              ],
+              id: "api",
+              label: "Copilot service",
+              sub: "identity-gated",
+              col: 4.3,
+              row: 1.3,
+              cw: 3.4,
+              hl: true,
+              note: "One service behind every surface, gated on identity from the platform hub. It resolves who the learner is and what they're working on, then hands off to whichever track the surface needs.",
             },
             {
-              label: "Model",
-              nodes: [
-                { id: "llm", label: "LLM", sub: "text + vision" },
-                { id: "live", label: "LLM Live", sub: "streaming audio", hl: true },
-              ],
+              id: "sess",
+              label: "Session assistant",
+              sub: "tone-tagged replies",
+              col: 0.45,
+              row: 3.0,
+              cw: 3.4,
+              note: "Responds to text and screenshots while a learner works, opening every reply with a tag saying whether it is nudging, explaining or walking through step by step. It writes only this activity's memory.",
             },
             {
-              label: "Memory",
-              nodes: [
-                { id: "local", label: "Activity memory", sub: "this work only" },
-                { id: "glob", label: "Global memory", sub: "cross-activity patterns" },
-                { id: "trace", label: "Trace log", sub: "fire-and-forget" },
-              ],
+              id: "graph",
+              label: "Agentic chat",
+              sub: "graph + tools",
+              col: 4.3,
+              row: 3.0,
+              cw: 3.4,
+              hl: true,
+              note: "The smarter track. It can search the local skill library and the web before answering, and it writes the learner's global memory as well as this activity's.",
+            },
+            {
+              id: "live",
+              label: "Live model",
+              sub: "streaming audio",
+              col: 8.15,
+              row: 3.0,
+              cw: 3.4,
+              hl: true,
+              note: "Voice relays straight through here, bypassing both agent tracks entirely — a graph cannot sit in the middle of a live audio stream and still feel live.",
+            },
+            {
+              id: "mem",
+              label: "Activity memory",
+              sub: "this work only",
+              col: 0.45,
+              row: 5.0,
+              cw: 3.4,
+              note: "A rolling summary and the open gaps for one activity, and nothing else.",
+            },
+            {
+              id: "glob",
+              label: "Global memory",
+              sub: "cross-activity",
+              col: 4.3,
+              row: 5.0,
+              cw: 3.4,
+              note: "Patterns that recur across everything the learner does. \"Struggles with written structure\" belongs here; \"hasn't set up the database yet\" does not.",
+            },
+            {
+              id: "skills",
+              label: "Skill corpus",
+              sub: "63 guides, in-repo",
+              col: 8.15,
+              row: 5.0,
+              cw: 3.4,
+              note: "Guides the agent searches and reads before answering. Directory-name matching rather than a vector index — at this catalogue size, fuzzy scoring is enough and a vector store would be infrastructure for nothing.",
             },
           ],
           edges: [
@@ -529,16 +602,14 @@ export const caseStudies: CaseStudy[] = [
             { from: "vc", to: "api", label: "WebSocket", hl: true },
             { from: "api", to: "sess" },
             { from: "api", to: "graph" },
-            { from: "graph", to: "skills", label: "search" },
-            { from: "sess", to: "llm" },
-            { from: "graph", to: "llm" },
             { from: "api", to: "live", label: "relay", hl: true },
-            { from: "sess", to: "local" },
+            { from: "graph", to: "skills", label: "search" },
+            { from: "sess", to: "mem" },
+            { from: "graph", to: "mem" },
             { from: "graph", to: "glob" },
-            { from: "api", to: "trace", dashed: true },
           ],
           caption:
-            "Two agent tracks share one API and one memory layer — which is exactly the duplication called out at the bottom of this page. Voice bypasses the agent tracks entirely and relays straight through, because a live audio socket can't wait on a graph.",
+            "Two agent tracks share one API and one memory layer — which is the duplication this page argues against further down. Voice bypasses both and relays straight through.",
         },
       },
       {

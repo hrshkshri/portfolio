@@ -3,7 +3,6 @@ import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
 import type { CaseStudy, Flow } from "@/content/work";
 import { renderTextWithBold } from "@/components/shared/utils";
-import ArchitectureDiagram from "./ArchitectureDiagram";
 import SystemDiagram from "./SystemDiagram";
 import { FailureModeTable } from "./StudyBlocks";
 
@@ -109,12 +108,6 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                 )}
                 {section.systemDiagram && (
                   <SystemDiagram arch={section.systemDiagram} id={`${study.slug}-${si}`} />
-                )}
-                {section.architecture && (
-                  <ArchitectureDiagram
-                    arch={section.architecture}
-                    id={`${study.slug}-${si}`}
-                  />
                 )}
                 {section.failureModes && <FailureModeTable modes={section.failureModes} />}
                 {section.flow && <Diagram flow={section.flow} />}
