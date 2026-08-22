@@ -277,7 +277,7 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Where it stands",
         body: [
-          "Live with billing and paying users. Ask AI streams over SSE — a first token in a few hundred milliseconds reads as faster than a complete answer four seconds later, even though it finishes at the same time.",
+          "Deployed, with subscription billing wired end to end. Ask AI streams over SSE — a first token in a few hundred milliseconds reads as faster than a complete answer four seconds later, even though it finishes at the same time.",
         ],
       },
     ],
