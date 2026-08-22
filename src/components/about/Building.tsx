@@ -1,5 +1,7 @@
 import React from "react";
+import Link from "next/link";
 import { FiExternalLink } from "react-icons/fi";
+import { MdArrowOutward } from "react-icons/md";
 
 interface ProductLink {
   href: string;
@@ -19,11 +21,14 @@ interface Product {
   description: string;
   tags: string[];
   links: ProductLink[];
+  /** Slug in src/content/work.ts. Adds a link through to the case study. */
+  caseStudy?: string;
 }
 
 const products: Product[] = [
   {
     name: "Crelyzor",
+    caseStudy: "crelyzor",
     description:
       "All-in-one productivity SaaS for solo professionals — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live with billing, AI meeting intelligence, and scheduling.",
     tags: ["PERN Stack", "TypeScript", "LLM · Gemini", "Deepgram STT", "AI Summarization", "Ask AI (SSE)", "Recall.ai", "Bull · Redis", "Docker"],
@@ -34,6 +39,7 @@ const products: Product[] = [
   },
   {
     name: "Claukit",
+    caseStudy: "claukit",
     description:
       "Your Claude companion — a browser extension + CLI that surfaces token usage, cache reads, and rate limits in real time, with usage bars for the 5-hour and 7-day limits.",
     tags: ["TypeScript", "Browser Extension", "Node.js CLI"],
@@ -44,6 +50,7 @@ const products: Product[] = [
   },
   {
     name: "Fitted",
+    caseStudy: "fitted",
     badge: "Android Beta",
     team: { name: "Ashwath Kannan", href: "https://github.com/Ash-2k3" },
     description:
@@ -107,6 +114,18 @@ const Building: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4 flex-wrap mt-4">
+              {product.caseStudy && (
+                <Link
+                  href={`/work/${product.caseStudy}`}
+                  // Three cards each saying "Read the case study" is ambiguous
+                  // read aloud, so the accessible name carries the project.
+                  aria-label={`Read the ${product.name} case study`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-amber-400 border border-amber-400/40 rounded-full px-3.5 py-1.5 hover:bg-amber-400/10 hover:border-amber-400/60 transition-colors"
+                >
+                  Read the case study
+                  <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
+                </Link>
+              )}
               {product.links.map((link) => (
                 <a
                   key={link.href}
