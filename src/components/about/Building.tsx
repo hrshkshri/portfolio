@@ -120,7 +120,11 @@ const Building: React.FC = () => {
                   // Three cards each saying "Read the case study" is ambiguous
                   // read aloud, so the accessible name carries the project.
                   aria-label={`Read the ${product.name} case study`}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-amber-400 border border-amber-400/40 rounded-full px-3.5 py-1.5 hover:bg-amber-400/10 hover:border-amber-400/60 transition-colors"
+                  // Deliberately not a bordered pill: the card already carries a
+                  // row of outlined tag pills, and a second pill style sitting
+                  // under them reads as one more tag. Hierarchy comes from
+                  // weight and colour instead — this is the only amber link.
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors"
                 >
                   Read the case study
                   <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
@@ -132,7 +136,7 @@ const Building: React.FC = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-amber-400 transition-colors"
                 >
                   {link.label}
                   <FiExternalLink className="w-3.5 h-3.5" />
