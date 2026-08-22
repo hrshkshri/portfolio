@@ -309,9 +309,14 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
             } border ${
               isActive
                 ? "border-amber-400 bg-neutral-900"
-                : n.hl
-                  ? "border-amber-400/45 bg-amber-400/[0.06]"
-                  : "border-neutral-700 bg-neutral-900/60"
+                : n.href
+                  ? // A link needs its own weight. Sharing `hl`'s styling made
+                    // amber read as "important" rather than "clickable", and a
+                    // box you can open should not look like a box you can't.
+                    "border-amber-400/80 bg-amber-400/[0.10] shadow-[0_0_0_3px_rgba(251,191,36,0.06)]"
+                  : n.hl
+                    ? "border-amber-400/45 bg-amber-400/[0.06]"
+                    : "border-neutral-700 bg-neutral-900/60"
             } ${
               // A pin outlives the pointer, so it needs to be visible even
               // when the note is showing some other box.
@@ -332,24 +337,36 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
 
             const inner = (
               <>
-                {n.href && (
-                  <span
-                    className="absolute top-1.5 right-2.5 text-[11px] text-amber-400/80"
-                    aria-hidden="true"
-                  >
-                    ↗
-                  </span>
-                )}
                 <span
                   className={`text-[13px] font-semibold leading-tight ${
                     n.hl || isActive ? "text-amber-300" : "text-neutral-100"
+                  } ${
+                    // Underline plus an inline arrow — the two things every
+                    // reader already recognises as "this goes somewhere",
+                    // rather than a glyph tucked in a corner.
+                    n.href
+                      ? "underline decoration-amber-400/50 underline-offset-2"
+                      : ""
                   }`}
                 >
                   {n.label}
+                  {n.href && (
+                    <span className="ml-1 no-underline" aria-hidden="true">
+                      ↗
+                    </span>
+                  )}
                 </span>
                 {n.sub && (
                   <span className="text-[10.5px] text-neutral-400 leading-snug mt-1">
                     {n.sub}
+                  </span>
+                )}
+                {n.href && (
+                  <span
+                    className="mt-2 text-[9px] tracking-[0.16em] uppercase text-amber-400 border border-amber-400/40 rounded-full px-2 py-0.5"
+                    aria-hidden="true"
+                  >
+                    Case study
                   </span>
                 )}
               </>
