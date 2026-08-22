@@ -50,18 +50,6 @@ export interface Architecture {
   caption: string;
 }
 
-export interface Entity {
-  name: string;
-  /** Cardinality or a field note — "1:n", "soft-delete", "unique per day". */
-  note?: string;
-  children?: Entity[];
-}
-
-export interface DataModel {
-  caption: string;
-  entities: Entity[];
-}
-
 export interface FailureMode {
   trigger: string;
   behaviour: string;
@@ -130,7 +118,6 @@ export interface Section {
   flow?: Flow;
   architecture?: Architecture;
   systemDiagram?: SystemArchitecture;
-  dataModel?: DataModel;
   failureModes?: FailureMode[];
 }
 
@@ -814,37 +801,6 @@ export const caseStudies: CaseStudy[] = [
           "Instead a **tag is a standalone, user-created label** that attaches to a wardrobe, a garment, *and* an outfit through three join tables. Selecting a tag slices the whole app horizontally; the user then chooses which kinds of thing to show. No fixed vocabulary — people invent their own.",
           "The part I'm happiest with: **an outfit's effective tags are computed, never stored.** They're the union of the outfit's own tags with the tags of both garments in it. Tag a blazer `party` and jeans `casual` and the outfit surfaces under both, plus anything you tag it directly. Storing that union would mean recomputing it on every tag edit to either garment — a denormalisation with a guaranteed drift bug in it. Wear counts and last-worn are derived the same way, straight from the calendar.",
         ],
-        dataModel: {
-          caption:
-            "Every domain table carries soft-delete columns. Join tables are the deliberate exception — composite key, hard delete on detach, because a detached tag is not history worth keeping.",
-          entities: [
-            {
-              name: "User",
-              note: "google_sub unique — no passwords stored",
-              children: [
-                {
-                  name: "Wardrobe",
-                  note: "1:n · a default always exists",
-                  children: [
-                    { name: "Shelf", note: "1:n — named section" },
-                    { name: "WardrobeShare", note: "0:1 active — token hashed" },
-                  ],
-                },
-                {
-                  name: "ClothingItem",
-                  note: "1:n · draft until type is set",
-                  children: [
-                    { name: "original_photo_key", note: "always kept" },
-                    { name: "processed_photo_key", note: "nullable — null means processing failed" },
-                  ],
-                },
-                { name: "Outfit", note: "upper + lower → ClothingItem" },
-                { name: "CalendarEntry", note: "one active outfit per day" },
-                { name: "Tag", note: "n:m with wardrobe, item and outfit" },
-              ],
-            },
-          ],
-        },
       },
       {
         heading: "Privacy as a data-model decision",

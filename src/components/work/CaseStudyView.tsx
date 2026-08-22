@@ -5,7 +5,7 @@ import type { CaseStudy, Flow } from "@/content/work";
 import { renderTextWithBold } from "@/components/shared/utils";
 import ArchitectureDiagram from "./ArchitectureDiagram";
 import SystemDiagram from "./SystemDiagram";
-import { DataModelTree, FailureModeTable } from "./StudyBlocks";
+import { FailureModeTable } from "./StudyBlocks";
 
 /** The inline pipeline strip — a critical path, not a topology. */
 const Diagram: React.FC<{ flow: Flow }> = ({ flow }) => (
@@ -99,7 +99,6 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                     id={`${study.slug}-${si}`}
                   />
                 )}
-                {section.dataModel && <DataModelTree model={section.dataModel} />}
                 {section.failureModes && <FailureModeTable modes={section.failureModes} />}
                 {section.flow && <Diagram flow={section.flow} />}
               </section>
