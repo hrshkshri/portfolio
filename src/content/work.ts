@@ -767,7 +767,7 @@ export const caseStudies: CaseStudy[] = [
               col: 2.9,
               row: 2.3,
               cw: 2.4,
-              note: "Every domain table carries soft-delete columns. The tag join tables are the deliberate exception — composite key, hard delete on detach, because a detached tag is not history worth keeping.",
+              note: "Every domain table carries soft-delete columns, and uniqueness is scoped to live rows — so a soft-deleted outfit can still occupy a date that an active one now holds. The tag join tables are the deliberate exception: composite key, hard delete on detach, because a detached tag is not history worth keeping.",
             },
             {
               id: "goog",
@@ -810,29 +810,6 @@ export const caseStudies: CaseStudy[] = [
           "**The bucket is never public.** Keys are namespaced per user and every read goes through a short-lived, user-scoped presigned URL. Account deletion removes the user's entire storage prefix, not just their rows.",
           "**Share links are hashed at rest.** A share stores the SHA-256 of a 256-bit token; the raw token exists only in the URL the user copies. A database dump doesn't hand anyone a working link, and the shared view is a minimal projection rather than the full record.",
           "**Token verification fails closed.** Sign-in checks the Google ID token's audience against an explicit allowlist of client IDs. If none are configured, verification *errors* rather than skipping the check — the failure mode of a misconfigured deploy is \"nobody can log in,\" not \"anyone can.\"",
-        ],
-      },
-      {
-        heading: "Failure modes",
-        body: [
-          "Each of these is a rule the schema enforces rather than something the application remembers to check — which is why they hold even when a request arrives from somewhere I didn't anticipate.",
-        ],
-        failureModes: [
-          {
-            trigger: "Item photographed but not typed",
-            behaviour: "Stays a draft, excluded from grid and outfits",
-            recovery: "Finalised whenever the user sets a type",
-          },
-          {
-            trigger: "Two outfits planned on one day",
-            behaviour: "Rejected — unique on (user, date) where active",
-            recovery: "Soft-deleted history may share the date",
-          },
-          {
-            trigger: "Share link revoked or expired",
-            behaviour: "Public view 404s, no partial render",
-            recovery: "Owner issues a fresh token; old hash never matches",
-          },
         ],
       },
     ],
