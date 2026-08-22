@@ -522,11 +522,11 @@ export const caseStudies: CaseStudy[] = [
     restricted: true,
     summary:
       "A tutor that starts from everything the platform already knows — meetings, tasks, working files — and checks the artefact rather than the claim about it.",
-    tags: ["Agentic", "RAG", "Tool-calling", "LLM-as-judge", "Eval harness", "WebSocket"],
+    tags: ["Agentic", "RAG", "Tool-calling", "LLM-as-judge", "Eval harness", "Memory"],
     facts: [
       { label: "Role", value: "Founding Engineer" },
       { label: "Agent", value: "Tool-calling over the learner's work" },
-      { label: "Voice", value: "Realtime, WebSocket relay" },
+      { label: "Tools", value: "GitHub · Figma · Docs" },
       { label: "Memory", value: "Two layers + a stuck signal" },
       { label: "Quality", value: "3-tier eval harness, CI gate" },
     ],
@@ -819,13 +819,6 @@ export const caseStudies: CaseStudy[] = [
           caption:
             "A structural failure short-circuits — a malformed plan can't be 'good', so there's no point paying a judge to read it.",
         },
-      },
-      {
-        heading: "Voice, and where it can't run",
-        body: [
-          "Voice is a **WebSocket relay**: the client opens a socket to the backend, which opens a second one to the model's live endpoint. The last stretch of text conversation is handed over on connect, so speaking continues where typing left off.",
-          "**Serverless cannot hold a long-lived socket**, so voice needs a persistent host while the rest of the API doesn't. That's a constraint rather than a preference — pretending otherwise ships a feature that works locally and is dead in production.",
-        ],
       },
     ],
   },
