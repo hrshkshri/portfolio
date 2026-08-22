@@ -115,6 +115,13 @@ export interface Section {
   heading: string;
   /** Paragraphs. `**bold**` is rendered via renderTextWithBold. */
   body: string[];
+  /**
+   * Scannable points, rendered after `body`. Use when a section is a list of
+   * separate claims rather than an argument that builds — four dense
+   * paragraphs of equal weight read as a wall, and nobody finishes them.
+   * Lead each one with a bolded claim so the page can be skimmed on the bolds.
+   */
+  bullets?: string[];
   flow?: Flow;
   architecture?: Architecture;
   systemDiagram?: SystemArchitecture;
@@ -331,11 +338,12 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         heading: "Trade-offs",
-        body: [
-          "**Postgres over MongoDB.** Meetings have participants, recordings have transcripts, transcripts have segments — every one of those is a foreign key a document store would have made me denormalise and then keep in sync by hand. It also let recording, transcript and segments stay three tables rather than one nested blob, so segments can be queried on their own for speaker filtering and timestamp seeks.",
+        body: [],
+        bullets: [
+          "**Postgres over MongoDB.** Meetings have participants, recordings have transcripts, transcripts have segments. A document store would have meant denormalising every one of those and then keeping it in sync by hand.",
           "**Deepgram Nova-2 over Whisper.** Whisper is the obvious default and has no speaker diarization. A transcript that can't tell you *who said what* is close to useless for summarisation, and it's the one property you cannot add afterwards in post-processing.",
           "**GPT-4o-mini over GPT-4o.** Transcripts fit comfortably in the smaller context and the task is structured extraction rather than reasoning — roughly **10× cheaper** at the same usable quality, with a one-string upgrade path if that stops being true.",
-          "**Recall.ai over building the bot.** A Zoom and Meet bot means maintaining OAuth apps, bot infrastructure and recording pipelines — none of which is the product. Recall streams audio to Deepgram under my own credentials, so the pipeline above runs unchanged whether the audio came from an upload or a bot.",
+          "**Recall.ai over building the bot.** A bot means OAuth apps, bot infrastructure and recording pipelines — none of which is the product. Recall streams to Deepgram under my own credentials, so the pipeline runs unchanged.",
           "**Google OAuth as the only login.** Solo professionals all have Google accounts, and Calendar sync needs the OAuth grant anyway. No password storage, no reset flow, no credential-stuffing surface — the cheapest security posture is the one with nothing to steal.",
         ],
       },
@@ -797,19 +805,24 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "One tag table, three entity types",
         body: [
-          "The obvious model gives clothes a category — tops, formal, winter. I didn't build that, because every fixed taxonomy is wrong for somebody, and the interesting queries cut across entity types anyway.",
-          "Instead a **tag is a standalone, user-created label** that attaches to a wardrobe, a garment, *and* an outfit through three join tables. Selecting a tag slices the whole app horizontally; the user then chooses which kinds of thing to show. No fixed vocabulary — people invent their own.",
-          "The part I'm happiest with: **an outfit's effective tags are computed, never stored.** They're the union of the outfit's own tags with the tags of both garments in it. Tag a blazer `party` and jeans `casual` and the outfit surfaces under both, plus anything you tag it directly. Storing that union would mean recomputing it on every tag edit to either garment — a denormalisation with a guaranteed drift bug in it. Wear counts and last-worn are derived the same way, straight from the calendar.",
+          "The obvious model gives clothes a category — tops, formal, winter. I didn't build that: every fixed taxonomy is wrong for somebody, and the interesting queries cut across entity types anyway.",
+        ],
+        bullets: [
+          "**A tag is standalone, not a property of clothes.** It attaches to a wardrobe, a garment *and* an outfit through three join tables, so picking one slices the whole app horizontally. No fixed vocabulary — people invent their own.",
+          "**An outfit's tags are computed, never stored.** They're the union of its own tags with those of both garments. Tag a blazer `party` and jeans `casual` and the outfit surfaces under both.",
+          "**Because storing that union would drift.** It would need recomputing on every tag edit to either garment — a denormalisation with a guaranteed bug in it. Wear counts and last-worn are derived the same way, straight from the calendar.",
         ],
       },
       {
         heading: "Privacy as a data-model decision",
         body: [
-          "A wardrobe app accumulates photographs of the inside of someone's home, tagged with where things are. The privacy work had to be structural rather than a policy page.",
-          "**No geolocation is stored on any entity.** Wardrobes carry an optional *typed label* — \"Home\", \"Office\", \"Suitcase\" — which covers every real \"where are these clothes\" need. It is a string the user types, never a coordinate. You cannot leak a location you never collected.",
-          "**The bucket is never public.** Keys are namespaced per user and every read goes through a short-lived, user-scoped presigned URL. Account deletion removes the user's entire storage prefix, not just their rows.",
-          "**Share links are hashed at rest.** A share stores the SHA-256 of a 256-bit token; the raw token exists only in the URL the user copies. A database dump doesn't hand anyone a working link, and the shared view is a minimal projection rather than the full record.",
-          "**Token verification fails closed.** Sign-in checks the Google ID token's audience against an explicit allowlist of client IDs. If none are configured, verification *errors* rather than skipping the check — the failure mode of a misconfigured deploy is \"nobody can log in,\" not \"anyone can.\"",
+          "A wardrobe app accumulates photographs of the inside of someone's home. That work had to be structural rather than a policy page.",
+        ],
+        bullets: [
+          "**No geolocation, on any entity.** A wardrobe carries a typed label — \"Home\", \"Suitcase\" — which covers every real *where are these clothes* need. It's a string the user types, never a coordinate. You cannot leak a location you never collected.",
+          "**The bucket is never public.** Keys are namespaced per user and every read is a short-lived, user-scoped presigned URL. Deleting an account removes the whole storage prefix, not just the rows.",
+          "**Share links are hashed at rest.** The database holds a SHA-256 of a 256-bit token; the raw value exists only in the URL the user copies. A dump hands nobody a working link, and the shared view is a minimal projection.",
+          "**Sign-in fails closed.** The Google ID token's audience is checked against an explicit allowlist. With none configured, verification *errors* rather than skipping the check — a misconfigured deploy locks everyone out, not everyone in.",
         ],
       },
     ],
@@ -967,7 +980,8 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         heading: "Trade-offs",
-        body: [
+        body: [],
+        bullets: [
           "**Parsing defensively rather than trusting the shape.** Every field is read as something that might not be there, so when a response changes underneath me the panel drops the number it can no longer read and keeps showing the rest. The alternative — assuming the shape and throwing — turns somebody else's deploy into a broken extension.",
           "**Counting locally rather than on a server.** The `o200k_base` tokenizer is vendored into the bundle, so no conversation content ever leaves the machine. It costs bundle size and nothing else — and the alternative would have leaked exactly what the tool exists to measure.",
           "**Zero runtime dependencies.** Nothing to audit in a supply chain, on something that sits on top of your chat and reads every response.",

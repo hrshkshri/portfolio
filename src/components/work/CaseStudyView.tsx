@@ -90,6 +90,23 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                     {renderTextWithBold(para)}
                   </p>
                 ))}
+                {section.bullets && (
+                  <ul className="space-y-3 mt-1">
+                    {section.bullets.map((item, i) => (
+                      <li key={i} className="flex gap-3">
+                        <span
+                          className="text-amber-500/70 text-sm shrink-0 leading-[1.7]"
+                          aria-hidden="true"
+                        >
+                          ◦
+                        </span>
+                        <p className="text-[15px] text-neutral-300 leading-[1.7]">
+                          {renderTextWithBold(item)}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 {section.systemDiagram && (
                   <SystemDiagram arch={section.systemDiagram} id={`${study.slug}-${si}`} />
                 )}
