@@ -178,6 +178,7 @@ export const caseStudies: CaseStudy[] = [
         body: [
           "Transcribing and summarising a recording takes **30 to 120 seconds**. You cannot hold an HTTP connection open for that, and putting a spinner in front of it means nobody uses the feature twice.",
           "So the pipeline runs entirely off the request path. The upload returns immediately; a **Bull queue** on Upstash Redis hands the job to a worker running as its own process, and results land on the meeting record when they're ready. Bull earned its place over a hand-rolled queue for retries and job status — transcription fails often enough that both matter.",
+          "Both models in that pipeline are deliberate rejections of the obvious default. **Deepgram Nova-2 over Whisper**, because Whisper has no speaker diarization — a transcript that can't tell you *who said what* is close to useless for summarisation, and it's the one thing you can't add later in post-processing. **GPT-4o-mini over GPT-4o**, because transcripts fit comfortably in the smaller context and the task is structured extraction rather than reasoning: roughly **10× cheaper** at acceptable quality, with a one-string upgrade path if that stops being true.",
           "State is explicit rather than inferred. A meeting's `transcriptionStatus` walks **NONE → UPLOADED → PROCESSING → COMPLETED**, with **FAILED** as a real terminal state rather than a row that sits in PROCESSING forever. The frontend reads that field, so a stuck job looks stuck instead of looking slow.",
         ],
         flow: {
@@ -268,12 +269,9 @@ export const caseStudies: CaseStudy[] = [
         },
       },
       {
-        heading: "Choices worth defending",
+        heading: "Trade-offs",
         body: [
-          "**Deepgram Nova-2 over Whisper.** Whisper is the obvious default and I rejected it, because it has no speaker diarization. A meeting transcript that can't tell you *who said what* is close to useless for summarisation — and it's the one thing you can't add later in post-processing.",
-          "**GPT-4o-mini over GPT-4o.** Meeting transcripts fit comfortably in the smaller context, and the task is structured extraction rather than reasoning. Roughly **10× cheaper** at acceptable quality, with a one-string upgrade path if that stops being true.",
-          "**Postgres over MongoDB.** Meetings have participants, participants have roles, recordings have transcripts, transcripts have segments. Document storage would have meant denormalising all of it and then maintaining the denormalisation.",
-          "**Recall.ai over building the bot.** A Zoom and Meet bot means maintaining OAuth apps, bot infrastructure and recording pipelines — none of which is the product. Recall streams audio to Deepgram under my own credentials, so the Phase 1 pipeline runs unchanged.",
+          "**Recall.ai over building the bot.** A Zoom and Meet bot means maintaining OAuth apps, bot infrastructure and recording pipelines — none of which is the product. Recall streams audio to Deepgram under my own credentials, so the pipeline above runs unchanged whether the audio came from an upload or a bot.",
           "**Google OAuth as the only login.** Solo professionals all have Google accounts, and Calendar sync needs the OAuth grant anyway. No password storage, no reset flow, no credential-stuffing surface — the cheapest security posture is the one with nothing to steal.",
         ],
       },
