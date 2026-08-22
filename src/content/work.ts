@@ -673,29 +673,35 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Memory, and knowing where someone is stuck",
         body: [
-          "Two layers, kept apart on purpose. One flat store would have been less code and would have produced a tutor that brings up a research project while you're building a website.",
+          "Two layers, kept apart on purpose. One flat store would have been less code, and a tutor that brings up a research project while you're building a website.",
         ],
         bullets: [
-          "**Per-activity memory** holds a rolling summary and the open gaps for one piece of work, and nothing else.",
-          "**Global memory** holds what recurs across everything. *Struggles with written structure* belongs here; *hasn't set up the database yet* does not.",
-          "**The stuck signal is a count, not a guess.** Every intervention on a sub-task increments it. A task that needed help three times was harder than the plan assumed, and that's a fact about the plan as much as about the learner.",
-          "**Context is assembled in a fixed order** — global patterns, this activity's summary, its open gaps, then the current sub-task. Same order every turn, so behaviour is reproducible when something goes wrong.",
-          "**Extraction after a session is best-effort.** If it fails the session still ends cleanly. Bookkeeping is never allowed to break the thing the learner was doing.",
+          "**Per-activity memory** holds a rolling summary and the open gaps for one piece of work. **Global memory** holds what recurs across everything — *struggles with written structure* belongs there, *hasn't set up the database yet* does not.",
+          "**The stuck signal is a count, not a guess.** Every intervention on a sub-task increments it, and a task that needed help three times was harder than the plan assumed — a fact about the plan as much as the learner.",
+          "**Context is assembled in the same order every turn:** global patterns, this activity's summary, its open gaps, the current sub-task. Fixed order means reproducible behaviour when something goes wrong.",
+          "**Extraction is best-effort.** If it fails the session still ends cleanly — bookkeeping never breaks the thing the learner was doing.",
         ],
       },
       {
         heading: "The model is not allowed to mark work complete",
         body: [
-          "The agent has a tool that looks like it completes a task. It doesn't. It **signals readiness** and routes the learner to a completion check — and the shared status writer refuses a completed write that doesn't carry an explicit confirmation.",
-          "This was a deliberate walk-back. Letting the model close out work is the obvious affordance and it's wrong in both directions: silently marking incomplete work as done is bad, and refusing with no explanation is worse. So the check is **read-only** and returns the unmet requirements as a checklist — the learner sees what's left, and one tap does the actual write.",
-          "**Never silent, never dead-stop.** No path writes completion without a human confirming, and no failed check leaves someone stuck without knowing why. The model advises; it does not have authority.",
+          "The agent has a tool that looks like it completes a task. It doesn't — it **signals readiness**, and the shared status writer refuses any completed write that doesn't carry an explicit confirmation.",
+        ],
+        bullets: [
+          "**The check is read-only** and returns the unmet requirements as a checklist, so a learner sees what's left rather than simply being refused.",
+          "**Never silent, never dead-stop.** Nothing writes completion without a human confirming, and no failed check leaves someone stuck without knowing why. The model advises; it does not have authority.",
         ],
       },
       {
         heading: "The hard part: knowing whether it got worse",
         body: [
-          "Generative output has no build error. Change a prompt, swap a model, add a skill — the thing still responds fluently, and you have no idea if it's now subtly wrong. Manual spot-checking doesn't survive past the first few weeks; it's exactly the kind of testing that quietly stops happening.",
-          "So quality became a **CI gate**. A versioned golden dataset gets graded on every change, and the run exits non-zero if any case regresses.",
+          "Generative output has no build error. Change a prompt, swap a model, add a skill — it still responds fluently and you have no idea whether it's now subtly wrong. So quality became a **CI gate**: a versioned golden dataset graded on every change, exiting non-zero if any case regresses.",
+        ],
+        bullets: [
+          "**Cheap tiers first.** Zod validates structure for free and short-circuits the rest; embeddings are an on-topic signal only, never the verdict; the judge scores 1–5 on faithfulness, relevance, completeness and pedagogy. Pass is **0.70**.",
+          "**Goldens are expected-behaviour specs, not exact answers.** Grading a generative system on string equality only teaches you that it produced different words.",
+          "**The judge is calibrated against human grades**, so its scores track what a person would have said rather than what a model finds agreeable. An uncalibrated judge is a confidence generator, not a measurement.",
+          "**Every generative call writes a trace** — model, prompt version, latency, tokens, thumbs — fire-and-forget, so telemetry never blocks generation. That's how the golden set grows from real traffic instead of from someone remembering to write test cases.",
         ],
         flow: {
           nodes: [
@@ -706,22 +712,14 @@ export const caseStudies: CaseStudy[] = [
             { label: "Pass ≥ 0.70" },
           ],
           caption:
-            "Cheap tiers first. A structural failure short-circuits — a malformed plan can't be 'good', so there's no point paying a judge to read it.",
+            "A structural failure short-circuits — a malformed plan can't be 'good', so there's no point paying a judge to read it.",
         },
-      },
-      {
-        heading: "How the grading works",
-        body: [
-          "Three tiers, ordered cheap to expensive. **Deterministic** validates structure with Zod — required and forbidden keywords, expected counts — for free, and short-circuits the rest on failure. **Semantic** compares embeddings against a reference answer, used strictly as an on-topic signal and never as the correctness verdict. **Judge** scores 1–5 on faithfulness, relevance, completeness and pedagogy, with faithfulness weighted highest. The overall score is the deterministic gate multiplied by the normalised judge score; **0.70** passes.",
-          "Two details make it trustworthy. Goldens are **expected-behaviour specs, not exact answers** — grading a generative system on string equality only teaches you that it produced different words. And the judge is **calibrated against human grades**, so its scores track what a person would have said rather than what a model finds agreeable. An uncalibrated LLM judge is a confidence generator, not a measurement.",
-          "Every generative call also writes a trace — model, prompt version, latency, tokens, thumbs. Those writes are **fire-and-forget**: telemetry capture never blocks or breaks generation. The traces are what let the golden set grow from real traffic instead of from someone remembering to write test cases.",
-        ],
       },
       {
         heading: "Voice, and where it can't run",
         body: [
-          "Voice is a **WebSocket relay**: the client opens a socket to the backend, the backend opens a second socket to the model's live endpoint, and audio flows both ways with the session's screenshots interleaved. The last stretch of text conversation is handed over on connect, so speaking to it continues where typing left off rather than starting cold.",
-          "The operational consequence is unavoidable and worth stating plainly: **serverless cannot hold a long-lived socket.** The rest of the API is perfectly happy on a serverless host; voice needs a persistent one. That's not a preference, it's a constraint, and pretending otherwise produces a feature that works locally and is dead in production.",
+          "Voice is a **WebSocket relay**: the client opens a socket to the backend, which opens a second one to the model's live endpoint. The last stretch of text conversation is handed over on connect, so speaking continues where typing left off.",
+          "**Serverless cannot hold a long-lived socket**, so voice needs a persistent host while the rest of the API doesn't. That's a constraint rather than a preference — pretending otherwise ships a feature that works locally and is dead in production.",
         ],
       },
     ],
