@@ -65,8 +65,13 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_200px] gap-10 md:gap-14 mt-12 items-start">
-          <article>
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_200px] gap-10 md:gap-14 mt-12 items-start">
+          {/* min-w-0 is load-bearing. A grid item defaults to min-width:auto,
+              so this column refuses to shrink below the widest thing inside it
+              — and the diagrams are a fixed 980px canvas. Without it the column
+              blows past max-w-4xl and scrolls the whole page sideways instead
+              of letting the diagram scroll inside its own box. */}
+          <article className="min-w-0">
             {study.restricted && (
               <p className="text-xs text-neutral-400 leading-relaxed border-l-2 border-neutral-700 pl-4 mb-9">
                 Employer work. The architecture here is described at the level of
