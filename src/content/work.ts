@@ -484,27 +484,30 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         heading: "What each gate refuses",
-        body: [
-          "**The level gate** checks that ideas sit above the standing the learner has already reached. This is the one piece of the retired retrieval pipeline that survived: that code filtered candidates by minimum level *before* ranking them. Retrieval is gone, so the same comparison now runs against generated ideas instead — same arithmetic, moved to the other side of the model.",
-          "**The personalization gate** checks each idea is anchored in the learner's stated interests rather than in their academic subject alone. The prompt had always asked for this; nothing verified it, so personalization was whatever the model felt like on a given run. Stating the requirement as a *field* and then checking the field is the move.",
-          "**The claim gate** rejects fabricated statistics — the \"only 3% of…\", \"1 in 4 workers…\" openers the model liked to invent. It's a regex, deliberately. A second auditing LLM call hallucinates too and catches roughly half as much; n-sampling costs k× tokens on every request. The fabrication has a shape we specified, so it's a closed set, and a regex costs nothing and never flakes.",
-          "It's narrow on purpose. \"8–16 weeks\" and \"2 interests\" are scope, not evidence, and have to pass.",
+        body: [],
+        bullets: [
+          "**Level.** Ideas must sit above the standing the learner has already reached, and inside the band the corpus said was reachable. The comparison is ported from the retired *catalogue* lookup — same arithmetic, now run against generated ideas instead of retrieved rows.",
+          "**Personalisation.** Each idea must be anchored in the learner's own interests, not their academic subject alone. The prompt always asked; nothing verified it. Stating the requirement as a *field* and then checking the field is the move.",
+          "**Claims.** Fabricated statistics rejected by regex. A second auditing model hallucinates too and catches half as much, and n-sampling costs k× tokens on every request. The fabrication has a shape we specified, so it's a closed set — a regex costs nothing and never flakes.",
+          "**Narrow on purpose.** \"8–16 weeks\" and \"2 interests\" are scope, not evidence, and have to pass.",
         ],
       },
       {
         heading: "The bug that shaped the exit path",
         body: [
           "Every template asks for exactly five ideas. Nothing enforced it — the schema left the array unbounded and no gate counted.",
-          "A single call returned **66 ideas**, nine of the titles repeated four times each, all of them a type the template explicitly forbids. The gates caught the violations correctly, exhausted all three attempts, and then the caller passed the last attempt through **as-is** — straight into the database, where a human saw 66 suggestions under one activity.",
-          "The fix is the boring one, in the right place: force the answer down to a deduplicated, capped list on **every return path**, including the exhausted-retries fallback — which is the one that actually leaked. Not in the prompt, which already asked and was ignored. Not in the schema, which can bound an array's length but cannot express \"no two items share a title.\"",
-          "The lesson I actually took: **a validation layer that can be bypassed by its own failure path is not a validation layer.** The gates worked perfectly. The give-up branch didn't go through them.",
+        ],
+        bullets: [
+          "**One call returned 66 ideas**, nine titles repeated four times each, all of a type the template explicitly forbids.",
+          "**The gates worked.** They caught every violation and exhausted all three attempts — then the caller passed the last attempt through as-is, straight into the database, where a human saw 66 suggestions under one activity.",
+          "**The fix is boring, and in the right place:** cap and dedupe on every return path, including the exhausted-retries fallback. Not in the prompt, which already asked and was ignored. Not in the schema, which can bound an array's length but cannot express *no two items share a title*.",
+          "**The lesson:** a validation layer that can be bypassed by its own failure path is not a validation layer.",
         ],
       },
       {
         heading: "Cost is a design parameter",
         body: [
-          "The model bills reasoning as output tokens, which makes it a cost lever rather than a quality dial. Measured: **zero thinking tokens** at the lowest setting versus thousands at the highest, for longer output and only marginally better ideas. Running it at zero is what keeps the current model cheaper than the one it replaced.",
-          "It's set per-environment rather than in code, so raising it is a config change when a category turns out to need the headroom — not a deploy.",
+          "Reasoning bills as output, which makes it a cost lever rather than a quality dial — measured at **zero** thinking tokens on the lowest setting against thousands on the highest, for longer output and only marginally better ideas. It's set per-environment, so giving a category more headroom is config rather than a deploy.",
         ],
       },
     ],
