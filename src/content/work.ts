@@ -709,49 +709,102 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Architecture",
         body: [
-          "A thin app, a FastAPI backend that owns all the logic, and a strict layering rule: **routers → services → models, never skipping**. Routers parse and return an envelope; services hold business logic and own transactions; models are the ORM. It's unglamorous and it's the reason a second person could work in the app while I worked in the backend.",
-          "The app **never calls an image processor directly**. It uploads to the backend with a chosen mode, and the backend runs the processor server-side. That keeps third-party credentials off the device, makes the processor swappable without an app release, and means a failed cut-out is handled in one place.",
+          "A thin client and a backend that owns every decision — including which image processor runs, so the app never holds a third-party credential and a failed cut-out is handled in one place rather than once per client.",
         ],
-        architecture: {
-          tiers: [
+        systemDiagram: {
+          rows: 3.23,
+          groups: [
             {
-              label: "Client",
-              nodes: [
-                { id: "app", label: "Expo app", sub: "React Native · Android" },
-                { id: "web", label: "Marketing site", sub: "static, no API" },
-              ],
+              id: "g-proc",
+              label: "Processors — server-side, one per upload",
+              col: 5.8,
+              row: 0,
+              cw: 3.0,
+              rh: 2.8,
+            },
+          ],
+          nodes: [
+            {
+              id: "app",
+              label: "Expo app",
+              sub: "React Native · Android",
+              col: 0.2,
+              row: 0.9,
+              cw: 2.4,
+              note: "Uploads a photo and picks a processing mode. That is the whole extent of its involvement — no third-party credentials, no direct bucket access, nothing worth extracting if someone unpacks the APK.",
             },
             {
-              label: "API",
-              nodes: [{ id: "api", label: "FastAPI", sub: "Cloud Run" }],
+              id: "api",
+              label: "FastAPI",
+              sub: "Cloud Run",
+              col: 2.9,
+              row: 0.9,
+              cw: 2.4,
+              note: "Layered routers → services → models, never skipping. Routers parse and return an envelope, services own the transactions, models are the ORM. Unglamorous, and the reason a second person could work in the app while I worked here.",
             },
             {
-              label: "Process",
-              nodes: [
-                { id: "cut", label: "Cut-out", sub: "rembg · U²-Net", hl: true },
-                { id: "gem", label: "Ghost mannequin", sub: "generative" },
-              ],
+              id: "cut",
+              label: "Cut-out",
+              sub: "rembg · U²-Net",
+              col: 6.05,
+              row: 0.4,
+              cw: 2.5,
+              hl: true,
+              note: "Background removal, with the model baked into the container image so a cold start doesn't have to download it first.",
+              caution:
+                "When it fails the original is kept and the processed key stays null. The user carries on and can still confirm type and colour — a failed cut-out is not a failed upload.",
             },
             {
-              label: "Store",
-              nodes: [
-                { id: "pg", label: "Cloud SQL", sub: "Postgres · Alembic" },
-                { id: "obj", label: "Object storage", sub: "private, presigned", hl: true },
-                { id: "goog", label: "Google Identity", sub: "ID token verify" },
-              ],
+              id: "gem",
+              label: "Ghost mannequin",
+              sub: "generative",
+              col: 6.05,
+              row: 1.5,
+              cw: 2.5,
+              note: "The other mode: asks for the single most prominent garment rendered as an e-commerce flat lay. Which of the two runs is the user's choice, made before the upload.",
+            },
+            {
+              id: "obj",
+              label: "Object storage",
+              sub: "private, presigned",
+              col: 9.3,
+              row: 0.9,
+              cw: 2.5,
+              hl: true,
+              note: "Originals and processed images under per-user key prefixes. The bucket is never public — every read is a short-lived, user-scoped presigned URL, and deleting an account removes the entire prefix rather than just the rows.",
+            },
+            {
+              id: "pg",
+              label: "Cloud SQL",
+              sub: "Postgres · Alembic",
+              col: 2.9,
+              row: 2.3,
+              cw: 2.4,
+              note: "Every domain table carries soft-delete columns. The tag join tables are the deliberate exception — composite key, hard delete on detach, because a detached tag is not history worth keeping.",
+            },
+            {
+              id: "goog",
+              label: "Google Identity",
+              sub: "ID token verify",
+              col: 0.2,
+              row: 2.3,
+              cw: 2.4,
+              note: "Sign-in verifies the Google ID token's audience against an explicit allowlist of client IDs, then issues our own JWT. No passwords are stored anywhere.",
+              caution:
+                "It fails closed. With no client IDs configured, verification errors rather than skipping the check — a misconfigured deploy locks everyone out instead of letting everyone in.",
             },
           ],
           edges: [
-            { from: "app", to: "api" },
+            { from: "app", to: "api", label: "photo + mode", hl: true },
             { from: "api", to: "goog", label: "verify aud" },
-            { from: "api", to: "cut", label: "process_mode", hl: true },
-            { from: "api", to: "gem" },
             { from: "api", to: "pg" },
+            { from: "api", to: "cut", label: "chosen mode", hl: true },
+            { from: "api", to: "gem" },
             { from: "cut", to: "obj" },
             { from: "gem", to: "obj" },
           ],
           caption:
-            "The processors sit behind the API, never in the app. The bucket is never public — every read is a short-lived, user-scoped presigned URL, and the original photo is kept even when processing succeeds.",
+            "The app never reaches a processor or the bucket directly. Everything goes through the API, which is what keeps third-party credentials off the device and makes the processor swappable without shipping a new build.",
         },
       },
       {
@@ -806,14 +859,9 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Failure modes",
         body: [
-          "The one that matters is background removal, because it's the step most likely to fail and the one a user has already spent effort on by the time it runs.",
+          "Each of these is a rule the schema enforces rather than something the application remembers to check — which is why they hold even when a request arrives from somewhere I didn't anticipate.",
         ],
         failureModes: [
-          {
-            trigger: "Processor fails or times out",
-            behaviour: "Original kept, processed key left null",
-            recovery: "User continues — type and colour still confirmable",
-          },
           {
             trigger: "Item photographed but not typed",
             behaviour: "Stays a draft, excluded from grid and outfits",
