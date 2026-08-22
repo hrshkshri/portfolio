@@ -4,7 +4,7 @@ import { MdArrowOutward } from "react-icons/md";
 import type { CaseStudy, Flow } from "@/content/work";
 import { renderTextWithBold } from "@/components/shared/utils";
 import ArchitectureDiagram from "./ArchitectureDiagram";
-import { Metrics, DataModelTree, FailureModeTable } from "./StudyBlocks";
+import { DataModelTree, FailureModeTable } from "./StudyBlocks";
 
 /** The inline pipeline strip — a critical path, not a topology. */
 const Diagram: React.FC<{ flow: Flow }> = ({ flow }) => (
@@ -63,7 +63,6 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
           <p className="text-base text-neutral-300 max-w-xl leading-relaxed mt-5">
             {study.summary}
           </p>
-          {study.metrics && <Metrics metrics={study.metrics} />}
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_200px] gap-10 md:gap-14 mt-12 items-start">

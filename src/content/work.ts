@@ -68,12 +68,6 @@ export interface FailureMode {
   recovery: string;
 }
 
-/** A headline figure. Verified against the repo — never estimated. */
-export interface Metric {
-  value: string;
-  label: string;
-}
-
 export interface Section {
   heading: string;
   /** Paragraphs. `**bold**` is rendered via renderTextWithBold. */
@@ -96,8 +90,6 @@ export interface CaseStudy {
   tags: string[];
   href?: { label: string; url: string };
   facts: { label: string; value: string }[];
-  /** Headline numbers under the title. */
-  metrics?: Metric[];
   /**
    * Employer work. Renders a note explaining that the architecture is described
    * at pattern level, and is the flag that keeps schema entities, internal
@@ -119,12 +111,6 @@ export const caseStudies: CaseStudy[] = [
       "Four SaaS tools collapsed into one workspace for solo professionals — cards, scheduling, meeting intelligence and tasks that actually share state. Live with billing.",
     tags: ["PostgreSQL", "Prisma", "Deepgram", "Recall.ai", "Bull · Redis", "React", "Next.js"],
     href: { label: "crelyzor.hrshkshri.com", url: "https://crelyzor.hrshkshri.com" },
-    metrics: [
-      { value: "47", label: "Prisma models" },
-      { value: "30–120s", label: "transcription window" },
-      { value: "3", label: "independent repos" },
-      { value: "1", label: "backend, one database" },
-    ],
     facts: [
       { label: "Role", value: "Solo — design, build, ship" },
       { label: "Scale", value: "47 Prisma models across 3 repos" },
@@ -324,12 +310,6 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "A recommendation service that generates rather than retrieves — and then refuses to trust its own output until three independent gates have checked it.",
     tags: ["Express", "Gemini", "Structured output", "Prompt gates", "MongoDB", "TypeScript"],
-    metrics: [
-      { value: "3", label: "verification gates" },
-      { value: "5", label: "ideas per category, enforced" },
-      { value: "3", label: "attempts before give-up" },
-      { value: "0", label: "thinking tokens billed" },
-    ],
     facts: [
       { label: "Role", value: "Founding Engineer" },
       { label: "Shape", value: "Generate-then-verify pipeline" },
@@ -442,12 +422,6 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "An agentic tutor with realtime voice, grounded in each learner's actual progress — and an eval harness in CI so answer quality can't regress without someone noticing.",
     tags: ["LangGraph", "Gemini", "WebSocket", "LLM-as-judge", "Eval harness", "TypeScript"],
-    metrics: [
-      { value: "63", label: "skill guides in-repo" },
-      { value: "3", label: "grading tiers" },
-      { value: "0.70", label: "CI pass threshold" },
-      { value: "~16k", label: "lines of TypeScript" },
-    ],
     facts: [
       { label: "Role", value: "Founding Engineer" },
       { label: "Agent", value: "LangGraph over Gemini" },
@@ -591,12 +565,6 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "Ten backend services and a shared identity hub — how a multi-product platform agrees on who a user is, and what happens when a payment webhook doesn't arrive.",
     tags: ["Multi-service", "SSO", "RBAC", "PostgreSQL", "MongoDB", "Redis", "Webhooks"],
-    metrics: [
-      { value: "10", label: "backend services" },
-      { value: "6", label: "product frontends" },
-      { value: "2", label: "database engines, on purpose" },
-      { value: "100", label: "models in the identity schema" },
-    ],
     facts: [
       { label: "Role", value: "Founding Engineer" },
       { label: "Shape", value: "Service-oriented, shared identity" },
@@ -702,12 +670,6 @@ export const caseStudies: CaseStudy[] = [
       "Photograph a garment, get a clean cut-out, build outfits and plan them on a calendar. An Android beta where the interesting problems turned out to be privacy and taxonomy.",
     tags: ["FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "Cloud Run", "rembg · U²-Net"],
     href: { label: "fitted.hrshkshri.com", url: "https://fitted.hrshkshri.com" },
-    metrics: [
-      { value: "2", label: "processors, user-chosen" },
-      { value: "1", label: "tag table for three entity types" },
-      { value: "0", label: "coordinates stored, ever" },
-      { value: "256-bit", label: "share tokens, hashed at rest" },
-    ],
     facts: [
       { label: "Role", value: "Backend, data model, infra" },
       { label: "App", value: "Expo · React Native (Ashwath Kannan)" },
@@ -866,12 +828,6 @@ export const caseStudies: CaseStudy[] = [
       "A browser extension and CLI that surface Claude token usage, cache reads and rate limits in real time — by observing an app I don't control.",
     tags: ["TypeScript", "Browser Extension", "Node CLI", "esbuild", "Manifest V3"],
     href: { label: "npmjs.com/package/claukit", url: "https://www.npmjs.com/package/claukit" },
-    metrics: [
-      { value: "0", label: "runtime dependencies" },
-      { value: "0", label: "bytes of chat sent anywhere" },
-      { value: "3", label: "browser cookie formats read" },
-      { value: "~2.4k", label: "lines of source" },
-    ],
     facts: [
       { label: "Role", value: "Solo — open source" },
       { label: "Ships as", value: "Firefox add-on + npm CLI" },

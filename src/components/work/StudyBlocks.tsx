@@ -1,34 +1,14 @@
 import React from "react";
-import type { DataModel, Entity, FailureMode, Metric } from "@/content/work";
+import type { DataModel, Entity, FailureMode } from "@/content/work";
 
 /**
- * The non-diagram structured blocks of a case study: headline metrics, the
- * schema tree, and the failure-mode table.
+ * The non-diagram structured blocks of a case study: the schema tree and the
+ * failure-mode table.
  *
  * These are deliberately *not* hand-drawn. The architecture sketches earn the
  * rough treatment because they're explaining a shape; a table of failure modes
  * is reference material, and making it wobble would cost legibility for nothing.
  */
-
-/* ── metrics ──────────────────────────────────────────────────────────────── */
-
-export const Metrics: React.FC<{ metrics: Metric[] }> = ({ metrics }) => (
-  <dl className="flex flex-wrap gap-x-10 gap-y-5 mt-8 pt-6 border-t border-neutral-800">
-    {metrics.map((m) => (
-      <div key={m.label}>
-        <dt className="sr-only">{m.label}</dt>
-        <dd>
-          <span className="block text-2xl md:text-3xl text-white font-semibold tabular-nums leading-none">
-            {m.value}
-          </span>
-          <span className="block text-[11px] tracking-[0.12em] uppercase text-neutral-400 mt-2">
-            {m.label}
-          </span>
-        </dd>
-      </div>
-    ))}
-  </dl>
-);
 
 /* ── data model ───────────────────────────────────────────────────────────── */
 
