@@ -839,18 +839,24 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Two databases, on purpose",
         body: [
-          "Identity, money and notification logs run on **relational** storage. Product domains run on **document** storage. That isn't indecision, and it isn't two teams disagreeing.",
-          "Identity and payments are constrained, audited, and must not drift — they want foreign keys, transactions, and a schema that refuses bad states. Product data is schema-fluid and iterated on weekly, and running that against migrations is friction with no payoff. The split costs one extra ORM dialect and buys the right tool on both sides of the line.",
-          "The place it earns its keep is the audit trail. When someone asks why an account has access it shouldn't, the answer has to be reconstructible — and \"reconstructible\" is a property of constrained storage, not of a document you can shape however you like at write time.",
+          "Identity, money and notification logs run on relational storage; product domains run on document storage. Not indecision — one extra ORM dialect, and the right tool on both sides of the line.",
         ],
+        bullets: [
+          "**Identity and money must not drift.** They want foreign keys, transactions, and a schema that refuses bad states outright.",
+          "**Product data is schema-fluid**, reshaped weekly. Running that against migrations is friction with no payoff.",
+          "**The audit trail is where it earns its keep.** When someone asks why an account has access it shouldn't, the answer has to be reconstructible — and that's a property of constrained storage, not of a document you can shape however you like at write time.",
+        ]
       },
       {
         heading: "The webhook is the fast path, not the truth",
         body: [
-          "Payment is the flow where distributed-systems reality shows up. The provider fires a webhook when a payment captures — and sometimes it doesn't arrive, arrives twice, or arrives before the record it refers to has been written.",
-          "So the webhook is treated as an **optimisation**, not as the source of truth. Events are recorded idempotently so a duplicate delivery is a no-op, and a **scheduled reconciler** independently sweeps for unresolved orders and settles them against the provider's own view. If every webhook vanished tomorrow, the system would be slower and still correct.",
-          "That's the whole design principle: **anything that must be true cannot depend on someone else's HTTP request reaching you.**",
+          "A provider fires a webhook when money moves — and sometimes it doesn't arrive, arrives twice, or lands before the record it refers to exists.",
         ],
+        bullets: [
+          "**Duplicates are free.** Events are recorded idempotently, so a second delivery is a no-op.",
+          "**Silence is caught.** A scheduled reconciler sweeps for unresolved orders and settles them against the provider's own view.",
+          "**So the webhook is an optimisation, not the truth.** If every one vanished tomorrow the system would be slower and still correct — because a fact that matters has to be *checkable*, not merely announced.",
+        ]
       },
     ],
   },
