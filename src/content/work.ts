@@ -111,7 +111,6 @@ export const caseStudies: CaseStudy[] = [
     href: { label: "crelyzor.hrshkshri.com", url: "https://crelyzor.hrshkshri.com" },
     facts: [
       { label: "Role", value: "Solo — design, build, ship" },
-      { label: "Scale", value: "47 Prisma models across 3 repos" },
       { label: "Stack", value: "Node 20 · Express 5 · Prisma 6" },
       { label: "Database", value: "PostgreSQL (Neon, serverless)" },
       { label: "AI", value: "Deepgram Nova-2, GPT-4o-mini" },
@@ -400,7 +399,6 @@ export const caseStudies: CaseStudy[] = [
       { label: "Voice", value: "Realtime, WebSocket relay" },
       { label: "Memory", value: "Two layers — local + global" },
       { label: "Quality", value: "3-tier eval harness, CI gate" },
-      { label: "Size", value: "~16k lines TypeScript" },
     ],
     sections: [
       {
@@ -772,7 +770,6 @@ export const caseStudies: CaseStudy[] = [
       { label: "Ships as", value: "Firefox add-on + npm CLI" },
       { label: "Stack", value: "TypeScript, esbuild, MV3" },
       { label: "Tokenizer", value: "o200k_base, counted locally" },
-      { label: "Size", value: "~2.4k lines" },
       { label: "Status", value: "Published, v0.5" },
     ],
     sections: [
