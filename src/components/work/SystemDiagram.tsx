@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import type { SystemArchitecture, DiagramNode } from "@/content/work";
 
 /**
@@ -73,22 +74,62 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
     rects.set(n.id, cell(n.col, n.row, n.cw ?? 2, n.rh ?? 1, NODE_GAP));
   }
 
-  /** Pick the pair of box sides that face each other. */
-  const anchor = (a: Rect, b: Rect) => {
-    const ac = { x: a.x + a.w / 2, y: a.y + a.h / 2 };
-    const bc = { x: b.x + b.w / 2, y: b.y + b.h / 2 };
-    const dx = bc.x - ac.x;
-    const dy = bc.y - ac.y;
+  /**
+   * Anchors, in two passes.
+   *
+   * First decide which side of each box an edge should use — whichever axis
+   * dominates. Then spread the edges that landed on the same side along it,
+   * because a cycle puts an arrival and a departure on one edge of one box,
+   * and at a single midpoint they sit on top of each other and the direction
+   * stops being readable.
+   */
+  type Side = "left" | "right" | "top" | "bottom";
 
-    // Whichever axis dominates decides which sides the line leaves from.
-    if (Math.abs(dx) > Math.abs(dy)) {
-      return dx > 0
-        ? { x1: a.x + a.w, y1: ac.y, x2: b.x, y2: bc.y }
-        : { x1: a.x, y1: ac.y, x2: b.x + b.w, y2: bc.y };
-    }
-    return dy > 0
-      ? { x1: ac.x, y1: a.y + a.h, x2: bc.x, y2: b.y }
-      : { x1: ac.x, y1: a.y, x2: bc.x, y2: b.y + b.h };
+  const sideOf = (a: Rect, b: Rect): Side => {
+    const dx = b.x + b.w / 2 - (a.x + a.w / 2);
+    const dy = b.y + b.h / 2 - (a.y + a.h / 2);
+    if (Math.abs(dx) > Math.abs(dy)) return dx > 0 ? "right" : "left";
+    return dy > 0 ? "bottom" : "top";
+  };
+
+  const flip: Record<Side, Side> = {
+    left: "right",
+    right: "left",
+    top: "bottom",
+    bottom: "top",
+  };
+
+  const sides = arch.edges.map((e) => {
+    const a = rects.get(e.from);
+    const b = rects.get(e.to);
+    if (!a || !b) return null;
+    const s = sideOf(a, b);
+    return { fromSide: s, toSide: flip[s] };
+  });
+
+  // How many edges each (box, side) carries, and each edge's place in that run.
+  const total = new Map<string, number>();
+  const slot: { from: number; to: number }[] = [];
+  const bump = (key: string) => {
+    const n = total.get(key) ?? 0;
+    total.set(key, n + 1);
+    return n;
+  };
+  arch.edges.forEach((e, i) => {
+    const s = sides[i];
+    if (!s) return void slot.push({ from: 0, to: 0 });
+    slot.push({
+      from: bump(`${e.from}:${s.fromSide}`),
+      to: bump(`${e.to}:${s.toSide}`),
+    });
+  });
+
+  const pointOn = (r: Rect, side: Side, idx: number, n: number) => {
+    const t = (idx + 1) / (n + 1); // one edge -> 0.5, the old midpoint
+    if (side === "left") return { x: r.x, y: r.y + r.h * t };
+    if (side === "right") return { x: r.x + r.w, y: r.y + r.h * t };
+    if (side === "top") return { x: r.x + r.w * t, y: r.y };
+    return { x: r.x + r.w * t, y: r.y + r.h };
   };
 
   const activeNode = arch.nodes.find((n) => n.id === active) ?? null;
@@ -178,11 +219,15 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
               </marker>
             </defs>
 
-            {arch.edges.map((e) => {
+            {arch.edges.map((e, i) => {
               const a = rects.get(e.from);
               const b = rects.get(e.to);
-              if (!a || !b) return null;
-              const { x1, y1, x2, y2 } = anchor(a, b);
+              const s = sides[i];
+              if (!a || !b || !s) return null;
+              const p1 = pointOn(a, s.fromSide, slot[i].from, total.get(`${e.from}:${s.fromSide}`)!);
+              const p2 = pointOn(b, s.toSide, slot[i].to, total.get(`${e.to}:${s.toSide}`)!);
+              const { x: x1, y: y1 } = p1;
+              const { x: x2, y: y2 } = p2;
               const dim = active !== null && e.from !== active && e.to !== active;
 
               return (
@@ -259,34 +304,42 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
               height: circle ? size : r.h,
             };
 
-            const Tag = n.note ? "button" : "div";
+            const className = `absolute flex flex-col items-center justify-center text-center px-2.5 transition-all duration-150 ${
+              circle ? "rounded-full" : "rounded-xl"
+            } border ${
+              isActive
+                ? "border-amber-400 bg-neutral-900"
+                : n.hl
+                  ? "border-amber-400/45 bg-amber-400/[0.06]"
+                  : "border-neutral-700 bg-neutral-900/60"
+            } ${
+              // A pin outlives the pointer, so it needs to be visible even
+              // when the note is showing some other box.
+              pinned === n.id ? "ring-1 ring-amber-400/60" : ""
+            } ${dim ? "opacity-40" : "opacity-100"} ${
+              n.href ? "cursor-pointer" : n.note ? "cursor-help" : ""
+            }`;
 
-            return (
-              <Tag
-                key={n.id}
-                type={n.note ? "button" : undefined}
-                className={`absolute flex flex-col items-center justify-center text-center px-2.5 transition-all duration-150 ${
-                  circle ? "rounded-full" : "rounded-xl"
-                } border ${
-                  isActive
-                    ? "border-amber-400 bg-neutral-900"
-                    : n.hl
-                      ? "border-amber-400/45 bg-amber-400/[0.06]"
-                      : "border-neutral-700 bg-neutral-900/60"
-                } ${
-                  // A pin outlives the pointer, so it needs to be visible even
-                  // when the note is showing some other box.
-                  pinned === n.id ? "ring-1 ring-amber-400/60" : ""
-                } ${dim ? "opacity-40" : "opacity-100"} ${
-                  n.note ? "cursor-help" : ""
-                }`}
-                style={common}
-                onMouseEnter={n.note ? () => setHovered(n.id) : undefined}
-                onFocus={n.note ? () => setHovered(n.id) : undefined}
-                onBlur={n.note ? () => setHovered(null) : undefined}
-                onClick={n.note ? () => setPinned(pinned === n.id ? null : n.id) : undefined}
-                aria-describedby={isActive && n.note ? `${id}-tip` : undefined}
-              >
+            // Hover still previews the note on a linked box; only the click
+            // differs, because navigating and pinning can't share one gesture.
+            const hoverProps = n.note
+              ? {
+                  onMouseEnter: () => setHovered(n.id),
+                  onFocus: () => setHovered(n.id),
+                  onBlur: () => setHovered(null),
+                }
+              : {};
+
+            const inner = (
+              <>
+                {n.href && (
+                  <span
+                    className="absolute top-1.5 right-2.5 text-[11px] text-amber-400/80"
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                )}
                 <span
                   className={`text-[13px] font-semibold leading-tight ${
                     n.hl || isActive ? "text-amber-300" : "text-neutral-100"
@@ -299,7 +352,35 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
                     {n.sub}
                   </span>
                 )}
-              </Tag>
+              </>
+            );
+
+            if (n.href) {
+              return (
+                <Link key={n.id} href={n.href} className={className} style={common} {...hoverProps}>
+                  {inner}
+                </Link>
+              );
+            }
+            if (n.note) {
+              return (
+                <button
+                  key={n.id}
+                  type="button"
+                  className={className}
+                  style={common}
+                  {...hoverProps}
+                  onClick={() => setPinned(pinned === n.id ? null : n.id)}
+                  aria-describedby={isActive ? `${id}-tip` : undefined}
+                >
+                  {inner}
+                </button>
+              );
+            }
+            return (
+              <div key={n.id} className={className} style={common}>
+                {inner}
+              </div>
             );
           })}
 
@@ -323,6 +404,9 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
                 <p className="text-[12px] text-amber-300/90 leading-relaxed mt-3 rounded-lg bg-amber-400/10 border border-amber-400/20 px-3 py-2">
                   {activeNode.caution}
                 </p>
+              )}
+              {activeNode.href && (
+                <p className="text-[12px] text-amber-400 mt-3">Read the case study →</p>
               )}
             </div>
           )}

@@ -80,6 +80,12 @@ export interface DiagramNode {
   note?: string;
   /** The gotcha — rendered as an amber callout under the note. */
   caution?: string;
+  /**
+   * Makes the box a link — used to zoom from a platform view into the study
+   * for one of its services. Clicking navigates instead of pinning the note,
+   * so a linked box gets an arrow glyph to say so before it's clicked.
+   */
+  href?: string;
 }
 
 export interface DiagramGroup {
@@ -609,59 +615,94 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Shape of the platform",
         body: [
-          "Ten backends — CRM, payments, notifications, recommendations, meeting intelligence, interviewing, internships — each starting out with its own idea of who a user was and what they were allowed to do. Every new product meant reimplementing authentication, and every permission change meant finding all ten copies of it.",
-          "One identity hub that every product authenticates through, and a deliberate split in persistence underneath it. Services don't call each other anonymously — internal calls carry signed service tokens, so a product can't quietly act as the platform.",
-          "The **authorization cache** is what keeps the hub from becoming the bottleneck. Resolving permissions from the database on every request would put every product's every call behind one database. Resolved permissions are cached and invalidated on role change, and **tenant identity is part of the cache key** — which turns cross-tenant leakage into a cache miss rather than something you hope a reviewer catches.",
+          "Ten backends — CRM, payments, notifications, recommendations, meeting intelligence, interviewing, internships — each starting out with its own idea of who a user was. Every new product meant reimplementing authentication, and every permission change meant finding all ten copies of it.",
+          "What ties three of them together isn't a call graph, it's a **loop**.",
         ],
-        architecture: {
-          tiers: [
+        systemDiagram: {
+          rows: 5.68,
+          groups: [
             {
-              label: "Clients",
-              nodes: [
-                { id: "apps", label: "Product web apps", sub: "six frontends" },
-                { id: "embed", label: "Embeddable plugin", sub: "third-party hosts" },
-              ],
+              id: "loop",
+              label: "The learning loop",
+              col: 0.2,
+              row: 2.6,
+              cw: 11.6,
+              rh: 3.0,
+            },
+          ],
+          nodes: [
+            {
+              id: "apps",
+              label: "Product apps",
+              sub: "six frontends",
+              col: 0.45,
+              row: 0,
+              cw: 3.4,
+              note: "Six product frontends, plus an embeddable plugin that runs on somebody else's page. Not one of them carries its own idea of who a user is.",
             },
             {
-              label: "Identity",
-              nodes: [{ id: "idp", label: "Identity & SSO hub", sub: "authN + cached authZ", hl: true }],
+              id: "idp",
+              label: "Identity & SSO hub",
+              sub: "authN + cached authZ",
+              col: 0.45,
+              row: 1.3,
+              cw: 3.4,
+              hl: true,
+              note: "The one service every product authenticates through. SSO, tokens with refresh sessions, OAuth, and a permission engine whose answers are cached with the tenant as part of the key — which turns cross-tenant leakage into a cache miss rather than something you hope a reviewer catches.",
+              caution:
+                "It is also the platform's single point of failure. Every product's every request waits on it, which is the whole reason the cache exists.",
             },
             {
-              label: "Services",
-              nodes: [
-                { id: "rel", label: "Ledger services", sub: "payments · notifications" },
-                { id: "doc", label: "Product services", sub: "domain-shaped data" },
-              ],
+              id: "svcs",
+              label: "Product services",
+              sub: "signed tokens only",
+              col: 8.15,
+              row: 1.3,
+              cw: 3.4,
+              note: "The domain backends behind those frontends. They never call each other anonymously — internal calls carry signed service tokens, so a compromised product cannot quietly act as the platform.",
             },
             {
-              label: "Async",
-              nodes: [
-                { id: "queue", label: "Queue workers", sub: "media pipelines" },
-                { id: "cron", label: "Reconcilers", sub: "scheduled sweeps", hl: true },
-              ],
+              id: "score",
+              label: "Scoring",
+              sub: "profile → a band",
+              col: 0.45,
+              row: 3.0,
+              cw: 3.4,
+              note: "Turns a profile questionnaire into a single score on a fixed band. It is both the input the recommender ranks against and the output the loop rewrites once work is finished.",
             },
             {
-              label: "Store",
-              nodes: [
-                { id: "sql", label: "Relational", sub: "identity · money" },
-                { id: "nosql", label: "Document", sub: "product domains" },
-                { id: "cache", label: "Cache", sub: "resolved permissions" },
-              ],
+              id: "rec",
+              label: "Recommender",
+              sub: "activity ideas",
+              col: 8.15,
+              row: 3.0,
+              cw: 3.4,
+              hl: true,
+              href: "/work/recommender",
+              note: "Generates candidate activities for a learner, then refuses to trust its own output until three independent gates have checked it. Began as retrieval over a vector index and became generation.",
+            },
+            {
+              id: "cop",
+              label: "Learning Copilot",
+              sub: "guided execution",
+              col: 4.3,
+              row: 4.4,
+              cw: 3.4,
+              hl: true,
+              href: "/work/learning-copilot",
+              note: "Takes the activity a learner picked and helps them actually do it — a week-by-week plan first, then real-time guidance while they work, with memory that survives across sessions.",
             },
           ],
           edges: [
             { from: "apps", to: "idp" },
-            { from: "embed", to: "idp" },
-            { from: "idp", to: "rel", label: "signed token", hl: true },
-            { from: "idp", to: "doc", label: "signed token", hl: true },
-            { from: "idp", to: "cache" },
-            { from: "rel", to: "sql" },
-            { from: "doc", to: "nosql" },
-            { from: "doc", to: "queue", dashed: true },
-            { from: "cron", to: "rel", label: "sweep", dashed: true, hl: true },
+            { from: "idp", to: "svcs", label: "signed token" },
+            { from: "idp", to: "score", label: "profile" },
+            { from: "score", to: "rec", label: "score", hl: true },
+            { from: "rec", to: "cop", label: "chosen activity", hl: true },
+            { from: "cop", to: "score", label: "completion", dashed: true, hl: true },
           ],
           caption:
-            "Described at the level of the pattern rather than the deployment. Every product enters through identity; nothing talks to anything else without a signed token; the reconcilers exist because webhooks are a fast path, not a guarantee.",
+            "Described at the level of the pattern rather than the deployment. The loop is the point: a score decides what gets recommended, the copilot helps execute it, and finishing rewrites the score — so the next recommendation is harder than the last. The two boxes with arrows lead to their own write-ups.",
         },
       },
       {
