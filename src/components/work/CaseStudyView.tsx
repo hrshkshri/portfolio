@@ -43,10 +43,10 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
           which no overflow setting can fix. 6xl leaves it 896px. */}
       <div className="max-w-6xl">
         <Link
-          href="/work"
+          href="/about"
           className="text-xs text-neutral-400 hover:text-amber-400 transition-colors duration-150"
         >
-          ← Work
+          ← About
         </Link>
 
         <header className="mt-5">

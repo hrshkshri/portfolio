@@ -1,5 +1,5 @@
 import { AiOutlineHome } from "react-icons/ai";
-import { BsFillPersonVcardFill, BsCalendar3, BsBriefcaseFill } from "react-icons/bs";
+import { BsFillPersonVcardFill, BsCalendar3 } from "react-icons/bs";
 import { IconType } from "react-icons";
 
 interface NavLink {
@@ -35,7 +35,6 @@ export const resumeLink = "/resume.pdf";
 
 export const navLinks: NavLink[] = [
   { href: "/", icon: AiOutlineHome, label: "Home" },
-  { href: "/work", icon: BsBriefcaseFill, label: "Work" },
   { href: "/about", icon: BsFillPersonVcardFill, label: "About" },
   { href: "/calendar", icon: BsCalendar3, label: "Schedule" },
 ];

@@ -1,5 +1,5 @@
 /**
- * Case studies for /work.
+ * Case studies, rendered at /work/<slug> and reached from /about.
  *
  * Flat by design — each entry stands alone and carries an optional `org`,
  * rather than nesting studies under a project or employer. Grouping can be
