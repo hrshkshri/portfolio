@@ -93,7 +93,7 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                 {section.body.map((para, i) => (
                   <p
                     key={i}
-                    className="text-[18px] text-neutral-300 leading-[1.75] mb-3.5 last:mb-0"
+                    className="text-base text-neutral-300 leading-[1.75] mb-3.5 last:mb-0"
                   >
                     {renderTextWithBold(para)}
                   </p>
@@ -108,7 +108,7 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                         >
                           ◦
                         </span>
-                        <p className="text-[18px] text-neutral-300 leading-[1.7]">
+                        <p className="text-base text-neutral-300 leading-[1.7]">
                           {renderTextWithBold(item)}
                         </p>
                       </li>
