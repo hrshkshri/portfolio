@@ -3,6 +3,15 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SystemArchitecture, DiagramNode } from "@/content/work";
+import {
+  CANVAS_W,
+  NODE_GAP,
+  DEFAULT_COLS,
+  cellRect,
+  canvasHeight,
+  overlapArea as overlap,
+  type Rect,
+} from "./diagramGeometry";
 
 /**
  * System-design diagram: free-form boxes on a coarse grid, grouped regions,
@@ -19,23 +28,8 @@ import type { SystemArchitecture, DiagramNode } from "@/content/work";
  * described in the same vocabulary.
  */
 
-const CANVAS_W = 860; // fits inside max-w-4xl (896) with room to breathe
-const PAD = 24;
-const ROW_H = 92; // vertical pitch of one row unit
-const NODE_GAP = 14; // inset that makes nodes sit inside their cell
-
-interface Rect {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), hi);
-
-const overlap = (a: Rect, b: Rect) =>
-  Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) *
-  Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
 
 /** Rough rendered height of a note card, used only to place it. */
 const tipHeight = (note: string, caution?: string) =>
@@ -58,16 +52,10 @@ const SystemDiagram: React.FC<{ arch: SystemArchitecture; id: string }> = ({ arc
     return () => window.removeEventListener("keydown", onKey);
   }, [pinned]);
 
-  const cols = arch.cols ?? 12;
-  const colW = (CANVAS_W - PAD * 2) / cols;
-  const canvasH = PAD * 2 + arch.rows * ROW_H;
-
-  const cell = (col: number, row: number, cw: number, rh: number, gap: number): Rect => ({
-    x: PAD + col * colW + gap / 2,
-    y: PAD + row * ROW_H + gap / 2,
-    w: cw * colW - gap,
-    h: rh * ROW_H - gap,
-  });
+  const cols = arch.cols ?? DEFAULT_COLS;
+  const canvasH = canvasHeight(arch.rows);
+  const cell = (col: number, row: number, cw: number, rh: number, gap: number): Rect =>
+    cellRect(col, row, cw, rh, gap, cols);
 
   const rects = new Map<string, Rect>();
   for (const n of arch.nodes) {
