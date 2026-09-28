@@ -81,7 +81,7 @@ const products: Product[] = [
 const Building: React.FC = () => {
   return (
     <div className="mb-12">
-      <h1 className="text-xl font-bold">Projects</h1>
+      <h2 className="text-xl font-bold">Projects</h2>
 
       <div className="space-y-4 mt-5">
         {products.map((product) => (
@@ -95,7 +95,7 @@ const Building: React.FC = () => {
                   className={`w-2 h-2 rounded-full ${STATUS_DOT[product.status]}`}
                   aria-hidden="true"
                 />
-                <h2 className="text-xl font-semibold text-white">{product.name}</h2>
+                <h3 className="text-xl font-semibold text-white">{product.name}</h3>
                 {product.badge && (
                   <span className="text-[10px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-400/90">
                     {product.badge}

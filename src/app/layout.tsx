@@ -24,21 +24,11 @@ const kalam = Kalam({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Harsh Keshari — Software Developer",
+    default: "Harsh Keshari — Founding Engineer",
     template: "%s | Harsh Keshari",
   },
   description:
-    "Software developer at Experiment Labs. I build web apps and work on open source.",
-  keywords: [
-    "Harsh Keshari",
-    "Software Developer",
-    "React",
-    "Next.js",
-    "Node.js",
-    "Open Source",
-    "Web Development",
-    "Software Engineer",
-  ],
+    "Founding engineer at Experiment Labs. I build web apps, AI systems and the platforms underneath them.",
   authors: [{ name: "Harsh Keshari", url: SITE_URL }],
   creator: "Harsh Keshari",
   publisher: "Harsh Keshari",
@@ -59,14 +49,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Harsh Keshari Portfolio",
-    title: "Harsh Keshari — Software Developer",
-    description: "Software developer at Experiment Labs.",
+    title: "Harsh Keshari — Founding Engineer",
+    description: "Founding engineer at Experiment Labs.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Harsh Keshari — Software Developer",
+        alt: "Harsh Keshari — Founding Engineer",
         type: "image/jpeg",
       },
     ],
@@ -76,8 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Harsh Keshari — Software Developer",
-    description: "Software developer at Experiment Labs.",
+    title: "Harsh Keshari — Founding Engineer",
+    description: "Founding engineer at Experiment Labs.",
     creator: "@hrshkshri",
     images: ["/og-image.jpg"],
   },

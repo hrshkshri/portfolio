@@ -3,24 +3,26 @@ import { SITE_URL } from "@/lib/site";
 import { caseStudies } from "@/content/work";
 
 /**
- * Generated at build time, so `lastModified` can't go stale the way the old
- * hand-written public/sitemap.xml did (it was frozen at 2025-10 and still
- * listed both "/" and the "/home" redirect).
+ * Generated at build time, so it can't go stale the way the old hand-written
+ * public/sitemap.xml did (frozen at 2025-10, and it still listed both "/" and
+ * the "/home" redirect).
+ *
+ * No changefreq and no priority: Google ignores both, and emitting them only
+ * invites the belief that they are doing something.
+ *
+ * lastModified is emitted ONLY for a study that carries a real `updated` date.
+ * It used to be `new Date()` for every URL, which meant a study untouched for
+ * months claimed it changed on this deploy — a freshness signal that is wrong
+ * every time is worse than no signal at all.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  const staticRoutes = ["/", "/work", "/about", "/github", "/calendar"];
 
   return [
-    { url: `${SITE_URL}/`, lastModified, changeFrequency: "weekly", priority: 1 },
-    { url: `${SITE_URL}/work`, lastModified, changeFrequency: "monthly", priority: 0.9 },
+    ...staticRoutes.map((path) => ({ url: `${SITE_URL}${path}` })),
     ...caseStudies.map((study) => ({
       url: `${SITE_URL}/work/${study.slug}`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
+      ...(study.updated ? { lastModified: new Date(study.updated) } : {}),
     })),
-    { url: `${SITE_URL}/about`, lastModified, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${SITE_URL}/github`, lastModified, changeFrequency: "weekly", priority: 0.6 },
-    { url: `${SITE_URL}/calendar`, lastModified, changeFrequency: "monthly", priority: 0.6 },
   ];
 }

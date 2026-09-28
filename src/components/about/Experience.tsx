@@ -8,7 +8,7 @@ const Experience: React.FC = () => {
 
     return (
         <div className="w-full">
-            <h1 className="text-xl font-bold">Experience</h1>
+            <h2 className="text-xl font-bold">Experience</h2>
             <div className="mt-5 space-y-8">
                 {experiences.slice().reverse().map((experience, index) => (
                     <div key={index} className="border-l-2 border-neutral-700 pl-4 transition ease-in-out duration-300 hover:border-amber-500">
