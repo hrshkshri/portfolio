@@ -44,10 +44,10 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
           which no overflow setting can fix. 6xl leaves it 896px. */}
       <div className="max-w-6xl">
         <Link
-          href="/work"
+          href="/about"
           className="text-xs text-neutral-400 hover:text-amber-400 transition-colors duration-150"
         >
-          ← Work
+          ← About
         </Link>
 
         <header className="mt-5">
@@ -143,24 +143,15 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
             ))}
             {study.href && (
               <div className="mt-5 pt-4 border-t border-neutral-800">
-                {study.href.offline ? (
-                  <span
-                    className="inline-flex items-center gap-1 text-sm text-neutral-500 line-through decoration-neutral-700"
-                    title="This host is currently unreachable."
-                  >
-                    {study.href.label}
-                  </span>
-                ) : (
-                  <a
-                    href={study.href.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300 transition-colors duration-150"
-                  >
-                    {study.href.label}
-                    <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
-                  </a>
-                )}
+                <a
+                  href={study.href.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300 transition-colors duration-150"
+                >
+                  {study.href.label}
+                  <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
+                </a>
               </div>
             )}
           </dl>

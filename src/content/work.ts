@@ -109,8 +109,7 @@ export interface CaseStudy {
   /** One line for the index page. */
   summary: string;
   tags: string[];
-  /** `offline` renders the host as plain text — see StudyEnd/CaseStudyView. */
-  href?: { label: string; url: string; offline?: boolean };
+  href?: { label: string; url: string };
   facts: { label: string; value: string }[];
   /**
    * Employer work. Renders a note explaining that the architecture is described
@@ -130,11 +129,7 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "Four SaaS tools collapsed into one workspace for solo professionals — cards, scheduling, meeting intelligence and tasks that actually share state. Live with billing.",
     tags: ["PostgreSQL", "Prisma", "Deepgram", "Recall.ai", "Bull · Redis", "React", "Next.js"],
-    href: {
-      label: "crelyzor.hrshkshri.com",
-      url: "https://crelyzor.hrshkshri.com",
-      offline: true,
-    },
+    href: { label: "crelyzor.hrshkshri.com", url: "https://crelyzor.hrshkshri.com" },
     facts: [
       { label: "Role", value: "Solo — design, build, ship" },
       { label: "Stack", value: "Node 20 · Express 5 · Prisma 6" },
@@ -986,11 +981,7 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "Photograph a garment, get a clean cut-out, build outfits and plan them on a calendar. An Android beta where the interesting problems turned out to be privacy and taxonomy.",
     tags: ["FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "Cloud Run", "rembg · U²-Net"],
-    href: {
-      label: "fitted.hrshkshri.com",
-      url: "https://fitted.hrshkshri.com",
-      offline: true,
-    },
+    href: { label: "fitted.hrshkshri.com", url: "https://fitted.hrshkshri.com" },
     facts: [
       { label: "Role", value: "Backend, data model, infra" },
       { label: "App", value: "Expo · React Native (Ashwath Kannan)" },
