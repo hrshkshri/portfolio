@@ -5,6 +5,7 @@ import type { CaseStudy, Flow } from "@/content/work";
 import { renderTextWithBold } from "@/components/shared/utils";
 import SystemDiagram from "./SystemDiagram";
 import { FailureModeTable } from "./StudyBlocks";
+import StudyEnd from "./StudyEnd";
 
 /** The inline pipeline strip — a critical path, not a topology. */
 const Diagram: React.FC<{ flow: Flow }> = ({ flow }) => (
@@ -43,10 +44,10 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
           which no overflow setting can fix. 6xl leaves it 896px. */}
       <div className="max-w-6xl">
         <Link
-          href="/about"
+          href="/work"
           className="text-xs text-neutral-400 hover:text-amber-400 transition-colors duration-150"
         >
-          ← About
+          ← Work
         </Link>
 
         <header className="mt-5">
@@ -127,6 +128,8 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                 {section.flow && <Diagram flow={section.flow} />}
               </section>
             ))}
+
+            <StudyEnd slug={study.slug} title={study.title} />
           </article>
 
           <dl className="md:border-l border-t md:border-t-0 border-neutral-800 pt-6 md:pt-0 md:pl-5">
@@ -140,15 +143,24 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
             ))}
             {study.href && (
               <div className="mt-5 pt-4 border-t border-neutral-800">
-                <a
-                  href={study.href.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300 transition-colors duration-150"
-                >
-                  {study.href.label}
-                  <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
-                </a>
+                {study.href.offline ? (
+                  <span
+                    className="inline-flex items-center gap-1 text-sm text-neutral-500 line-through decoration-neutral-700"
+                    title="This host is currently unreachable."
+                  >
+                    {study.href.label}
+                  </span>
+                ) : (
+                  <a
+                    href={study.href.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300 transition-colors duration-150"
+                  >
+                    {study.href.label}
+                    <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
+                  </a>
+                )}
               </div>
             )}
           </dl>

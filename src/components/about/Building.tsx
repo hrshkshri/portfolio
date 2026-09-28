@@ -6,6 +6,11 @@ import { MdArrowOutward } from "react-icons/md";
 interface ProductLink {
   href: string;
   label: string;
+  /**
+   * The host is down. Rendered as plain text instead of a link — an honest
+   * label beats sending a visitor to a connection error.
+   */
+  offline?: boolean;
 }
 
 interface TeamCredit {
@@ -13,8 +18,34 @@ interface TeamCredit {
   href: string;
 }
 
+/**
+ * Drives the status dot and its label. This used to be a hardcoded
+ * "Live in Production" heading over an unconditional pulsing amber dot, which
+ * kept claiming uptime for two products after their hosts went down.
+ */
+type ProductStatus = "live" | "beta" | "offline";
+
+const STATUS: Record<ProductStatus, { label: string; dot: string; text: string }> = {
+  live: {
+    label: "Live in production",
+    dot: "bg-amber-400 animate-pulse",
+    text: "text-amber-400/90 border-amber-400/40",
+  },
+  beta: {
+    label: "In beta",
+    dot: "bg-sky-400",
+    text: "text-sky-300/90 border-sky-400/40",
+  },
+  offline: {
+    label: "Offline",
+    dot: "bg-neutral-600",
+    text: "text-neutral-400 border-neutral-700",
+  },
+};
+
 interface Product {
   name: string;
+  status: ProductStatus;
   badge?: string;
   /** Shown when the project wasn't solo — credits the collaborator. */
   team?: TeamCredit;
@@ -28,17 +59,19 @@ interface Product {
 const products: Product[] = [
   {
     name: "Crelyzor",
+    status: "offline",
     caseStudy: "crelyzor",
     description:
       "All-in-one productivity SaaS for solo professionals — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live with billing, AI meeting intelligence, and scheduling.",
     tags: ["PERN Stack", "TypeScript", "LLM · Gemini", "Deepgram STT", "AI Summarization", "Ask AI (SSE)", "Recall.ai", "Bull · Redis", "Docker"],
     links: [
-      { href: "https://crelyzor.hrshkshri.com", label: "crelyzor.hrshkshri.com" },
       { href: "https://youtu.be/lQWSQ-r3zXQ", label: "Demo" },
+      { href: "https://crelyzor.hrshkshri.com", label: "crelyzor.hrshkshri.com", offline: true },
     ],
   },
   {
     name: "Claukit",
+    status: "live",
     caseStudy: "claukit",
     description:
       "Your Claude companion — a browser extension + CLI that surfaces token usage, cache reads, and rate limits in real time, with usage bars for the 5-hour and 7-day limits.",
@@ -50,13 +83,16 @@ const products: Product[] = [
   },
   {
     name: "Fitted",
+    status: "offline",
     caseStudy: "fitted",
     badge: "Android Beta",
     team: { name: "Ashwath Kannan", href: "https://github.com/Ash-2k3" },
     description:
       "Your wardrobe, digitized — snap a photo of a garment, get an auto-cut-out flat lay, swipe tops and bottoms into outfits, and plan them on a calendar. Expo app on Android, FastAPI backend on Cloud Run, photos in private storage behind presigned URLs.",
     tags: ["Expo · React Native", "FastAPI · Python", "Postgres · SQLAlchemy", "rembg · U²-Net", "GCP Cloud Run", "Cloud SQL · GCS"],
-    links: [{ href: "https://fitted.hrshkshri.com", label: "fitted.hrshkshri.com" }],
+    links: [
+      { href: "https://fitted.hrshkshri.com", label: "fitted.hrshkshri.com", offline: true },
+    ],
   },
 ];
 
@@ -64,22 +100,29 @@ const Building: React.FC = () => {
   return (
     <div className="mb-12">
       <h1 className="text-xl font-bold">Projects</h1>
-      <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mt-5 mb-4">
-        Live in Production
-      </p>
 
-      <div className="space-y-4">
+      <div className="space-y-4 mt-5">
         {products.map((product) => (
           <div
             key={product.name}
             className="border border-neutral-800 rounded-2xl p-6 bg-neutral-900/40"
           >
             <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <div className="flex items-center gap-3 flex-wrap">
+                <span
+                  className={`w-2 h-2 rounded-full ${STATUS[product.status].dot}`}
+                  aria-hidden="true"
+                />
                 <h2 className="text-xl font-semibold text-white">{product.name}</h2>
+                <span
+                  className={`text-[10px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full border ${
+                    STATUS[product.status].text
+                  }`}
+                >
+                  {STATUS[product.status].label}
+                </span>
                 {product.badge && (
-                  <span className="text-[10px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-400/90">
+                  <span className="text-[10px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full border border-neutral-700 text-neutral-400">
                     {product.badge}
                   </span>
                 )}
@@ -129,18 +172,28 @@ const Building: React.FC = () => {
                   <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
                 </Link>
               )}
-              {product.links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-neutral-400"
-                >
-                  {link.label}
-                  <FiExternalLink className="w-3.5 h-3.5" />
-                </a>
-              ))}
+              {product.links.map((link) =>
+                link.offline ? (
+                  <span
+                    key={link.href}
+                    className="inline-flex items-center gap-1.5 text-sm text-neutral-500 line-through decoration-neutral-700"
+                    title="This host is currently unreachable."
+                  >
+                    {link.label}
+                  </span>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm text-neutral-400"
+                  >
+                    {link.label}
+                    <FiExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )
+              )}
             </div>
           </div>
         ))}
