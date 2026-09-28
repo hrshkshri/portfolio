@@ -2,12 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AiFillGithub } from "react-icons/ai";
 import { BsCalendar3, BsFileEarmarkText } from "react-icons/bs";
 
 // `onMobile` marks the links the bottom tab bar doesn't already cover.
+// `primary` is the single ranked next step — four identically-weighted neutral
+// links gave a 90-second skimmer nothing to choose.
 const LINKS = [
-  { label: "View My Work", href: "/about", onMobile: false },
+  { label: "View My Work", href: "/work", onMobile: false, primary: true },
   { label: "GitHub", href: "/github", icon: AiFillGithub, onMobile: true },
   { label: "Get In Touch", href: "/calendar", icon: BsCalendar3, onMobile: false },
   { label: "Resume", href: "/resume.pdf", icon: BsFileEarmarkText, onMobile: true },
@@ -54,50 +57,44 @@ const Greeting: React.FC = () => {
           </div>
 
           <p className="text-base text-neutral-300 max-w-md leading-relaxed">
-            Software developer at Experiment Labs. I build web apps — the
-            backends and the interfaces that sit on top of them.
+            Founding engineer at Experiment Labs — ten production services,
+            including AI systems gated by an LLM-as-judge eval in CI.
           </p>
 
           <ul className="text-sm text-neutral-400 max-w-md leading-relaxed space-y-1.5">
             <li className="flex gap-2">
               <span className="text-amber-400/70 select-none">›</span>
               <span>
-                <a
-                  href="https://crelyzor.hrshkshri.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/work/crelyzor"
                   className="text-neutral-200 hover:text-amber-400 transition-colors duration-150"
                 >
                   Crelyzor
-                </a>{" "}
+                </Link>{" "}
                 — AI-native workspace for contacts, meetings, and tasks.
               </span>
             </li>
             <li className="flex gap-2">
               <span className="text-amber-400/70 select-none">›</span>
               <span>
-                <a
-                  href="https://www.npmjs.com/package/claukit"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/work/claukit"
                   className="text-neutral-200 hover:text-amber-400 transition-colors duration-150"
                 >
                   Claukit
-                </a>{" "}
+                </Link>{" "}
                 — real-time usage companion for Claude.
               </span>
             </li>
             <li className="flex gap-2">
               <span className="text-amber-400/70 select-none">›</span>
               <span>
-                <a
-                  href="https://fitted.hrshkshri.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/work/fitted"
                   className="text-neutral-200 hover:text-amber-400 transition-colors duration-150"
                 >
                   Fitted
-                </a>{" "}
+                </Link>{" "}
                 — your wardrobe, digitized: build outfits, plan the week.
               </span>
             </li>
@@ -124,17 +121,27 @@ const Greeting: React.FC = () => {
             <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mb-3">
               Links
             </p>
-            <div className="space-y-2">
-              {LINKS.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="flex items-center justify-end gap-2 text-base text-neutral-400 hover:text-neutral-100 transition-colors duration-150"
-                >
-                  {link.label}
-                  {link.icon && <link.icon className="w-4 h-4" />}
-                </a>
-              ))}
+            <div className="flex flex-col items-end gap-2">
+              {LINKS.map((link) =>
+                link.primary ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="px-6 py-2.5 mb-1 bg-white text-neutral-900 text-sm font-semibold rounded-full hover:bg-neutral-200 transition-colors duration-150"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="flex items-center justify-end gap-2 text-base text-neutral-400 hover:text-neutral-100 transition-colors duration-150"
+                  >
+                    {link.label}
+                    {link.icon && <link.icon className="w-4 h-4" />}
+                  </a>
+                )
+              )}
             </div>
           </div>
         </div>

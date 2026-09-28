@@ -8,7 +8,7 @@ const OpenSource: React.FC = () => {
 
     return (
         <div className="w-full">
-            <h1 className="text-xl font-bold">Open Source Contributions</h1>
+            <h2 className="text-xl font-bold">Open Source Contributions</h2>
             <div className="mt-5 space-y-6">
                 {openSourceContributions.slice(0, 2).map((contribution, index) => (
                     <div key={index} className="border-l-2 border-neutral-700 pl-4 transition ease-in-out duration-300 hover:border-amber-500">

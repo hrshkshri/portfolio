@@ -5,6 +5,7 @@ import type { CaseStudy, Flow } from "@/content/work";
 import { renderTextWithBold } from "@/components/shared/utils";
 import SystemDiagram from "./SystemDiagram";
 import { FailureModeTable } from "./StudyBlocks";
+import StudyEnd from "./StudyEnd";
 
 /** The inline pipeline strip — a critical path, not a topology. */
 const Diagram: React.FC<{ flow: Flow }> = ({ flow }) => (
@@ -127,6 +128,8 @@ const CaseStudyView: React.FC<{ study: CaseStudy }> = ({ study }) => {
                 {section.flow && <Diagram flow={section.flow} />}
               </section>
             ))}
+
+            <StudyEnd slug={study.slug} title={study.title} />
           </article>
 
           <dl className="md:border-l border-t md:border-t-0 border-neutral-800 pt-6 md:pt-0 md:pl-5">

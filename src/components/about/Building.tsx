@@ -13,8 +13,23 @@ interface TeamCredit {
   href: string;
 }
 
+/**
+ * Drives the status dot. This replaces a hardcoded "Live in Production"
+ * heading over an unconditional pulsing amber dot — the heading kept claiming
+ * uptime for products whose hosts had gone down, and it stated the obvious
+ * besides. The dot carries it now; no card announces that it is shipped.
+ */
+type ProductStatus = "live" | "beta" | "offline";
+
+const STATUS_DOT: Record<ProductStatus, string> = {
+  live: "bg-amber-400 animate-pulse",
+  beta: "bg-sky-400",
+  offline: "bg-neutral-600",
+};
+
 interface Product {
   name: string;
+  status: ProductStatus;
   badge?: string;
   /** Shown when the project wasn't solo — credits the collaborator. */
   team?: TeamCredit;
@@ -28,6 +43,7 @@ interface Product {
 const products: Product[] = [
   {
     name: "Crelyzor",
+    status: "live",
     caseStudy: "crelyzor",
     description:
       "All-in-one productivity SaaS for solo professionals — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live with billing, AI meeting intelligence, and scheduling.",
@@ -39,6 +55,7 @@ const products: Product[] = [
   },
   {
     name: "Claukit",
+    status: "live",
     caseStudy: "claukit",
     description:
       "Your Claude companion — a browser extension + CLI that surfaces token usage, cache reads, and rate limits in real time, with usage bars for the 5-hour and 7-day limits.",
@@ -50,6 +67,7 @@ const products: Product[] = [
   },
   {
     name: "Fitted",
+    status: "live",
     caseStudy: "fitted",
     badge: "Android Beta",
     team: { name: "Ashwath Kannan", href: "https://github.com/Ash-2k3" },
@@ -63,21 +81,21 @@ const products: Product[] = [
 const Building: React.FC = () => {
   return (
     <div className="mb-12">
-      <h1 className="text-xl font-bold">Projects</h1>
-      <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mt-5 mb-4">
-        Live in Production
-      </p>
+      <h2 className="text-xl font-bold">Projects</h2>
 
-      <div className="space-y-4">
+      <div className="space-y-4 mt-5">
         {products.map((product) => (
           <div
             key={product.name}
             className="border border-neutral-800 rounded-2xl p-6 bg-neutral-900/40"
           >
             <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                <h2 className="text-xl font-semibold text-white">{product.name}</h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <span
+                  className={`w-2 h-2 rounded-full ${STATUS_DOT[product.status]}`}
+                  aria-hidden="true"
+                />
+                <h3 className="text-xl font-semibold text-white">{product.name}</h3>
                 {product.badge && (
                   <span className="text-[10px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-400/90">
                     {product.badge}
@@ -145,6 +163,18 @@ const Building: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* The flat index. Not in the sidebar — About and Work would compete for
+          the same intent — so this is the entry point from here. It is also the
+          only surface that reaches the two studies which exist solely as
+          drill-down targets inside the platform diagram. */}
+      <Link
+        href="/work"
+        className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-amber-400 transition-colors duration-150 mt-5"
+      >
+        All six case studies
+        <MdArrowOutward className="w-3.5 h-3.5" aria-hidden="true" />
+      </Link>
     </div>
   );
 };

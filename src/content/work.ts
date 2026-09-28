@@ -110,6 +110,13 @@ export interface CaseStudy {
   summary: string;
   tags: string[];
   href?: { label: string; url: string };
+  /**
+   * ISO date this study's content last actually changed. Feeds sitemap
+   * lastModified and schema.org dateModified. Left unset rather than filled
+   * with a build timestamp — a page that claims it changed on every deploy
+   * teaches crawlers to ignore the field.
+   */
+  updated?: string;
   facts: { label: string; value: string }[];
   /**
    * Employer work. Renders a note explaining that the architecture is described

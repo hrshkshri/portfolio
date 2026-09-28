@@ -54,8 +54,13 @@ src/
     home/           Landing hero
     layout/         Sidebar + mobile tab bar
     shared/         Content constants, structured data, helpers
+    work/           Case-study view, interactive SVG system diagrams
+  content/
+    work.ts         Case-study content — prose, facts, diagram placement
   lib/
     server/         Server-only GitHub service (native fetch, cached 1h)
+    diagramGeometry.ts  Shared layout constants — the property test in
+                        diagramLayout.test.ts measures these same numbers
     site.ts         Canonical origin — single source of truth
 resume/             Typst source for the résumé PDF
 ```

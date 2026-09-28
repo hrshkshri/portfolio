@@ -20,7 +20,9 @@ const activityGraphUrl = (username: string) =>
  * which meant: blank -> "Loading..." -> content, over two network hops
  * (browser -> /api/github -> GitHub). Now the data is fetched on the server in
  * one hop and the HTML arrives populated, so there is no loading flash and
- * crawlers see real content. Streaming fallback lives in app/github/loading.tsx.
+ * crawlers see real content. There is deliberately no loading.tsx — the
+ * fetch is cached for an hour, so a streaming fallback would flash on a
+ * cache hit for no benefit. app/github/error.tsx covers the failure path.
  */
 const GitHub = async () => {
   let user, repos;
