@@ -49,7 +49,7 @@ const products: Product[] = [
       "All-in-one productivity SaaS for solo professionals — replaces HiHello (cards) + Cal.com (scheduling) + Otter.ai (meeting AI) + Todoist (tasks). Live with billing, AI meeting intelligence, and scheduling.",
     tags: ["PERN Stack", "TypeScript", "LLM · Gemini", "Deepgram STT", "AI Summarization", "Ask AI (SSE)", "Recall.ai", "Bull · Redis", "Docker"],
     links: [
-      { href: "https://crelyzor.hrshkshri.com", label: "crelyzor.hrshkshri.com" },
+      // { href: "https://crelyzor.hrshkshri.com", label: "crelyzor.hrshkshri.com" },
       { href: "https://youtu.be/lQWSQ-r3zXQ", label: "Demo" },
     ],
   },
@@ -74,7 +74,10 @@ const products: Product[] = [
     description:
       "Your wardrobe, digitized — snap a photo of a garment, get an auto-cut-out flat lay, swipe tops and bottoms into outfits, and plan them on a calendar. Expo app on Android, FastAPI backend on Cloud Run, photos in private storage behind presigned URLs.",
     tags: ["Expo · React Native", "FastAPI · Python", "Postgres · SQLAlchemy", "rembg · U²-Net", "GCP Cloud Run", "Cloud SQL · GCS"],
-    links: [{ href: "https://fitted.hrshkshri.com", label: "fitted.hrshkshri.com" }],
+    links: [
+      // { href: "https://fitted.hrshkshri.com", label: "fitted.hrshkshri.com" },
+      { href: "https://www.youtube.com/shorts/9yy8k-yQC1A", label: "Demo" },
+    ],
   },
 ];
 

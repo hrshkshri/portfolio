@@ -102,9 +102,9 @@
 // ── Projects ───────────────────────────────────────────────────────────────────
 #custom-title("Projects")[
   #project-heading(
-    [Crelyzor: #link("https://crelyzor.hrshkshri.com")[crelyzor.hrshkshri.com]],
+    [Crelyzor: #link("https://youtu.be/lQWSQ-r3zXQ")[Demo]],
     stack: "PERN stack · TypeScript · Prisma · Bull/Redis · Next.js · Deepgram Nova-3 · Google Gemini · Recall.ai · Google Cloud KMS/GCS · Docker · GitHub Actions",
-    project-url: "https://crelyzor.hrshkshri.com",
+    project-url: "https://youtu.be/lQWSQ-r3zXQ",
   )[
     - *Built an all-in-one productivity OS for teams* (cards + scheduling + meeting AI + tasks; replaces HiHello, Cal.com, Otter.ai, Todoist): live in production with usage-metered billing, across a 4-repo system (API, dashboard, SSR public site, admin) with Docker multi-stage builds and GitHub Actions CI/CD.
     - *Engineered the meeting-intelligence pipeline*: Deepgram Nova-3 diarized transcription, Gemini AI summaries and task extraction, SSE-streamed Ask AI with history, and Recall.ai bots that auto-join Meet/Zoom calls; plus human-in-the-loop transcript and summary editing.
